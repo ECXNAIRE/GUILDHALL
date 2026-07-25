@@ -17,6 +17,10 @@
             src: url("../static/fonts/Excalifont-Regular.woff2") format("woff2");
         }
 
+        html {
+            user-select: none;
+        }
+
         body {
             background: #EAD7AE;
         }
@@ -24,7 +28,7 @@
 
         #logoArea {
             position: absolute;
-            top: 80px;
+            top: 40px;
             left: 50%;
             transform: translateX(-50%);
             font-family: font2;
@@ -88,6 +92,12 @@
             height: 45px;
             border-radius: 8px;
             font-size: 15px;
+            transition: all 0.1s ease;
+        }
+
+        .loginBtns:hover {
+            cursor: pointer;
+            transform: scale(1.01);
         }
 
         #githubLogin {
@@ -163,13 +173,13 @@
 
         #note2 {
             position: absolute;
-            top: 240px;
+            top: 200px;
             left: 50%;
             transform: translateX(-50%);
             width: 900px;
             text-align: center;
             font-family: font1;
-            font-size: 14px;
+            font-size: 22px;
             line-height: 1.5;
             color: #6B4A1F;
             opacity: 0.85;
@@ -188,7 +198,7 @@
     </div>
 
     <div id="loginArea">
-        <button class="loginBtns" id="googleLogin">GOOGLE LOGIN</button>
+        <button class="loginBtns" id="googleLogin" onclick="window.location.href='/login'">GOOGLE LOGIN</button>
 
         <div id="divider">
             <span>OR</span>

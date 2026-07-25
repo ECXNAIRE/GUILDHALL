@@ -1,11 +1,9 @@
 import { camera } from "./camera.js";
-import { uiCanvas } from "./canvas.js";
+import { uiCanvas, worldCanvas, uiCtx, worldCtx } from "./canvas.js";
 import { addQuestFrame } from "./drawFrame.js";
 
 
 
-const width = 1000
-const height = width * (addQuestFrame.height / addQuestFrame.width);
 
 export function renderWorld(worldCtx, worldCanvas) {
 
@@ -35,7 +33,8 @@ export function renderUI(uiCtx, uiCanvas) {
     );
 
     if (addQuestFrame.complete) {
-
+        const width = 1000
+        const height = width * (addQuestFrame.height / addQuestFrame.width);
         uiCtx.drawImage(
             addQuestFrame,
             0,
@@ -48,4 +47,16 @@ export function renderUI(uiCtx, uiCanvas) {
 
 
 
+}
+
+
+
+
+export function render() {
+    renderWorld(worldCtx, worldCanvas)
+    renderUI(uiCtx, uiCanvas)
+
+
+
+    requestAnimationFrame(render)
 }

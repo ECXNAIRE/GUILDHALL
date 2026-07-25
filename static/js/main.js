@@ -1,5 +1,5 @@
 import { worldCanvas, uiCanvas, worldCtx, uiCtx } from "./canvas.js";
-import { renderUI, renderWorld } from "./renders.js";
+import { renderUI, renderWorld, render } from "./renders.js";
 
 
 document.querySelectorAll('.options').forEach(button => {
@@ -13,12 +13,5 @@ document.querySelectorAll('.options').forEach(button => {
     })
 })
 
-function render() {
-    renderWorld(worldCtx, worldCanvas)
-    renderUI(uiCtx, uiCanvas)
 
-
-
-    requestAnimationFrame(render)
-}
 render()
