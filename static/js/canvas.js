@@ -6,13 +6,14 @@ export const worldCtx = worldCanvas.getContext("2d")
 
 function resize(){
 
-    const rect = worldCanvas.getBoundingClientRect();
+    const uiRect = uiCanvas.getBoundingClientRect();
+    uiCanvas.width = uiRect.width;
+    uiCanvas.height = uiRect.height;
 
-    worldCanvas.width = rect.width;
-    worldCanvas.height = rect.height;
+    const worldRect = worldCanvas.getBoundingClientRect();
+    worldCanvas.width = worldRect.width;
+    worldCanvas.height = worldRect.height;
 
-    uiCanvas.width = rect.width;
-    uiCanvas.height = rect.height;
 
 }
 

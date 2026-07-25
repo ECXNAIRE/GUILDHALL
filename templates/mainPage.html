@@ -7,8 +7,14 @@
     <title>GUILDHALL</title>
 
     <style>
+        @font-face {
+            font-family: "font1";
+            src: url("../static/fonts/Excalifont-Regular.woff2") format("woff2");
+        }
+
         * {
             box-sizing: border-box;
+            font-family: font1;
         }
 
         html,
@@ -20,8 +26,9 @@
             background: #f5f5f5;
         }
 
-        body{
+        body {
             background: #E8DFC8;
+            font-family: font1;
         }
 
         #canvasArea {
@@ -32,13 +39,15 @@
             width: 1000px;
             border: 2px solid rgba(0, 0, 0, 0);
             border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         #worldCanvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
+            width: calc(100% - 100px);
+            height: calc(100% - 100px);
+            background: #EAD7AE;
             z-index: 0;
         }
 
@@ -53,8 +62,8 @@
 
         #topArea {
             position: absolute;
-            top: 30px;
-            left: 10px;
+            top: 35px;
+            left: 30px;
             width: 200px;
             height: 45px;
             border: 2px solid black;
@@ -66,30 +75,99 @@
             z-index: 10;
         }
 
-        #nav {
+        #optionsSection {
             position: absolute;
-            top: 85px;
-            left: 10px;
-            width: 200px;
+            top: 90px;
+            left: 30px;
+            width: 250px;
             height: 500px;
-            border: 2px solid black;
-            background: white;
+            border-top: 2px solid #D8B46A;
+            border-left: 2px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
+            background: #EAD7AE;
             border-radius: 12px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
             z-index: 10;
+            padding: 10px;
+            gap: 20px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+
+        .options {
+            flex-shrink: 0;
+            width: 100%;
+            height: 50px;
+            border-radius: 12px;
+            border-top: 2px solid #D8B46A;
+            border-left: 2px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
+            background: #9B6A32;
+            color: #2F1B0F;
+        }
+
+        .options:hover {
+            cursor: pointer;
+            background: #A87439;
+        }
+
+        .options.active {
+            background: #6F4721;
+            color: #F2DFC0;
+            border-top: 2px solid #F0D99A;
+            border-left: 2px solid #F0D99A;
+            border-right: 4px solid #2B1708;
+            border-bottom: 4px solid #2B1708;
+        }
+
+        #optionsSection::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #optionsSection::-webkit-scrollbar-track {
+            background: #D8C08F;
+            border-radius: 10px;
+        }
+
+        #optionsSection::-webkit-scrollbar-thumb {
+            background: #7A4F25;
+            border-radius: 10px;
+        }
+
+        #optionsSection::-webkit-scrollbar-thumb:hover {
+            background: #5E3B1A;
         }
 
         #addQuestButtonArea {
             position: absolute;
-            top: 100px;
-            right: 200px;
-            height: 55px;
-            width: 55px;
-            border: 2px solid black;
+            top: 90px;
+            right: 190px;
+            height: 45px;
+            width: 150px;
+            border-top: 2px solid #D8B46A;
+            border-left: 2px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
             border-radius: 12px;
             z-index: 100;
+            display: flex;
+            background: #9B6A32;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            color: #2F1B0F
+        }
+
+        #addQuestButtonArea:hover {
+            transform: scale(1.02);
         }
     </style>
 </head>
@@ -97,13 +175,22 @@
 <body>
 
     <div id="addQuestButtonArea">
-
+        + ADD QUEST
     </div>
 
     <div id="topArea">
     </div>
 
-    <div id="nav">
+    <div id="optionsSection">
+        <button class="options active">FORGE</button>
+        <button class="options">ARTISAN'S GUILD</button>
+        <button class="options">TINKER'S WORKSHOP</button>
+        <button class="options">ARCANE'S LABORATORY</button>
+        <button class="options">GAMEKEEPER'S LODGE</button>
+        <button class="options">BARD'S STUDIO</button>
+        <button class="options">SCRIBBLE'S DESK</button>
+        <button class="options">ENGINEER'S WORKSHOP</button>
+        <button class="options">ODD JOBS</button>
     </div>
 
     <div id="canvasArea">
