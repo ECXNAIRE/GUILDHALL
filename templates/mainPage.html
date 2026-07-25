@@ -23,12 +23,14 @@
             height: 100%;
             margin: 0;
             overflow: hidden;
-            background: #f5f5f5;
         }
 
         body {
-            background: #E8DFC8;
+            background: #C8B48A;
             font-family: font1;
+            background: linear-gradient(180deg,
+                    #B89A68 0%,
+                    #9E7E4F 100%);
         }
 
         #canvasArea {
@@ -64,10 +66,10 @@
             position: absolute;
             top: 35px;
             left: 30px;
-            width: 200px;
+            width: 250px;
             height: 45px;
             border: 2px solid black;
-            background: white;
+            background: #EAD7AE;
             border-radius: 12px;
             display: flex;
             justify-content: center;
@@ -98,6 +100,22 @@
             overflow-x: hidden;
         }
 
+        #guildHeader {
+            flex-shrink: 0;
+            text-align: center;
+            border-bottom: 2px solid rgba(75, 46, 24, .25);
+            font-weight: 900
+        }
+
+        #guildList {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 10px;
+        }
+
 
         .options {
             flex-shrink: 0;
@@ -126,21 +144,21 @@
             border-bottom: 4px solid #2B1708;
         }
 
-        #optionsSection::-webkit-scrollbar {
+        #guildList::-webkit-scrollbar {
             width: 8px;
         }
 
-        #optionsSection::-webkit-scrollbar-track {
+        #guildList::-webkit-scrollbar-track {
             background: #D8C08F;
             border-radius: 10px;
         }
 
-        #optionsSection::-webkit-scrollbar-thumb {
+        #guildList::-webkit-scrollbar-thumb {
             background: #7A4F25;
             border-radius: 10px;
         }
 
-        #optionsSection::-webkit-scrollbar-thumb:hover {
+        #guildList::-webkit-scrollbar-thumb:hover {
             background: #5E3B1A;
         }
 
@@ -182,15 +200,22 @@
     </div>
 
     <div id="optionsSection">
-        <button class="options active">FORGE</button>
-        <button class="options">ARTISAN'S GUILD</button>
-        <button class="options">TINKER'S WORKSHOP</button>
-        <button class="options">ARCANE'S LABORATORY</button>
-        <button class="options">GAMEKEEPER'S LODGE</button>
-        <button class="options">BARD'S STUDIO</button>
-        <button class="options">SCRIBBLE'S DESK</button>
-        <button class="options">ENGINEER'S WORKSHOP</button>
-        <button class="options">ODD JOBS</button>
+        <div id="guildHeader">
+            GUILD REGISTERY
+        </div>
+
+
+        <div id="guildList">
+            <button class="options active">FORGE</button>
+            <button class="options">ARTISAN'S GUILD</button>
+            <button class="options">TINKER'S WORKSHOP</button>
+            <button class="options">ARCANE'S LABORATORY</button>
+            <button class="options">GAMEKEEPER'S LODGE</button>
+            <button class="options">BARD'S STUDIO</button>
+            <button class="options">SCRIBBLE'S DESK</button>
+            <button class="options">ENGINEER'S WORKSHOP</button>
+            <button class="options">ODD JOBS</button>
+        </div>
     </div>
 
     <div id="canvasArea">
