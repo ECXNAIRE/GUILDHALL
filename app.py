@@ -19,6 +19,18 @@ google = oauth.register(
     }
 )
 
+github = oauth.register(
+    name="github",
+    client_id=os.getenv("GITHUB_CLIENT_ID"),
+    client_secret=os.getenv("GITHUB_CLIENT_SECRET"),
+    access_token_url="https://github.com/login/oauth/access_token",
+    authorize_url="https://github.com/login/oauth/authorize",
+    api_base_url="https://api.github.com/",
+    client_kwargs={
+        "scope": "read:user user:email"
+    }
+)
+
 
 
 @app.route('/')
@@ -26,14 +38,14 @@ def landingPage():
     return render_template("landingPage.html")
 
 
-@app.route("/login")
-def login():
+@app.route("/googleLogin")
+def googleLogin():
     return google.authorize_redirect(
-        "http://127.0.0.1:5000/login/callback"
+        "http://127.0.0.1:5000/google/callback"
     )
 
-@app.route("/login/callback")
-def callback():
+@app.route("/google/callback")
+def googleCallback():
 
     token = google.authorize_access_token()
     user = token["userinfo"]
@@ -41,8 +53,19 @@ def callback():
     return redirect("/main")
 
 
+@app.route("/githubLogin")
+def githubLogin():
+    return github.authorize_redirect(
+        "http://127.0.0.1:5000/github/callback"
+    )
 
 
+@app.route("/github/callback")
+def githubCallback():
+    token = github.authorize_access_token()
+    user = github.get("user").json()
+    session["user"] = user
+    return redirect("/main")
 
     
 @app.route('/main')

@@ -228,6 +228,10 @@
 
 
     <script type="module" src="../static//js/main.js"></script>
+    <script>
+        const user = JSON.parse('{{ user | tojson | safe }}');
+        console.log(user);
+    </script>
 </body>
 
 </html>
