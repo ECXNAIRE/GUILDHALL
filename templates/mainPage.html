@@ -255,7 +255,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.1s ease;
-            color: #2F1B0F
+            color: #F2DFC0
         }
 
         #addQuest:hover {
@@ -280,7 +280,7 @@
             display: none;
             flex-shrink: 0;
             flex-direction: column;
-            gap: 20px;
+            gap: 30px;
             overflow-y: hidden;
             padding: 10px;
             overflow-x: hidden;
@@ -398,14 +398,17 @@
             justify-content: center;
             font-size: 22px;
             font-weight: 1000;
+            color: #5E3B1A
         }
 
-        .tagBox {
-            width: 400px;
+
+        #tagBox label {
+            color: #5E3B1A;
+            font-weight: 700;
         }
 
         #tagSearch {
-            width: 50%;
+            width: 320px;
             height: 40px;
             border: 2px solid #d1bb8ece;
             border-radius: 10px;
@@ -454,6 +457,31 @@
             cursor: pointer;
         }
 
+        #difficultyLevel label {
+            color: #5E3B1A;
+            font-weight: 700;
+        }
+
+        .difficultyBtn {
+            padding: 8px 14px;
+            border: 1px solid #d1bb8ece;
+            color:#5E3B1A;
+            border-radius: 20px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .difficultyBtn.active {
+            background: #9B6A32;
+            color: #F2DFC0;
+            padding: 6px 12px;
+            display: inline-flex;
+            align-items: center;
+            border: 2px solid #6F4721;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
         #title,
         #description {
             flex-shrink: 0;
@@ -467,6 +495,36 @@
             align-items: center;
             border: 2px solid #6F4721;
             border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #confirmBtnArea {
+            width:100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 20px
+        }
+
+        #confirmBtn {
+            width: 100px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border-top: 2px solid #D8B46A;
+            border-left: 2px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
+            background: #9B6A32;
+            color: #F2DFC0;
+            transition: all 0.1s ease;
+            font-weight: 600;
+        }
+
+        #confirmBtn:hover {
+            transform: scale(1.01);
             cursor: pointer;
         }
     </style>
@@ -531,10 +589,22 @@
             <div id="difficultyLevel"></div>
 
             <div id="tagBox">
-                <label>TAGS</label>
+                <label>TAGS:</label>
                 <input id="tagSearch" type="text" placeholder="SEARCH TAGS" ...>
                 <div id="tag-suggestions"></div>
                 <div id="selectedTags"></div>
+            </div>
+
+            <div id="difficultyLevel">
+                <label>DIFFICULTY: </label>
+                <button class="difficultyBtn active" data-difficulty="LOW">LOW</button>
+                <button class="difficultyBtn" data-difficulty="MEDIUM">MEDIUM</button>
+                <button class="difficultyBtn" data-difficulty="HARD">HARD</button>
+                <button class="difficultyBtn" data-difficulty="LEGENDARY">LEGENDARY</button>
+            </div>
+
+            <div id="confirmBtnArea">
+                <button id="confirmBtn">CONFIRM</button>
             </div>
         </div>
     </div>
@@ -564,7 +634,7 @@
         })
     </script>
 
-    <script src="../static/js/quest.js"></script>
+    <script type="module" src="../static/js/quest.js"></script>
 </body>
 
 </html>

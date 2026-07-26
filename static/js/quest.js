@@ -1,3 +1,5 @@
+import { state } from "./state.js";
+
 const suggestionBox = document.getElementById("tag-suggestions");
 const selectedBox = document.getElementById("selectedTags")
 const tagSearch = document.getElementById("tagSearch")
@@ -85,3 +87,14 @@ overlay.addEventListener("click", () => {
     questPopup.style.display = "none";
     overlay.style.display = "none";
 });
+
+
+
+//DIFFICULTY LEVEL 
+document.querySelectorAll(".difficultyBtn").forEach(button => {
+    button.addEventListener("click", () => {
+        document.querySelector(".difficultyBtn.active").classList.remove("active")
+
+        button.classList.add("active")
+    })
+})
