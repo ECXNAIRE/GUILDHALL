@@ -16,6 +16,7 @@ def initTable():
     provider TEXT NOT NULL,
     provider_id TEXT NOT NULL,
     user_id TEXT UNIQUE PRIMARY KEY,
+    user_name TEXT,
     email TEXT,
     avatar TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -30,19 +31,20 @@ def initTable():
 
 
 def insertUser(email, provider, providerID, avatar):
+    initTable()
     user = checkUserID(providerID)
 
     if user is None:
-        initTable()
         userID = generateUserId(providerID)
+        username = userID
 
         conn = sqlite3.connect("database/database.db")
         cursor = conn.cursor()
 
         cursor.execute("""
-        INSERT INTO users (email, provider, provider_id, user_id, avatar)
-        VALUES (?, ?, ?, ?, ?)
-        """, (email, provider, providerID, userID, avatar))
+        INSERT INTO users (email, provider, provider_id, user_id, avatar, user_name)
+        VALUES (?, ?, ?, ?, ?, ?)
+        """, (email, provider, providerID, userID, avatar, username))
 
 
         conn.commit()

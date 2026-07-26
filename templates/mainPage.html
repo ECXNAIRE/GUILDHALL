@@ -153,7 +153,7 @@
         }
 
         #guildList::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         #guildList::-webkit-scrollbar-track {
@@ -176,24 +176,7 @@
             right: 190px;
             height: 45px;
             width: 150px;
-            border-top: 2px solid #D8B46A;
-            border-left: 2px solid #D8B46A;
-            border-right: 4px solid #4B2E18;
-            border-bottom: 4px solid #4B2E18;
-            border-radius: 12px;
-            z-index: 100;
-            display: flex;
-            background: #9B6A32;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.1s ease;
-            color: #2F1B0F
-        }
-
-        #addQuestButtonArea:hover {
-            transform: scale(1.02);
+            z-index: 30;
         }
 
         #pfp {
@@ -252,16 +235,92 @@
         }
 
         #logoutArea img {
-            width: 32px;
-            height: 32px;
+            width: 25px;
+            height: 25px;
+            opacity: 0.8;
         }
+
+        #addQuest {
+            width: 100%;
+            height: 100%;
+            border-top: 2px solid #D8B46A;
+            border-left: 2px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
+            border-radius: 12px;
+            display: flex;
+            background: #9B6A32;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            color: #2F1B0F
+        }
+
+        #addQuest:hover {
+            transform: scale(1.02);
+        }
+
+        #questPopup {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 1000px;
+            height: 500px;
+            background: white;
+            border-top: 2px solid #D8B46A;
+            border-left: 2px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
+            border-radius: 12px;
+            z-index: 40;
+            background: #EAD7AE;
+            padding:20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px
+        }
+
+        #overlay {
+            z-index: 35;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background:#26170c;
+            opacity: 0.4;
+        }
+
+        #description {
+            width: 100%;
+            height: 100px;
+            border: 2px solid black
+        }
+
+        #title {
+            width: 100%;
+            height: 50px;
+            border: 2px solid black;
+        }
+
+        #titleTextArea {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            font-weight: 900;
+            text-align: ;
+        }
+
     </style>
 </head>
 
 <body>
 
     <div id="addQuestButtonArea">
-        + ADD QUEST
+        <button id="addQuest">+ ADD QUEST</button>
     </div>
     <div id="logoutArea">
         <img src="../static/images/log-out.svg">
@@ -302,12 +361,21 @@
         <canvas id="worldCanvas"></canvas>
     </div>
 
+    <div id="overlay"></div>
+
+    <div id="questPopup">
+        <div id="title"><input type="text" id="titleTextArea" value="ENTER TITLE"></textarea></div>
+        <div id="description"></div>
+        <div id="tags"></div>
+        <div id="difficultyLevel"></div>
+    </div>
 
     <script type="module" src="../static//js/main.js"></script>
     <script>
         const user = JSON.parse('{{ user | tojson | safe }}');
         document.getElementById("profilepic").src = user.avatar;
         document.getElementById("userID").textContent = user.user_id
+        document.getElementById("alias").textContent = user.user_name
     </script>
 </body>
 
