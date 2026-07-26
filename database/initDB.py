@@ -50,3 +50,18 @@ def insertUser(email, provider, providerID, avatar):
 
         return
 
+
+
+def getUser(providerID):
+    conn = sqlite3.connect("database/database.db")
+    
+    conn.row_factory = sqlite3.Row 
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM users WHERE provider_id = ?",( providerID,))
+    user = cursor.fetchone()
+
+    conn.close()
+    return dict(user)
+
+

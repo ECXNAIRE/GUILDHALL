@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 from urllib.parse import urlencode
 import requests
-from database.initDB import insertUser
+from database.initDB import insertUser, getUser
 
 
 load_dotenv()
@@ -51,13 +51,14 @@ def googleLogin():
 def googleCallback():
     token = google.authorize_access_token()
     user = token["userinfo"]
-    session["user"] = user
     email = user["email"]
     provider = "google"
     avatar = user["picture"]
     providerID = user["sub"]
 
     insertUser(email, provider, providerID, avatar)
+    userDetails = getUser(providerID)
+    session["userDetails"] = userDetails
 
 
     print(email, provider, providerID)
@@ -77,13 +78,13 @@ def githubLogin():
 def githubCallback():
     token = github.authorize_access_token()
     user = github.get("user").json()
-    session["user"] = user
     email = user["email"]
     provider = "github"
     providerID = str(user["id"])
     avatar = user["avatar_url"]
-
     insertUser(email, provider, providerID, avatar)
+    userDetails = getUser(providerID)
+    session["userDetails"] = userDetails
 
 
 
@@ -95,11 +96,13 @@ def githubCallback():
 
 @app.route('/main')
 def mainPage():
-    if "user" not in session:
+    if "userDetails" not in session:
         return redirect("/")
+    userDetails = session["userDetails"]
+
     return render_template(
         "mainPage.html",
-        user=session["user"]
+        user=userDetails
         )
 
 

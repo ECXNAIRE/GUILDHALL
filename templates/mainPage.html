@@ -32,8 +32,8 @@
             background: #C8B48A;
             font-family: font1;
             background: linear-gradient(180deg,
-                    #B89A68 0%,
-                    #9E7E4F 100%);
+                    #9C7A49 0%,
+                    #75532C 100%);
         }
 
         #canvasArea {
@@ -68,14 +68,18 @@
         #topArea {
             position: absolute;
             top: 35px;
-            left: 30px;
-            width: 250px;
+            left: 100px;
+            width: 180px;
             height: 45px;
-            border: 2px solid black;
+            border-top: 2px solid #D8B46A;
+            border-left: 2px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
             background: #EAD7AE;
             border-radius: 12px;
             display: flex;
-            justify-content: center;
+            flex-direction: row;
+            justify-content: flex-start;
             align-items: center;
             z-index: 10;
         }
@@ -111,6 +115,7 @@
         }
 
         #guildList {
+            width: 100%;
             flex: 1;
             overflow-y: auto;
             display: flex;
@@ -190,6 +195,66 @@
         #addQuestButtonArea:hover {
             transform: scale(1.02);
         }
+
+        #pfp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            margin-left: 10px
+        }
+
+        #pfp img {
+            width: 32px;
+            height: 32px;
+            border-radius: 5px;
+            border: 1px solid black;
+        }
+
+        #details {
+            margin-left: 5px;
+        }
+
+        #alias {
+            font-family: sans-serif;
+            font-size: 10px;
+            opacity: 0.8;
+            font-weight: 600;
+        }
+
+        #userID {
+            font-family: sans-serif;
+            font-size: 9px;
+            opacity: 0.5;
+        }
+
+
+        #openProfile {
+            margin-left: 50px;
+            cursor: pointer;
+        }
+
+        #logoutArea {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            top: 35px;
+            left: 30px;
+            border-top: 2px solid #D8B46A;
+            border-left: 2px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
+            background: #EAD7AE;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #logoutArea img {
+            width: 32px;
+            height: 32px;
+        }
     </style>
 </head>
 
@@ -198,8 +263,19 @@
     <div id="addQuestButtonArea">
         + ADD QUEST
     </div>
+    <div id="logoutArea">
+        <img src="../static/images/log-out.svg">
+    </div>
 
     <div id="topArea">
+        <div id="pfp">
+            <img id="profilepic">
+        </div>
+        <div id="details">
+            <div id="alias">PRASHANT</div>
+            <div id="userID"></div>
+        </div>
+        <div id="openProfile">></div>
     </div>
 
     <div id="optionsSection">
@@ -230,7 +306,8 @@
     <script type="module" src="../static//js/main.js"></script>
     <script>
         const user = JSON.parse('{{ user | tojson | safe }}');
-        console.log(user);
+        document.getElementById("profilepic").src = user.avatar;
+        document.getElementById("userID").textContent = user.user_id
     </script>
 </body>
 
