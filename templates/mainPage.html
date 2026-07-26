@@ -363,6 +363,59 @@
             font-size: 22px;
             font-weight: 1000;
         }
+
+        .tagBox {
+            width: 400px;
+        }
+
+        #tagSearch {
+            width: 50%;
+            height: 40px;
+            border: 2px solid #d1bb8ece;
+            border-radius: 10px;
+            background: transparent;
+            padding: 0 12px;
+            color: #5E3B1A;
+            font-size: 14px;
+        }
+
+        #tagSearch:focus {
+            outline: none;
+        }
+
+        #tagSearch::placeholder {
+            color: #9B6A32
+        }
+
+        #selectedTags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .tag button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+
+        #tag-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+
+        .suggestion {
+            padding: 8px 14px;
+            border: 1px solid #555;
+            border-radius: 20px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -421,8 +474,14 @@
                 maxlength="500"></textarea>
             <div id="descriptionCounter">0 / 500</div>
         </div>
-        <div id="tags"></div>
         <div id="difficultyLevel"></div>
+
+        <div id="tagBox">
+            <label>TAGS</label>
+            <div id="selectedTags"></div>
+            <input id="tagSearch" type="text" placeholder="SEARCH TAGS" ...>
+            <div id="tag-suggestions"></div>
+        </div>
     </div>
 
     <script type="module" src="../static//js/main.js"></script>
