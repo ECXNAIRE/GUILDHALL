@@ -279,8 +279,29 @@
             background: #EAD7AE;
             padding: 20px;
             display: flex;
+            flex-shrink: 0;
             flex-direction: column;
-            gap: 20px
+            gap: 20px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+         #questPopup::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #questPopup::-webkit-scrollbar-track {
+            background: #D8C08F;
+            border-radius: 10px;
+        }
+
+        #questPopup::-webkit-scrollbar-thumb {
+            background: #7A4F25;
+            border-radius: 10px;
+        }
+
+        #questPopup::-webkit-scrollbar-thumb:hover {
+            background: #5E3B1A;
         }
 
         #overlay {
@@ -391,7 +412,7 @@
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 10px;
+            margin-top: 20px;
         }
 
         .tag button {
@@ -415,6 +436,21 @@
             border: 1px solid #555;
             border-radius: 20px;
             cursor: pointer;
+        }
+
+        #title,
+        #description {
+            flex-shrink: 0;
+        }
+
+        .tag {
+            background: #9B6A32;
+            color: #F2DFC0;
+            padding: 6px 12px;
+            display: inline-flex;
+            align-items: center;
+            border: 2px solid #6F4721;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -478,9 +514,9 @@
 
         <div id="tagBox">
             <label>TAGS</label>
-            <div id="selectedTags"></div>
             <input id="tagSearch" type="text" placeholder="SEARCH TAGS" ...>
             <div id="tag-suggestions"></div>
+            <div id="selectedTags"></div>
         </div>
     </div>
 
@@ -508,6 +544,8 @@
             descriptionCounter.textContent = `${descriptionInput.value.length} / 500`
         })
     </script>
+
+    <script src="../static/js/tags.js"></script>
 </body>
 
 </html>
