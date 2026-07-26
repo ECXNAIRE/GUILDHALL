@@ -93,8 +93,38 @@ overlay.addEventListener("click", () => {
 //DIFFICULTY LEVEL 
 document.querySelectorAll(".difficultyBtn").forEach(button => {
     button.addEventListener("click", () => {
+        state.difficultyLevel = button.dataset.difficulty
         document.querySelector(".difficultyBtn.active").classList.remove("active")
 
         button.classList.add("active")
     })
+})
+
+
+
+
+
+document.getElementById("confirmBtn").addEventListener("click", async() => {
+    const titleValue = document.getElementById("titleTextArea").value
+    const descriptionValue = document.getElementById("descriptionTextArea").value
+    const userID = document.getElementById("userID").textContent
+
+
+    const response = await fetch("/createQuest", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            title: titleValue,
+            description: descriptionValue,
+            tags: selectedTags,
+            difficulty: state.difficultyLevel,
+            guild: state.selectedGuild,
+            userID: userID
+        })
+    })
+
+    const data = await response.json()
+    console.log(data)
 })

@@ -1,3 +1,4 @@
 export const state = {
-    difficultyLevel: "LOW"
+    difficultyLevel: "LOW",
+    selectedGuild: "FORGE"
 }

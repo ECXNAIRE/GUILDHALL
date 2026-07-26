@@ -1,10 +1,12 @@
-from flask import Flask, render_template, redirect, session, request
+from flask import Flask, render_template, redirect, session, request, jsonify
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 import os
 from urllib.parse import urlencode
 import requests
 from database.initDB import insertUser, getUser
+from database.quest import saveQuest
+import json
 
 
 load_dotenv()
@@ -106,6 +108,23 @@ def mainPage():
         )
 
 
+
+@app.route("/createQuest", methods=["POST"])
+def createQuest():
+    data = request.get_json()
+
+    title = data['title']
+    description = data['description']
+    tags = json.dumps(data["tags"])
+    difficulty = data['difficulty']
+    guild = data["guild"]
+    userID = data["userID"]
+
+    saveQuest(title, description, difficulty, tags, userID, guild)
+
+    return jsonify({
+        "success": True
+    })
 
 
 
