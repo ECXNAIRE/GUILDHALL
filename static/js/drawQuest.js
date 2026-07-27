@@ -99,16 +99,28 @@ export function drawQuestCard(ctx, quest) {
         quest.tags.length * tagLineHeight +
         tagGap +
         20 +
-        bottomPadding;
+        bottomPadding +
+        25 +
+        16
 
     quest.width = width;
     quest.height = height;
+
+    const postedDate = new Date(quest.created_at).toLocaleTimeString(
+        "en-GB",
+        {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        }
+    )
 
 
 
     ctx.save()
     ctx.translate(quest.x, quest.y + yOffset)
     ctx.rotate(quest.rotation)
+
 
 
     ctx.shadowColor = "rgba(0,0,0,0.28)";
@@ -165,7 +177,7 @@ export function drawQuestCard(ctx, quest) {
     }
 
 
-    ctx.strokeStyle = "rgba(90,70,40,0.04)";
+    ctx.strokeStyle = "rgba(90,70,40,0.05)";
     ctx.lineWidth = 1;
 
     roughLine(
@@ -187,6 +199,7 @@ export function drawQuestCard(ctx, quest) {
         seed + 801,
         4
     );
+
 
 
     //PIN STARTS HERE DONT CONFUSE
@@ -225,11 +238,20 @@ export function drawQuestCard(ctx, quest) {
     ctx.fill()
 
 
+    ctx.texAlign = "lefft"
+    let y = -height / 2 + padding + 10
+
+    y += 16
+
+    ctx.fillStyle = "rgba(94, 59, 26, 0.5)";
+    ctx.font = "bold 12px font1"
+    ctx.fillText(`Posted on: ${postedDate}`, -width / 2 + padding, y)
+
+
+    y += 35
 
     ctx.fillStyle = "#5E3B1A";
     ctx.font = "bold 24px font1";
-    let y = -height / 2 + padding + 20
-
     titleLines.forEach(line => {
         ctx.fillText(
             line,

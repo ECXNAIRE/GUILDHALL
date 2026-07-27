@@ -4,6 +4,30 @@ import { camera } from "./camera.js";
 
 export function pointerdown(e) {
     worldCanvas.setPointerCapture(e.pointerId);
+
+    const rect = worldCanvas.getBoundingClientRect();
+
+    const canvasX = (e.clientX - rect.left) * (worldCanvas.width / rect.width);
+    const canvasY = (e.clientY - rect.top) * (worldCanvas.height / rect.height);
+
+
+    const mouseX = (canvasX - camera.x) / camera.zoom;
+    const mouseY = (canvasY - camera.y) / camera.zoom;
+
+    state.selectedQuest = null
+
+    for(let i = state.quests.length - 1; i >= 0; i--) {
+        const quest = state.quests[i]
+
+        if(isPointInQuest(mouseX, mouseY, quest)) {
+            state.selectedQuest = quest
+            console.log(state.selectedQuest)
+            return
+        }
+    }
+
+
+
     state.isPanning = true;
 
     console.log("pointer down");
@@ -20,15 +44,12 @@ export function pointermove(e) {
 
     const rect = worldCanvas.getBoundingClientRect();
 
-    const canvasX =
-        (e.clientX - rect.left) * (worldCanvas.width / rect.width);
+    const canvasX = (e.clientX - rect.left) * (worldCanvas.width / rect.width);
+    const canvasY = (e.clientY - rect.top) * (worldCanvas.height / rect.height);
 
-    const canvasY =
-        (e.clientY - rect.top) * (worldCanvas.height / rect.height);
 
     const mouseX = (canvasX - camera.x) / camera.zoom;
     const mouseY = (canvasY - camera.y) / camera.zoom;
-    console.log(mouseX, mouseY);
     state.hoveredQuest = null;
 
     for (const quest of state.quests) {

@@ -5,5 +5,7 @@ export const state = {
     isPanning: false,
     lastMouseX: 0,
     lastMouseY: 0,
-    hoveredQuest: null
+    hoveredQuest: null,
+    selectedQuest: null,
+    spacePressed: false
 }
