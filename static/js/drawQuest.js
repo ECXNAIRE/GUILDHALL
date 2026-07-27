@@ -1,4 +1,4 @@
-
+import { roughLine } from "./strokeEditor.js";
 
 
 export function questLayout(quests) {
@@ -45,6 +45,7 @@ function seededRandom(seed) {
 export function drawQuestCard(ctx, quest) {
     const width = 320 //FOR NOW ITS FIXED
     const height = 220
+    const seed = new Date(quest.created_at).getTime();
 
     ctx.save()
 
@@ -53,32 +54,30 @@ export function drawQuestCard(ctx, quest) {
 
     ctx.fillStyle = "#F4E7BE"
     ctx.fillRect(-width / 2, -height / 2, width, height)
-
     ctx.lineWidth = 2
     ctx.strokeStyle = "#5E3B1A"
-    ctx.strokeRect(-width / 2, -height / 2, width, height)
+    roughLine(ctx, -width / 2, -height / 2, width / 2, -height / 2, seed, 1.5);
+    roughLine(ctx, width / 2, -height / 2, width / 2, height / 2, seed + 1, 1.5);
+    roughLine(ctx, width / 2, height / 2, -width / 2, height / 2, seed + 2, 1.5);
+    roughLine(ctx, -width / 2, height / 2, -width / 2, -height / 2, seed + 3, 1.5);
 
 
-    ctx.fillStyle = "#8B5A2B"
-    ctx.fillRect(-width / 2, - height / 2, width, 35)
-
-    ctx.fillStyle = "#F2DFC0";
+    ctx.fillStyle = "#5E3B1A";
     ctx.font = "bold 20px font1";
-    ctx.fillText(quest.title, -width / 2 + 15, -height / 2 + 23);
+    ctx.fillText(`TITLE: ${quest.title}`, -width / 2 + 15, -height / 2 + 23);
+
 
     ctx.fillStyle = "#5E3B1A";
     ctx.font = "14px font1";
 
-    const lines = wrapText(ctx, quest.description, width - 30)
-
-
-    lines.forEach((lines, i) => {
+    quest.tags.forEach((tag, i) => {
         ctx.fillText(
-            lines,
+            "#" + tag,
             -width / 2 + 15,
-            -height / 2 + 60 + i * 20
-        )
-    })
+            -height / 2 + 70 + i * 22
+        );
+    });
+
 
     ctx.font = "bold 14px font1"
     ctx.fillText(
@@ -89,27 +88,4 @@ export function drawQuestCard(ctx, quest) {
 
     ctx.restore()
 
-}
-
-
-function wrapText(ctx, text, maxWidth) {
-    const words = text.split(" ")
-
-    const lines = []
-    let line = ""
-
-    words.forEach(word => {
-        const test = line + word + " "
-
-        if(ctx.measureText(test).width > maxWidth) {
-            lines.push(line)
-            line = word + " "
-        } else {
-            line = test
-        }
-    })
-
-    lines .push(line)
-
-    return lines
 }

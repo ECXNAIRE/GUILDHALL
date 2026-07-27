@@ -29,6 +29,14 @@ window.addEventListener("pointerup", pointerup)
 worldCanvas.addEventListener("wheel", (e) => {
     e.preventDefault();
 
+    const rect = worldCanvas.getBoundingClientRect()
+
+
+    const mouseX = e.clientX - rect.left
+    const mouseY = e.clientY - rect.top
+
+
+    const oldZoom = camera.zoom
     const zoomSpeed = 0.1;
 
     if (e.deltaY < 0) {
@@ -38,4 +46,6 @@ worldCanvas.addEventListener("wheel", (e) => {
     }
 
     camera.zoom = Math.max(0.3, Math.min(camera.zoom, 3));
+    camera.x = mouseX - (mouseX - camera.x) * (camera.zoom / oldZoom);
+    camera.y = mouseY - (mouseY - camera.y) * (camera.zoom / oldZoom);
 });
