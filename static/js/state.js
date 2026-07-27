@@ -1,5 +1,8 @@
 export const state = {
     difficultyLevel: "LOW",
     selectedGuild: "FORGE",
-    quests: []
+    quests: [],
+    isPanning: false,
+    lastMouseX: 0,
+    lastMouseY: 0
 }
