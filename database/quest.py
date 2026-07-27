@@ -54,5 +54,3 @@ def getQuests(guild):
 
     return quest
 
-
-print(getQuests("FORGE"))

@@ -15,6 +15,7 @@ export function renderWorld(worldCtx, worldCanvas) {
 
     worldCtx.save();
     worldCtx.translate(camera.x, camera.y);
+    worldCtx.scale(camera.zoom, camera.zoom);
 
     state.quests.forEach(quest => {
         drawQuestCard(worldCtx, quest)

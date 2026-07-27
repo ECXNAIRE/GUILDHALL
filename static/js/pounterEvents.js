@@ -18,14 +18,16 @@ export function pointerdown(e) {
 
 
 export function pointermove(e) {
+    worldCanvas.style.cursor = "grab"
     if(!state.isPanning) return
+
+    worldCanvas.style.cursor = "grabbing"
 
     const dx = e.clientX - state.lastMouseX
     const dy = e.clientY - state.lastMouseY
 
     camera.x += dx
     camera.y += dy
-    console.log(camera.x, camera.y);
 
     state.lastMouseX = e.clientX
     state.lastMouseY = e.clientY
