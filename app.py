@@ -5,8 +5,9 @@ import os
 from urllib.parse import urlencode
 import requests
 from database.initDB import insertUser, getUser
-from database.quest import saveQuest
+from database.quest import saveQuest, getQuests
 import json
+
 
 
 load_dotenv()
@@ -125,6 +126,16 @@ def createQuest():
     return jsonify({
         "success": True
     })
+
+
+
+@app.route("/getQuest/<guild>")
+def getQuest(guild):
+
+    quests = getQuests(guild)
+
+    return jsonify(quests)
+
 
 
 

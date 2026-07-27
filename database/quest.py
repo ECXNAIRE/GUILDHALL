@@ -36,3 +36,23 @@ def saveQuest(title, description, difficulty, tags, creator, guild):
     conn.commit()
     conn.close()
 
+
+
+def getQuests(guild):
+    conn = sqlite3.connect("database/database.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+
+    cursor.execute("""
+    SELECT * FROM quests WHERE guild = ?
+    """, (guild,))
+
+    quest = [dict(row) for row in cursor.fetchall()]
+
+    conn.close()
+
+    return quest
+
+
+print(getQuests("FORGE"))

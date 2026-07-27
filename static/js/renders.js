@@ -1,9 +1,8 @@
 import { camera } from "./camera.js";
 import { uiCanvas, worldCanvas, uiCtx, worldCtx } from "./canvas.js";
 import { addQuestFrame } from "./drawFrame.js";
-
-
-
+// import { state } from "./state.js";
+// import { drawQuestCard } from "./drawQuest.js"
 
 export function renderWorld(worldCtx, worldCanvas) {
 
@@ -15,8 +14,11 @@ export function renderWorld(worldCtx, worldCanvas) {
     );
 
     worldCtx.save();
-
     worldCtx.translate(camera.x, camera.y);
+
+    // state.quests.forEach(quest => {
+    //     drawQuestCard(worldCtx, quest)
+    // })
 
     worldCtx.restore();
 

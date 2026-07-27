@@ -1,12 +1,13 @@
 import { worldCanvas, uiCanvas, worldCtx, uiCtx } from "./canvas.js";
 import { renderUI, renderWorld, render } from "./renders.js";
 import { state } from "./state.js";
-
+import { loadQuest } from "./loadQuest.js";
 
 document.querySelectorAll('.options').forEach(button => {
     button.addEventListener("click", () => {
         state.selectedGuild = button.dataset.guild
-        console.log(state.selectedGuild)
+
+        loadQuest(state.selectedGuild)
         
         document
         .querySelector(".options.active")
