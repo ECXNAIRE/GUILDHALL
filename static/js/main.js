@@ -20,6 +20,9 @@ document.querySelectorAll('.options').forEach(button => {
 })
 
 
+
+
+loadQuest(state.selectedGuild)
 render()
 
 

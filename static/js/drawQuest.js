@@ -110,18 +110,17 @@ export function drawQuestCard(ctx, quest) {
     ctx.translate(quest.x, quest.y + yOffset)
     ctx.rotate(quest.rotation)
 
-    ctx.fillStyle = "#F4E7BE"
-    ctx.fillRect(-width / 2, -height / 2, width, height)
 
     ctx.shadowColor = "rgba(0,0,0,0.28)";
-    ctx.shadowBlur = 12
-    ctx.shadowOffsetX = 4
-    ctx.shadowOffsetY = 5
+    ctx.shadowBlur = 12;
+    ctx.shadowOffsetX = 4;
+    ctx.shadowOffsetY = 5;
+    ctx.fillStyle = "#F4E7BE";
+    ctx.fillRect(-width / 2, -height / 2, width, height)
     ctx.shadowColor = "transparent";
     ctx.shadowBlur = 0;
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
-
 
     ctx.lineWidth = 2
     ctx.strokeStyle = "#5E3B1A";
@@ -134,7 +133,63 @@ export function drawQuestCard(ctx, quest) {
     roughLine(ctx, -width / 2, height / 2, -width / 2, -height / 2, seed + 3, 1.5);
 
 
+    ctx.fillStyle = "rgba(80,60,30,0.08)";
 
+    for (let i = 0; i < 300; i++) {
+        const x = -width / 2 + seededRandom(seed + i * 3) * width
+        const y = -height / 2 + seededRandom(seed + i * 3 + 1) * height
+
+        ctx.fillRect(x, y, 2, 2);
+    }
+
+    ctx.strokeStyle = "rgba(90,70,40,0.06)";
+    ctx.lineWidth = 0.5
+
+    for (let i = 0; i < 150; i++) {
+        const x = -width / 2 + seededRandom(seed + i * 4) * width
+        const y = -height / 2 + seededRandom(seed + i * 4 + 1) * height
+
+
+        const len = 2 + seededRandom(seed + i * 4 + 2) * 5;
+        const angle = seededRandom(seed + i * 4 + 3) * Math.PI * 2;
+
+        ctx.beginPath()
+        ctx.moveTo(x, y)
+        ctx.lineTo(
+            x, Math.cos(angle) * len,
+            y + Math.sin(angle) * len
+        )
+
+        ctx.stroke()
+
+    }
+
+
+    ctx.strokeStyle = "rgba(90,70,40,0.04)";
+    ctx.lineWidth = 1;
+
+    roughLine(
+        ctx,
+        -width / 2 + 40,
+        -height / 2 + 20,
+        width / 2 - 30,
+        height / 2 - 40,
+        seed + 800,
+        4
+    );
+
+    roughLine(
+        ctx,
+        -width / 2 + 70,
+        height / 2 - 30,
+        width / 2 - 60,
+        -height / 2 + 40,
+        seed + 801,
+        4
+    );
+
+
+    //PIN STARTS HERE DONT CONFUSE
     const pinX = 0
     const pinY = -height / 2 + 10
 
