@@ -2,7 +2,7 @@ import { worldCanvas, uiCanvas, worldCtx, uiCtx } from "./canvas.js";
 import { renderUI, renderWorld, render } from "./renders.js";
 import { state } from "./state.js";
 import { loadQuest } from "./loadQuest.js";
-import { pointerdown, pointermove, pointerup } from "./pounterEvents.js";
+import { pointerdown, pointermove, pointerup, pointerdblclick } from "./pointerEvents.js";
 import { camera } from "./camera.js";
 
 document.querySelectorAll('.options').forEach(button => {
@@ -29,6 +29,7 @@ render()
 worldCanvas.addEventListener("pointerdown", pointerdown)
 worldCanvas.addEventListener("pointermove", pointermove)
 window.addEventListener("pointerup", pointerup)
+window.addEventListener("dblclick", pointerdblclick)
 worldCanvas.addEventListener("wheel", (e) => {
     e.preventDefault();
 

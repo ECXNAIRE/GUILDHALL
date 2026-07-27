@@ -305,7 +305,7 @@
             border-radius: 12px;
             z-index: 40;
             background: #EAD7AE;
-            display: block;
+            display: none;
             flex-shrink: 0;
             flex-direction: column;
             gap: 30px;
@@ -381,7 +381,7 @@
         #titleDisplay {
             width: 100%;
             height: 50px;
-            border: 2px solid #d1bb8ece;
+            border: 2px solid #d1bb8e00;
             border-radius: 10px;
             position: relative;
             color: #5E3B1A;
@@ -394,7 +394,7 @@
         #descriptionDisplay {
             width: 100%;
             height: 150px;
-            border: 2px solid #d1bb8ece;
+            border: 2px solid #d1bb8e00;
             border-radius: 10px;
             position: relative;
             color: #9B6A32;
@@ -402,7 +402,7 @@
             padding: 10px;
         }
 
-        #tagDisplay {
+        .tagDisplay {
             background: #9B6A32;
             color: #F2DFC0;
             padding: 6px 12px;
@@ -411,6 +411,13 @@
             border: 2px solid #6F4721;
             border-radius: 10px;
             cursor: pointer;
+        }
+
+        #tagBoxDisplay {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
 
 
@@ -528,7 +535,8 @@
             cursor: pointer;
         }
 
-        #difficultyLevel label {
+        #difficultyLevel label,
+        #difficultyLevelDisplay label {
             color: #5E3B1A;
             font-weight: 700;
         }
@@ -543,6 +551,17 @@
         }
 
         .difficultyBtn.active {
+            background: #9B6A32;
+            color: #F2DFC0;
+            padding: 6px 12px;
+            display: inline-flex;
+            align-items: center;
+            border: 2px solid #6F4721;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .difficultyDisplay {
             background: #9B6A32;
             color: #F2DFC0;
             padding: 6px 12px;
@@ -577,7 +596,16 @@
             padding-right: 20px
         }
 
-        #confirmBtn {
+        #AcceptBtnAreaa {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 20px
+        }
+
+        #confirmBtn,
+        #acceptBtn {
             width: 100px;
             height: 40px;
             display: flex;
@@ -594,7 +622,10 @@
             font-weight: 600;
         }
 
-        #confirmBtn:hover {
+
+
+        #confirmBtn:hover,
+        #acceptBtn:hover {
             transform: scale(1.01);
             cursor: pointer;
         }
@@ -657,7 +688,7 @@
                     maxlength="500"></textarea>
                 <div id="descriptionCounter">0 / 500</div>
             </div>
-            <div id="difficultyLevel"></div>
+
 
             <div id="tagBox">
                 <label>TAGS:</label>
@@ -682,7 +713,7 @@
 
     <div id="questDisplayPopup">
         <div id="popupDisplayContent">
-            <div id="titleDisplay">TITLE: Build a Medieval Guild Hall Website with Canvas, Animations, and Quest Boards
+            <div id="titleDisplay">Build a Medieval Guild Hall Website with Canvas, Animations, and Quest Boards
             </div>
             <div id="descriptionDisplay">The Forge has received word of a neglected project that must be restored to
                 glory. Your task is to design and build a fully functional medieval-inspired quest board where
@@ -693,11 +724,20 @@
             <div id="tagBoxDisplay">
                 <label>TAGS:</label>
                 <div class="tagDisplay">TAG 1</div>
+                <div class="tagDisplay">TAG 1</div>
+                <div class="tagDisplay">TAG 1</div>
+                <div class="tagDisplay">TAG 1</div>
+                <div class="tagDisplay">TAG 1</div>
+                <div class="tagDisplay">TAG 1</div>
+                <div class="tagDisplay">TAG 1</div>
+                <div class="tagDisplay">TAG 1</div>
+                <div class="tagDisplay">TAG 1</div>
+                <div class="tagDisplay">TAG 1</div>
             </div>
 
             <div id="difficultyLevelDisplay">
                 <label>DIFFICULTY: </label>
-                <div id="difficultyDisplay">DIFFICULTY</div>
+                <div class="difficultyDisplay">DIFFICULTY</div>
             </div>
 
             <div id="AcceptBtnAreaa">

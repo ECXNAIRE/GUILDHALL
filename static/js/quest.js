@@ -6,6 +6,7 @@ const tagSearch = document.getElementById("tagSearch")
 const addQuestBtn = document.getElementById("addQuest")
 const questPopup = document.getElementById("questPopup")
 const overlay = document.getElementById("overlay")
+const displayPopup = document.getElementById("questDisplayPopup")
 
 
 const allTags = [
@@ -86,6 +87,8 @@ addQuestBtn.addEventListener("click", () => {
 overlay.addEventListener("click", () => {
     questPopup.style.display = "none";
     overlay.style.display = "none";
+    displayPopup.style.display = "none"
+
 });
 
 
