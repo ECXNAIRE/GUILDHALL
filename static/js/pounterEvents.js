@@ -2,13 +2,10 @@ import { worldCanvas } from "./canvas.js";
 import { state } from "./state.js";
 import { camera } from "./camera.js";
 
-
-console.log("Pan file loaded");
-
 export function pointerdown(e) {
     worldCanvas.setPointerCapture(e.pointerId);
     state.isPanning = true;
-    
+
     console.log("pointer down");
 
     state.lastMouseX = e.clientX;
@@ -19,7 +16,28 @@ export function pointerdown(e) {
 
 export function pointermove(e) {
     worldCanvas.style.cursor = "grab"
-    if(!state.isPanning) return
+
+
+    const rect = worldCanvas.getBoundingClientRect();
+
+    const canvasX =
+        (e.clientX - rect.left) * (worldCanvas.width / rect.width);
+
+    const canvasY =
+        (e.clientY - rect.top) * (worldCanvas.height / rect.height);
+
+    const mouseX = (canvasX - camera.x) / camera.zoom;
+    const mouseY = (canvasY - camera.y) / camera.zoom;
+    console.log(mouseX, mouseY);
+    state.hoveredQuest = null;
+
+    for (const quest of state.quests) {
+        if (isPointInQuest(mouseX, mouseY, quest)) {
+            state.hoveredQuest = quest
+            break
+        }
+    }
+    if (!state.isPanning) return
 
     worldCanvas.style.cursor = "grabbing"
 
@@ -37,4 +55,25 @@ export function pointermove(e) {
 export function pointerup(e) {
     worldCanvas.releasePointerCapture(e.pointerId);
     state.isPanning = false
+}
+
+
+function isPointInQuest(mouseX, mouseY, quest) {
+    const dx = mouseX - quest.x
+    const dy = mouseY - quest.y
+
+    const cos = Math.cos(-quest.rotation);
+    const sin = Math.sin(-quest.rotation);
+
+
+    const localX = dx * cos - dy * sin
+    const localY = dx * sin + dy * cos
+
+
+    return (
+        localX >= -quest.width / 2 &&
+        localX <= quest.width / 2 &&
+        localY >= -quest.height / 2 &&
+        localY <= quest.height / 2
+    )
 }

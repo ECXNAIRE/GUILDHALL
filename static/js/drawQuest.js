@@ -1,12 +1,18 @@
+import { worldCanvas } from "./canvas.js";
 import { roughLine } from "./strokeEditor.js";
-
+import { state } from "./state.js";
 
 export function questLayout(quests) {
     quests.sort((a, b) =>
         new Date(a.created_at) - new Date(b.created_at)
     );
 
+    const CARD_W = 380
+    const CARD_H = 180
+    const GAP = 40
+
     const latest = quests.length - 1
+
 
     quests.forEach((quest, i) => {
         if (i === latest) {
@@ -18,14 +24,40 @@ export function questLayout(quests) {
 
         const seed = new Date(quest.created_at).getTime()
 
-        const angle = seededRandom(seed) * Math.PI * 2
+        let tries = 0
 
-        const distance = 250 + seededRandom(seed + 1) * 500
+        while (tries < 300) {
+            const angle = seededRandom(seed + tries) * Math.PI * 2
+            const distance = 100 + seededRandom(seed + tries + 100) * 450
 
-        quest.x = Math.cos(angle) * distance
-        quest.y = Math.sin(angle) * distance
+            const x = Math.cos(angle) * distance
+            const y = Math.sin(angle) * distance
 
-        quest.rotation = (seededRandom(seed + 2) - 0.5) * 0.3
+            let overlaps = false
+
+            for (const placed of quests.slice(0, i)) {
+                if (!placed.hasOwnProperty("x")) continue;
+
+                if (
+                    Math.abs(x - placed.x) < CARD_W + GAP &&
+                    Math.abs(y - placed.y) < CARD_H + GAP
+                ) {
+                    overlaps = true;
+                    break;
+                }
+            }
+
+
+
+            tries++
+
+            if (!overlaps) {
+                quest.x = x;
+                quest.y = y;
+                quest.rotation = (seededRandom(seed + 500) - 0.5) * 0.12;
+                break;
+            }
+        }
     })
 
     return quests
@@ -43,6 +75,9 @@ function seededRandom(seed) {
 
 
 export function drawQuestCard(ctx, quest) {
+    let yOffset = 0
+
+
     const width = 380 //FOR NOW ITS FIXED
     const padding = 20
     const seed = new Date(quest.created_at).getTime();
@@ -65,9 +100,14 @@ export function drawQuestCard(ctx, quest) {
         tagGap +
         20 +
         bottomPadding;
-    ctx.save()
 
-    ctx.translate(quest.x, quest.y)
+    quest.width = width;
+    quest.height = height;
+
+
+
+    ctx.save()
+    ctx.translate(quest.x, quest.y + yOffset)
     ctx.rotate(quest.rotation)
 
     ctx.fillStyle = "#F4E7BE"
@@ -77,10 +117,6 @@ export function drawQuestCard(ctx, quest) {
     ctx.shadowBlur = 12
     ctx.shadowOffsetX = 4
     ctx.shadowOffsetY = 5
-    ctx.fillStyle = "#F4E7BE"
-    ctx.fillRect(-width / 2, -height / 2, width, height)
-
-
     ctx.shadowColor = "transparent";
     ctx.shadowBlur = 0;
     ctx.shadowOffsetX = 0;

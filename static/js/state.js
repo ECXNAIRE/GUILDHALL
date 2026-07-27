@@ -4,5 +4,6 @@ export const state = {
     quests: [],
     isPanning: false,
     lastMouseX: 0,
-    lastMouseY: 0
+    lastMouseY: 0,
+    hoveredQuest: null
 }

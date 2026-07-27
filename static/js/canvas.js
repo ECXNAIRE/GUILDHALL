@@ -1,3 +1,5 @@
+import { camera } from "./camera.js"
+
 export const uiCanvas = document.getElementById("uiCanvas")
 export const uiCtx = uiCanvas.getContext("2d")
 
@@ -17,6 +19,11 @@ function resize() {
 
     worldCanvas.style.width = worldRect.width + "px";
     worldCanvas.style.height = worldRect.height + "px";
+
+
+    camera.x = worldCanvas.width / 2;
+    camera.y = worldCanvas.height / 2;
+
 
 
 

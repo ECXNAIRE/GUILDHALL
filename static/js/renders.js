@@ -17,10 +17,16 @@ export function renderWorld(worldCtx, worldCanvas) {
     worldCtx.translate(camera.x, camera.y);
     worldCtx.scale(camera.zoom, camera.zoom);
 
-    state.quests.forEach(quest => {
-        drawQuestCard(worldCtx, quest)
-    })
+    for (const quest of state.quests) {
+        if (quest !== state.hoveredQuest) {
+            drawQuestCard(worldCtx, quest)
+        }
+    }
 
+
+    if (state.hoveredQuest) {
+        drawQuestCard(worldCtx, state.hoveredQuest);
+    }
     worldCtx.restore();
 
 }
