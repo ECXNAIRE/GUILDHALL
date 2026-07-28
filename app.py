@@ -7,7 +7,7 @@ import requests
 from database.initDB import insertUser, getUser, getUserName
 from database.quest import saveQuest, getQuests
 import json
-
+from database.profile import saveProfile
 
 
 load_dotenv()
@@ -58,9 +58,10 @@ def googleCallback():
     provider = "google"
     avatar = user["picture"]
     providerID = user["sub"]
-
     insertUser(email, provider, providerID, avatar)
+
     userDetails = getUser(providerID)
+    saveProfile(userDetails["user_name"], userDetails["user_id"], "Add Bio", "Add Skills" ,"Add Github", "Add Discord", "Add LinkedIn", "Add email")
     session["userDetails"] = userDetails
 
 
@@ -143,4 +144,5 @@ def getQuest(guild):
 
 if (__name__) == "__main__":
     app.run(debug=True)
+
     
