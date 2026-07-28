@@ -4,5 +4,3 @@ export const camera = {
     zoom: 1
 }
 
-camera.x = worldCanvas.width / 2;
-camera.y = worldCanvas.height / 2;

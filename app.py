@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 from urllib.parse import urlencode
 import requests
-from database.initDB import insertUser, getUser
+from database.initDB import insertUser, getUser, getUserName
 from database.quest import saveQuest, getQuests
 import json
 
@@ -64,7 +64,7 @@ def googleCallback():
     session["userDetails"] = userDetails
 
 
-    print(email, provider, providerID)
+    print(email, provider, providerID, avatar)
 
 
     return redirect("/main")
@@ -121,7 +121,9 @@ def createQuest():
     guild = data["guild"]
     userID = data["userID"]
 
-    saveQuest(title, description, difficulty, tags, userID, guild)
+    username = getUserName(userID)
+
+    saveQuest(title, description, difficulty, tags, username, guild)
 
     return jsonify({
         "success": True

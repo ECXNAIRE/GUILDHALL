@@ -67,3 +67,17 @@ def getUser(providerID):
     return dict(user)
 
 
+
+
+def getUserName(userID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT user_name FROM users WHERE user_id = ? 
+    """, (userID))
+
+    username = cursor.fetchone()
+    conn.close()
+
+    return username
