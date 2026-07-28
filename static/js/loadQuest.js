@@ -13,9 +13,6 @@ export async function loadQuest(guild) {
 
     state.quests = questLayout(quests)
 
-    console.log(state.quests[0]);
-    console.log(state.quests[1]);
-
 }
 
 

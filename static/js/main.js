@@ -53,3 +53,12 @@ worldCanvas.addEventListener("wheel", (e) => {
     camera.x = mouseX - (mouseX - camera.x) * (camera.zoom / oldZoom);
     camera.y = mouseY - (mouseY - camera.y) * (camera.zoom / oldZoom);
 });
+
+
+
+
+const profileBtn = document.getElementById("openProfile")
+
+profileBtn.addEventListener("click",() => {
+    window.location.href = "/profilePage"
+})

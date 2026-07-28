@@ -19,6 +19,10 @@ def initTable():
     user_name TEXT,
     email TEXT,
     avatar TEXT,
+    bio TEXT,
+    skills TEXT,
+    discord TEXT,
+    linkedIn TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
@@ -42,9 +46,9 @@ def insertUser(email, provider, providerID, avatar):
         cursor = conn.cursor()
 
         cursor.execute("""
-        INSERT INTO users (email, provider, provider_id, user_id, avatar, user_name)
-        VALUES (?, ?, ?, ?, ?, ?)
-        """, (email, provider, providerID, userID, avatar, username))
+        INSERT INTO users (email, provider, provider_id, user_id, avatar, user_name, bio, skills, discord, linkedIN)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (email, provider, providerID, userID, avatar, username,"Add Bio", "Add Skills", "Add Discord", "Add LinkedIn"))
 
 
         conn.commit()

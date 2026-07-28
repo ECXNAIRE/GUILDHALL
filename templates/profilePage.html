@@ -200,15 +200,13 @@
             border-radius: 10px;
             cursor: pointer;
         }
-
     </style>
 </head>
 
 <body>
     <div id="profileEditArea">
         <div id="profilePic">
-            <img
-                src="https://lh3.googleusercontent.com/a/ACg8ocKtigmoRSURyutQh02oCh86L0hotrUxyZyoplW8oPp8qb0RNIYt=s96-c">
+            <img id="profileImg">
             <img id="editPfp" src="../static/images/editIcon.png">
         </div>
 
@@ -222,20 +220,49 @@
                 to use. Always exploring, always improving, and always ready for the next quest.</div>
 
 
-            <div id="userSkills">
+            <!-- <div id="userSkills">
                 <label>Skills:</label>
                 <input id="skillsSearch" type="text" placeholder="SEARCH SKILLS" ...>
                 <div id="skills-suggestions"></div>
                 <div id="selectedskills"></div>
+            </div> -->
+
+            <div id="userSkills">
+                <label>Skills:</label>
+                <div id="selectedSkills"></div>
             </div>
 
-            <div id="userSocials"></div>
+            <div id="userSocials">
+            </div>
         </div>
 
         <div id="buttonArea"></div>
     </div>
 
+    <script>
+        const userProfile ={{ userProfile | tojson | safe }}
+        const userName = document.getElementById("userName")
+        const useruserBio = document.getElementById("userBio")
+        // const skills = document.getElementById("skills")
+        const selectedskills = document.getElementById("selectedSkills")
+        const profileImg = document.getElementById("profileImg")
+        const savedSkills = ["java", "python", "ai"]
+
+        profileImg.src = userProfile.avatar
+        savedSkills.forEach(skill => {
+            const chip = document.createElement("div")
+            chip.className = "skill"
+            chip.textContent = skill
+            selectedskills.appendChild(chip)
+        });
+
+
+        userName.textContent = userProfile.user_name
+        useruserBio.textContent = userProfile.bio
+    </script>
+
     <script type="module" src="../static/js/profile.js"></script>
+
 </body>
 
 </html>

@@ -7,7 +7,6 @@ import requests
 from database.initDB import insertUser, getUser, getUserName
 from database.quest import saveQuest, getQuests
 import json
-from database.profile import saveProfile
 
 
 load_dotenv()
@@ -61,7 +60,6 @@ def googleCallback():
     insertUser(email, provider, providerID, avatar)
 
     userDetails = getUser(providerID)
-    saveProfile(userDetails["user_name"], userDetails["user_id"], "Add Bio", "Add Skills" ,"Add Github", "Add Discord", "Add LinkedIn", "Add email")
     session["userDetails"] = userDetails
 
 
@@ -93,9 +91,6 @@ def githubCallback():
 
 
     return redirect("/main")
-
-
-
 
 
 @app.route('/main')
@@ -138,6 +133,21 @@ def getQuest(guild):
     quests = getQuests(guild)
 
     return jsonify(quests)
+
+
+@app.route("/profilePage", methods = ['GET', 'POST'])
+def profilePage():
+    if "userDetails" not in session:
+        return redirect("/")
+    userDetails = session["userDetails"]
+
+    return render_template(
+        "profilePage.html",
+        userProfile=userDetails
+        )
+
+
+
 
 
 
