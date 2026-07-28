@@ -28,21 +28,25 @@
             overflow-y: auto;
         }
 
-        body::-webkit-scrollbar {
+        body::-webkit-scrollbar,
+        #profileEditContainer::-webkit-scrollbar {
             width: 6px;
         }
 
-        body::-webkit-scrollbar-track {
+        body::-webkit-scrollbar-track,
+        #profileEditContainer::-webkit-scrollbar-track {
             background: #D8C08F;
             border-radius: 10px;
         }
 
-        body::-webkit-scrollbar-thumb {
+        body::-webkit-scrollbar-thumb,
+        #profileEditContainer::-webkit-scrollbar-thumb {
             background: #7A4F25;
             border-radius: 10px;
         }
 
-        body::-webkit-scrollbar-thumb:hover {
+        body::-webkit-scrollbar-thumb:hover,
+        #profileEditContainer::-webkit-scrollbar-thumb:hover {
             background: #5E3B1A;
         }
 
@@ -51,7 +55,7 @@
             background: #EAD7AE;
         }
 
-        #profileEditArea {
+        #profileDisplayArea {
             width: 100%;
             height: 100%;
         }
@@ -190,6 +194,13 @@
             margin-top: 20px;
         }
 
+        #selectedSkillsDisplay {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
         .skill {
             background: #9B6A32;
             color: #F2DFC0;
@@ -200,11 +211,79 @@
             border-radius: 10px;
             cursor: pointer;
         }
+
+
+        #profileEditPopup {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 760px;
+            height: 500px;
+            background: white;
+            border-top: 4px solid #D8B46A;
+            border-left: 4px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
+            border-radius: 12px;
+            z-index: 40;
+            background: #EAD7AE;
+            display: block;
+            flex-shrink: 0;
+            flex-direction: column;
+            gap: 50px;
+            overflow-y: hidden;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
+        #profileEditContainer {
+            height: 100%;
+            width: 100%;
+            overflow-y: auto;
+            padding-right: 10px;
+            display: flex;
+            flex-shrink: 0;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+            gap: 20px;
+
+        }
+
+        #profileEditContainer label {
+            color: #5E3B1A;
+            font-weight: 700;
+        }
+
+        #userNameEdit {
+            width: 25%;
+            height: 45px;
+            background: transparent;
+            border: 2px solid #d1bb8ece;
+            border-radius: 10px;
+            padding: 10px
+        }
+
+        #userNameEdit:focus,
+        #userBioEdit:focus {
+            outline: none;
+        }
+
+        #userBioEdit {
+            width: 100%;
+            height: 150px;
+            background: transparent;
+            border: 2px solid #d1bb8ece;
+            border-radius: 10px;
+            padding: 10px;
+            resize: none;
+        }
     </style>
 </head>
 
 <body>
-    <div id="profileEditArea">
+    <div id="profileDisplayArea">
         <div id="profilePic">
             <img id="profileImg">
             <img id="editPfp" src="../static/images/editIcon.png">
@@ -213,23 +292,15 @@
         <div id="userName">UserName</div>
 
         <div id="userInfo">
-            <label>Description:</label>
             <div id="userBio">Passionate developer who enjoys turning ideas into polished, functional projects. I love
                 solving challenging problems, learning new technologies, and crafting clean, intuitive user experiences.
                 From frontend design to backend logic, I strive to build software that's fast, reliable, and enjoyable
                 to use. Always exploring, always improving, and always ready for the next quest.</div>
 
 
-            <!-- <div id="userSkills">
-                <label>Skills:</label>
-                <input id="skillsSearch" type="text" placeholder="SEARCH SKILLS" ...>
-                <div id="skills-suggestions"></div>
-                <div id="selectedskills"></div>
-            </div> -->
-
             <div id="userSkills">
                 <label>Skills:</label>
-                <div id="selectedSkills"></div>
+                <div id="selectedSkillsDisplay"></div>
             </div>
 
             <div id="userSocials">
@@ -239,16 +310,65 @@
         <div id="buttonArea"></div>
     </div>
 
+    <div id="profileEditPopup">
+        <div id="profileEditContainer">
+            <div>
+                <label>Edit Username: </label>
+                <input id="userNameEdit" type="text" maxlength="20">
+            </div>
+
+            <div>
+                <label>Edit Bio: </label>
+                <textarea id="userBioEdit" maxlength="500"></textarea>
+            </div>
+
+            <div id="userSkills">
+                <label>Skills:</label>
+                <input id="skillsSearch" type="text" placeholder="SEARCH SKILLS" ...>
+                <div id="skills-suggestions"></div>
+                <div id="selectedskills"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        const userProfile ={{ userProfile | tojson | safe }}
+        const userProfile = {{ userProfile | tojson | safe }}
         const userName = document.getElementById("userName")
-        const useruserBio = document.getElementById("userBio")
+        const userBio = document.getElementById("userBio")
         // const skills = document.getElementById("skills")
         const selectedskills = document.getElementById("selectedSkills")
         const profileImg = document.getElementById("profileImg")
         const savedSkills = ["java", "python", "ai"]
+        const selectedSkillsDisplay = document.getElementById("selectedSkillsDisplay")
 
         profileImg.src = userProfile.avatar
+
+
+
+        userName.textContent = userProfile.user_name
+        if (!userProfile.bio) {
+            userBio.style.display = "none"
+
+        } else {
+            userBio.textContent = userProfile.bio
+        }
+        if (!userProfile.skills) {
+            selectedSkillsDisplay.style.display = "none"
+        } else {
+            savedSkills.forEach(skill => {
+                const chip = document.createElement("div")
+                chip.className = "skill"
+                chip.textContent = skill
+                selectedSkillsDisplay.appendChild(chip)
+            });
+        }
+
+
+
+
+        const userNameEdit = document.getElementById("userNameEdit").value = userProfile.user_name
+        const userBioEdit = document.getElementById("userBioEdit").textContent = userProfile.bio
+
         savedSkills.forEach(skill => {
             const chip = document.createElement("div")
             chip.className = "skill"
@@ -257,8 +377,9 @@
         });
 
 
-        userName.textContent = userProfile.user_name
-        useruserBio.textContent = userProfile.bio
+
+
+
     </script>
 
     <script type="module" src="../static/js/profile.js"></script>
