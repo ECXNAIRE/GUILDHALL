@@ -27,6 +27,7 @@
             overflow-x: hidden;
             overflow-y: auto;
         }
+
         body::-webkit-scrollbar {
             width: 6px;
         }
@@ -41,7 +42,7 @@
             border-radius: 10px;
         }
 
-        body::-webkit-scrollbar-thumb:hover{
+        body::-webkit-scrollbar-thumb:hover {
             background: #5E3B1A;
         }
 
@@ -138,10 +139,10 @@
         }
 
         #userSkills label {
-            color:black ;
+            color: black;
         }
 
-         #skillsSearch {
+        #skillsSearch {
             width: 320px;
             height: 40px;
             border: 2px solid #d1bb8ece;
@@ -166,6 +167,40 @@
             flex-wrap: wrap;
             margin-top: 20px;
         }
+
+        #skills-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .suggestions {
+            padding: 8px 14px;
+            border: 1px solid #d1bb8ece;
+            color: #5E3B1A;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        #selectedSkills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .skill {
+            background: #9B6A32;
+            color: #F2DFC0;
+            padding: 6px 12px;
+            display: inline-flex;
+            align-items: center;
+            border: 2px solid #6F4721;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 
@@ -193,11 +228,14 @@
                 <div id="skills-suggestions"></div>
                 <div id="selectedskills"></div>
             </div>
+
             <div id="userSocials"></div>
         </div>
 
         <div id="buttonArea"></div>
     </div>
+
+    <script type="module" src="../static/js/profile.js"></script>
 </body>
 
 </html>
