@@ -1,5 +1,5 @@
 import sqlite3
-
+from helpers.questID import generateQuestId
 
 def createQuestTable():
     conn = sqlite3.connect("database/database.db")
@@ -7,12 +7,14 @@ def createQuestTable():
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS quests (
+    quest_id TEXT UNIQUE,
     title TEXT,
     description TEXT,
     difficulty TEXT,
     tags TEXT,
     guild TEXT,
     creator TEXT,
+    creator_id TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
 
@@ -23,15 +25,16 @@ def createQuestTable():
     conn.close()
 
 
-def saveQuest(title, description, difficulty, tags, creator, guild):
+def saveQuest(title, description, difficulty, tags, creator, guild, userID):
     createQuestTable()
+    quest_id = generateQuestId()
     conn = sqlite3.connect("database/database.db")
     cursor = conn.cursor()
 
     cursor.execute(""" 
-    INSERT INTO quests (title, description, difficulty, tags, creator, guild)
-    VALUES (?, ?, ?, ?, ?, ?)
-    """, (title, description, difficulty, tags, creator, guild))
+    INSERT INTO quests (quest_id, title, description, difficulty, tags, creator, guild, creator_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """, (quest_id, title, description, difficulty, tags, creator, guild, userID))
 
     conn.commit()
     conn.close()
@@ -53,5 +56,4 @@ def getQuests(guild):
     conn.close()
 
     return quest
-
 

@@ -80,12 +80,12 @@ def getUserName(userID):
 
     cursor.execute("""
     SELECT user_name FROM users WHERE user_id = ? 
-    """, (userID))
+    """, (userID,))
 
     username = cursor.fetchone()
     conn.close()
 
-    return username
+    return username[0]
 
 
 

@@ -7,7 +7,7 @@ import requests
 from database.initDB import insertUser, getUser, getUserName, updateProfile
 from database.quest import saveQuest, getQuests
 import json
-
+from database.pledges import savePledges
 
 
 load_dotenv()
@@ -98,7 +98,6 @@ def mainPage():
 
     providerID = session["userDetails"]["provider_id"]
     userDetails = getUser(providerID)
-    print(userDetails)
 
     return render_template(
         "mainPage.html",
@@ -120,7 +119,8 @@ def createQuest():
 
     username = getUserName(userID)
 
-    saveQuest(title, description, difficulty, tags, username, guild)
+    saveQuest(title, description, difficulty, tags, username, guild, userID)
+    print(title, description, difficulty, tags, username, guild)
 
     return jsonify({
         "success": True
@@ -171,6 +171,19 @@ def profilePage():
 
 
 
+
+@app.route("/pledges", methods=["POST"])
+def pledges():
+    if request.method == "POST":
+        data = request.get_json()
+
+        questID = data["questID"]
+        pledgerID = data["pledgerID"]
+        masterID = data["masterID"]
+
+        savePledges(masterID, pledgerID, questID)
+
+        return "OK"
 
 
 

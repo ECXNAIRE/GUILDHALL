@@ -88,6 +88,7 @@ overlay.addEventListener("click", () => {
     questPopup.style.display = "none";
     overlay.style.display = "none";
     displayPopup.style.display = "none"
+    pledgePopup.style.display = "none"
 
 });
 
@@ -107,7 +108,7 @@ document.querySelectorAll(".difficultyBtn").forEach(button => {
 
 
 
-document.getElementById("confirmBtn").addEventListener("click", async() => {
+document.getElementById("confirmBtn").addEventListener("click", async () => {
     const titleValue = document.getElementById("titleTextArea").value
     const descriptionValue = document.getElementById("descriptionTextArea").value
     const userID = document.getElementById("userID").textContent
@@ -128,8 +129,10 @@ document.getElementById("confirmBtn").addEventListener("click", async() => {
         })
     })
 
+    questPopup.style.display = "none"
+    overlay.style.display = "none"
+    window.location.reload()
     const data = await response.json()
-    console.log(data)
 })
 
 
@@ -140,6 +143,38 @@ const pledgePopup = document.getElementById("pledgePopup")
 document.getElementById("acceptBtn").addEventListener("click", () => {
     questDisplayPopup.style.display = "none"
     pledgePopup.style.display = "block"
+})
+
+
+const cancelPledge = document.getElementById("cancelPledge")
+const confirmPledge = document.getElementById("confirmPledge")
+
+cancelPledge.addEventListener("click", () => {
+    questDisplayPopup.style.display = "none"
+    pledgePopup.style.display = "block"
+    overlay.style.display = "none"
+})
+
+confirmPledge.addEventListener("click", async () => {
+    questDisplayPopup.style.display = "none"
+    pledgePopup.style.display = "none"
+    overlay.style.display = "none"
+    const questId = state.selectedQuest.quest_id
+    const pledgerID = document.getElementById("userID").textContent
+    const masterID = state.selectedQuest.creator_id
+
+
+    const response = await fetch("/pledges", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            questID: questId,
+            pledgerID: pledgerID,
+            masterID: masterID
+        })
+    })
 })
 
 

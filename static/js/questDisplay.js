@@ -8,6 +8,7 @@ const difficultyDisplayid = document.getElementById("difficultyDisplayid")
 const tagBoxDisplay = document.getElementById("tagBoxDisplay")
 const createdOn = document.getElementById("createdOn")
 const createdBy = document.getElementById("createdBy")
+const questId = document.getElementById("questId")
 
 export function displayQuest(quest) {
     if (state.selectedQuest) {
@@ -16,6 +17,7 @@ export function displayQuest(quest) {
         difficultyDisplayid.textContent = state.selectedQuest.difficulty
         createdBy.textContent = `Posted by: ${state.selectedQuest.creator}`
         createdOn.textContent = `Posted on: ${state.selectedQuest.created_at}`
+        questId.textContent =`QUEST ID: ${state.selectedQuest.quest_id}`
         tagBoxDisplay.innerHTML = "";
         state.selectedQuest.tags.forEach(tag => {
             const tagDiv = document.createElement("div");
