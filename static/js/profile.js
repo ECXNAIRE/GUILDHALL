@@ -23,7 +23,10 @@ const allSkills = [
 ]
 
 
-let selectedSkills = []
+let selectedSkills = [...window.savedSkills]
+renderSelectedSkills()
+renderSuggestions()
+
 function renderSuggestions() {
     suggestionBox.innerHTML = ""
 
@@ -73,9 +76,3 @@ skillsSearch.addEventListener("input", renderSuggestions)
 
 
 /// PROFILE DATAA
-const userProfile = JSON.parse('{{ userProfile | tojson | safe }}');
-const userName = document.getElementById("userName")
-const useruserBio = document.getElementById("userBio")
-
-userName.textContent = userProfile.user_name
-useruserBio.textContent = userProfile.bio

@@ -137,6 +137,21 @@ def getQuest(guild):
 
 @app.route("/profilePage", methods = ['GET', 'POST'])
 def profilePage():
+    if request.method == "POST":
+
+        data = request.get_json()
+
+        print(data)
+
+        username = data["username"]
+        bio = data["userBio"]
+        github = data["github"]
+        linkedIn = data["linkedIn"]
+        discord = data["discord"]
+
+        return jsonify({"success": True})
+
+
     if "userDetails" not in session:
         return redirect("/")
     userDetails = session["userDetails"]

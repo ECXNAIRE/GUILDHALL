@@ -135,7 +135,7 @@
 
         #userSkills {
             width: 100%;
-            height: 200px;
+            min-height: 80px;
             border: 2px solid #9a6a3200;
             color: #7A4E1F;
             border-radius: 12px;
@@ -157,7 +157,24 @@
             font-size: 12px;
         }
 
-        #skillsSearch:focus {
+        #githubInput,
+        #linkedInInput,
+        #discordInput {
+            width: 500px;
+            height: 40px;
+            border: 2px solid #d1bb8ece;
+            border-radius: 10px;
+            background: transparent;
+            padding: 0 12px;
+            color: #5E3B1A;
+            font-size: 12px;
+            flex: 1;
+        }
+
+        #skillsSearch:focus,
+        #githubInput:focus,
+        #linkedInInput:focus,
+        #discordInput:focus {
             outline: none;
         }
 
@@ -214,7 +231,7 @@
 
 
         #profileEditPopup {
-            position: absolute;
+            position: fixed;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
@@ -279,6 +296,50 @@
             padding: 10px;
             resize: none;
         }
+
+        #overlay {
+            z-index: 35;
+            position: fixed;
+            inset: 0;
+            background: #26170c;
+            opacity: 0.5;
+            display: block;
+        }
+
+        #userSocialsDisplay {
+            display: flex;
+            flex-direction: column;
+            gap: 20px
+        }
+
+        .socialClass {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #saveBtnArea {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        #saveBtn {
+            width: 150px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border-top: 2px solid #D8B46A;
+            border-left: 2px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
+            background: #9B6A32;
+            color: #F2DFC0;
+            transition: all 0.1s ease;
+            font-weight: 600;
+        }
     </style>
 </head>
 
@@ -310,6 +371,8 @@
         <div id="buttonArea"></div>
     </div>
 
+    <div id="overlay"></div>
+
     <div id="profileEditPopup">
         <div id="profileEditContainer">
             <div>
@@ -322,11 +385,30 @@
                 <textarea id="userBioEdit" maxlength="500"></textarea>
             </div>
 
-            <div id="userSkills">
+            <div id="userSkillsDisplay">
                 <label>Skills:</label>
                 <input id="skillsSearch" type="text" placeholder="SEARCH SKILLS" ...>
                 <div id="skills-suggestions"></div>
                 <div id="selectedskills"></div>
+            </div>
+
+            <div id="userSocialsDisplay">
+                <div class="socialsClass">
+                    <label>Add Github: </label>
+                    <input id="githubInput">
+                </div>
+                <div class="socialsClass">
+                    <label>Add LinedIn: </label>
+                    <input id="linkedInInput">
+                </div>
+                <div class="socialsClass">
+                    <label>Add Discord: </label>
+                    <input id="discordInput">
+                </div>
+            </div>
+
+            <div id="saveBtnArea">
+                <button id="saveBtn">SAVE CAHNGES</button>
             </div>
         </div>
     </div>
@@ -336,12 +418,11 @@
         const userName = document.getElementById("userName")
         const userBio = document.getElementById("userBio")
         // const skills = document.getElementById("skills")
-        const selectedskills = document.getElementById("selectedSkills")
         const profileImg = document.getElementById("profileImg")
         const savedSkills = ["java", "python", "ai"]
         const selectedSkillsDisplay = document.getElementById("selectedSkillsDisplay")
-
         profileImg.src = userProfile.avatar
+        
 
 
 
@@ -366,20 +447,58 @@
 
 
 
-        const userNameEdit = document.getElementById("userNameEdit").value = userProfile.user_name
-        const userBioEdit = document.getElementById("userBioEdit").textContent = userProfile.bio
+        const userNameEdit = document.getElementById("userNameEdit")
+        const userBioEdit = document.getElementById("userBioEdit")
+        const githubInput = document.getElementById("githubInput")
+        const linkedInInput = document.getElementById("linkedInInput")
+        const discordInput = document.getElementById("discordInput")
+        const profileEditPopup = document.getElementById("profileEditPopup")
+        const overlay = document.getElementById("overlay")
 
-        savedSkills.forEach(skill => {
-            const chip = document.createElement("div")
-            chip.className = "skill"
-            chip.textContent = skill
-            selectedskills.appendChild(chip)
-        });
+        userNameEdit.value = userProfile.user_name
+        userBioEdit.textContent = userProfile.bio
+        githubInput.value = userProfile.github
+        linkedInInput.value = userProfile.linkedIn
+        discordInput.value = userProfile.discord
+
+
+        const saveBtn = document.getElementById("saveBtn")
+
+        saveBtn.addEventListener("click", async () => {
+            const profileData = {
+                username: userNameEdit.value,
+                userBio: userBioEdit.value,
+                github: githubInput.value,
+                linkedIn: linkedInInput.value,
+                discord: discordInput.value,
+            }
+
+            const response = await fetch("/profilePage", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(profileData)
+            })
+
+            const result = await response.json()
+
+            if(result.success) {
+                profileEditPopup.style.display = "none"
+                overlay.style.display = "none"
+            } else {
+                alert("Failed to save profile")
+            }
+            profileEditPopup.style.display = "none"
+        })
 
 
 
 
 
+    </script>
+    <script>
+        window.savedSkills = ["java", "python", "ai"];
     </script>
 
     <script type="module" src="../static/js/profile.js"></script>
