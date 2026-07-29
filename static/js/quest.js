@@ -135,6 +135,14 @@ document.getElementById("confirmBtn").addEventListener("click", async() => {
 
 
 
+const questDisplayPopup = document.getElementById("questDisplayPopup")
+const pledgePopup = document.getElementById("pledgePopup")
+document.getElementById("acceptBtn").addEventListener("click", () => {
+    questDisplayPopup.style.display = "none"
+    pledgePopup.style.display = "block"
+})
+
+
 
 
 

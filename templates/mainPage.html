@@ -631,7 +631,7 @@
         }
 
         #creation {
-            display:flex;
+            display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: center;
@@ -653,6 +653,56 @@
             justify-content: flex-end;
             color: #9B6A32;
             font-size: 12px;
+        }
+
+        #pledgePopup {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 520px;
+            background: #EAD7AE;
+            border-top: 4px solid #D8B46A;
+            border-left: 4px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
+            border-radius: 12px;
+            padding: 28px;
+            display: none;
+            z-index: 91;
+        }
+
+        #pledgeTitle {
+            font-size: 28px;
+            color: #5E3B1A;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        #pledgeText {
+            color: #6C4A24;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        #pledgeButtons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 14px;
+        }
+
+        #cancelPledge,
+        #confirmPledge {
+            width: 130px;
+            height: 42px;
+            border-radius: 10px;
+            border-top: 2px solid #D8B46A;
+            border-left: 2px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
+            background: #9B6A32;
+            color: #F2DFC0;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -744,24 +794,10 @@
             </div>
             <div id="titleDisplay">Build a Medieval Guild Hall Website with Canvas, Animations, and Quest Boards
             </div>
-            <div id="descriptionDisplay">The Forge has received word of a neglected project that must be restored to
-                glory. Your task is to design and build a fully functional medieval-inspired quest board where
-                adventurers can browse, accept, and complete quests. Focus on clean architecture, polished interactions,
-                smooth animations, and immersive visuals. Deliver a finished system worthy of display in the Guild Hall.
-                Every detail matters—craftsmanship will be judged by the Guild Masters.</div>
+            <div id="descriptionDisplay"></div>
 
             <div id="tagBoxDisplay">
                 <label>TAGS:</label>
-                <div class="tagDisplay">TAG 1</div>
-                <div class="tagDisplay">TAG 1</div>
-                <div class="tagDisplay">TAG 1</div>
-                <div class="tagDisplay">TAG 1</div>
-                <div class="tagDisplay">TAG 1</div>
-                <div class="tagDisplay">TAG 1</div>
-                <div class="tagDisplay">TAG 1</div>
-                <div class="tagDisplay">TAG 1</div>
-                <div class="tagDisplay">TAG 1</div>
-                <div class="tagDisplay">TAG 1</div>
             </div>
 
             <div id="difficultyLevelDisplay">
@@ -770,14 +806,34 @@
             </div>
 
             <div id="AcceptBtnAreaa">
-                <button id="acceptBtn">ACCEPT</button>
+                <button id="acceptBtn">PLEDGE</button>
             </div>
+        </div>
+    </div>
+
+
+
+    <div id="pledgePopup">
+        <div id="pledgeTitle">Pledge Quest</div>
+        <div id="pledgeText">
+            Do you wish to pledge yourself to this quest?
+
+            <br><br>
+
+            Your pledge will be sent to the Quest Master for approval.
+            Until then, the quest will remain available to other adventurers.
+        </div>
+
+        <div id="pledgeButtons">
+            <button id="cancelPledge">CANCEL</button>
+            <button id="confirmPledge">CONFIRM</button>
         </div>
     </div>
 
     <script type="module" src="../static//js/main.js"></script>
     <script>
-        const user = JSON.parse('{{ user | tojson | safe }}');
+        const user = {{ user | tojson | safe }};
+
         document.getElementById("profilepic").src = user.avatar;
         document.getElementById("userID").textContent = user.user_id
         document.getElementById("alias").textContent = user.user_name

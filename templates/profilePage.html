@@ -78,20 +78,6 @@
             border-radius: 12px;
         }
 
-        #editPfp {
-            position: absolute;
-            width: 42px;
-            height: 42px;
-            right: -8px;
-            bottom: -8px;
-            border-radius: 50%;
-            background: linear-gradient(180deg, #D8B56C 0%, #B8873A 100%);
-            border: 2px solid #5B3A1B;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, .35);
-            padding: 6px;
-            cursor: pointer;
-        }
-
         #userInfo {
             position: absolute;
             top: 300px;
@@ -288,6 +274,11 @@
             outline: none;
         }
 
+        #bioContainer {
+            position: relative;
+            width: 100%;
+        }
+
         #userBioEdit {
             width: 100%;
             height: 150px;
@@ -296,6 +287,15 @@
             border-radius: 10px;
             padding: 10px;
             resize: none;
+        }
+
+        #bioCounter {
+            position: absolute;
+            right: 12px;
+            bottom: 10px;
+            font-size: 11px;
+            color: #8A6A45;
+            pointer-events: none;
         }
 
         #overlay {
@@ -310,12 +310,20 @@
         #userSocialsDisplay {
             display: flex;
             flex-direction: column;
+            gap: 12px
+        }
+
+        .socialsClass {
+            display: flex;
+            align-items: center;
             gap: 20px
         }
 
-        .socialClass {
-            display: flex;
-            flex-direction: row;
+        .socialsClass label {
+            width: 90px;
+            flex-shrink: 0;
+            font-weight: 700;
+            color: #5E3B1A
         }
 
         #saveBtnArea,
@@ -347,15 +355,26 @@
         #githubDisplay,
         #linkedInDisplay,
         #discordDisplay {
-            width: 500px;
-            height: 40px;
-            border: 2px solid #d1bb8ece;
+            width: 350px;
+            min-height: 42px;
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            border: 2px solid #D1BB8E;
             border-radius: 10px;
-            background: transparent;
-            padding: 0 12px;
+            background: #F3E5BE;
             color: #5E3B1A;
-            font-size: 12px;
-            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        #userSocials {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 550px;
         }
     </style>
 </head>
@@ -364,7 +383,6 @@
     <div id="profileDisplayArea">
         <div id="profilePic">
             <img id="profileImg">
-            <img id="editPfp" src="../static/images/editIcon.png">
         </div>
 
         <div id="userName"></div>
@@ -410,12 +428,15 @@
         <div id="profileEditContainer">
             <div>
                 <label>Edit Username: </label>
-                <input id="userNameEdit" type="text" maxlength="20">
+                <input id="userNameEdit" type="text" maxlength="10">
             </div>
 
             <div>
                 <label>Edit Bio: </label>
-                <textarea id="userBioEdit" maxlength="500"></textarea>
+                <div id="bioContainer">
+                    <textarea id="userBioEdit" maxlength="500"></textarea>
+                    <div id="bioCounter">0 / 500</div>
+                </div>
             </div>
 
             <div id="userSkillsDisplay">
@@ -427,15 +448,15 @@
 
             <div id="userSocialsDisplay">
                 <div class="socialsClass">
-                    <label>Add Github: </label>
+                    <label>Github: </label>
                     <input id="githubInput">
                 </div>
                 <div class="socialsClass">
-                    <label>Add LinedIn: </label>
+                    <label>LinkedIn: </label>
                     <input id="linkedInInput">
                 </div>
                 <div class="socialsClass">
-                    <label>Add Discord: </label>
+                    <label>Discord: </label>
                     <input id="discordInput">
                 </div>
             </div>
@@ -532,6 +553,15 @@
         const profileEditPopup = document.getElementById("profileEditPopup")
         const overlay = document.getElementById("overlay")
         const editProfile = document.getElementById("editProfile")
+        const bioCounter = document.getElementById("bioCounter")
+
+        function updateBioCounter() {
+            bioCounter.textContent = `${userBioEdit.value.length} / 500`;
+        }
+
+        updateBioCounter();
+        userBioEdit.addEventListener("input", updateBioCounter);
+
 
         editProfile.addEventListener("click", () => {
             profileEditPopup.style.display = "block"
@@ -545,6 +575,7 @@
 
         userNameEdit.value = userProfile.user_name
         userBioEdit.textContent = userProfile.bio
+        updateBioCounter();
         githubInput.value = userProfile.github
         linkedInInput.value = userProfile.linkedIn
         discordInput.value = userProfile.discord
@@ -582,8 +613,6 @@
             }
             profileEditPopup.style.display = "none"
         })
-
-
 
 
 

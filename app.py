@@ -64,9 +64,6 @@ def googleCallback():
     session["userDetails"] = userDetails
 
 
-    print(email, provider, providerID, avatar)
-
-
     return redirect("/main")
 
 
@@ -98,7 +95,10 @@ def githubCallback():
 def mainPage():
     if "userDetails" not in session:
         return redirect("/")
-    userDetails = session["userDetails"]
+
+    providerID = session["userDetails"]["provider_id"]
+    userDetails = getUser(providerID)
+    print(userDetails)
 
     return render_template(
         "mainPage.html",
