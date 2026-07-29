@@ -23,6 +23,7 @@ def initTable():
     skills TEXT,
     discord TEXT,
     linkedIn TEXT,
+    github TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
@@ -46,9 +47,9 @@ def insertUser(email, provider, providerID, avatar):
         cursor = conn.cursor()
 
         cursor.execute("""
-        INSERT INTO users (email, provider, provider_id, user_id, avatar, user_name, bio, skills, discord, linkedIN)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (email, provider, providerID, userID, avatar, username,"Add Bio", "Add Skills", "Add Discord", "Add LinkedIn"))
+        INSERT INTO users (email, provider, provider_id, user_id, avatar, user_name)
+        VALUES (?, ?, ?, ?, ?, ?)
+        """, (email, provider, providerID, userID, avatar, username))
 
 
         conn.commit()
@@ -85,3 +86,20 @@ def getUserName(userID):
     conn.close()
 
     return username
+
+
+
+
+
+def updateProfile(username, bio, skills, discord, linkedIn, github, userId):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    UPDATE users SET user_name = ?, bio = ?, skills = ?, discord = ?, linkedIn = ?, github = ?
+    WHERE user_id = ?
+    """, (username, bio, skills, discord, linkedIn, github, userId))
+
+
+    conn.commit()
+    conn.close()

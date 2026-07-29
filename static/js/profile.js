@@ -23,11 +23,11 @@ const allSkills = [
 ]
 
 
-let selectedSkills = [...window.savedSkills]
+export let selectedSkills = []
 renderSelectedSkills()
 renderSuggestions()
 
-function renderSuggestions() {
+export function renderSuggestions() {
     suggestionBox.innerHTML = ""
 
     const search = skillsSearch.value.toLocaleLowerCase()
@@ -53,7 +53,7 @@ function renderSuggestions() {
 renderSuggestions()
 
 
-function renderSelectedSkills() {
+export function renderSelectedSkills() {
     selectedBox.innerHTML = ""
 
     selectedSkills.forEach(skill => {

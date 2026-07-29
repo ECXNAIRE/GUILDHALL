@@ -4,9 +4,10 @@ from dotenv import load_dotenv
 import os
 from urllib.parse import urlencode
 import requests
-from database.initDB import insertUser, getUser, getUserName
+from database.initDB import insertUser, getUser, getUserName, updateProfile
 from database.quest import saveQuest, getQuests
 import json
+
 
 
 load_dotenv()
@@ -140,21 +141,27 @@ def profilePage():
     if request.method == "POST":
 
         data = request.get_json()
-
-        print(data)
-
         username = data["username"]
         bio = data["userBio"]
         github = data["github"]
         linkedIn = data["linkedIn"]
         discord = data["discord"]
+        skills = json.dumps(data["skills"])
+
+        userId = session["userDetails"]["user_id"]
+
+        updateProfile(username, bio, skills, discord, linkedIn, github, userId, )
 
         return jsonify({"success": True})
 
 
     if "userDetails" not in session:
         return redirect("/")
-    userDetails = session["userDetails"]
+
+    providerId = session["userDetails"]["provider_id"]
+    userDetails = getUser(providerId)
+
+
 
     return render_template(
         "profilePage.html",

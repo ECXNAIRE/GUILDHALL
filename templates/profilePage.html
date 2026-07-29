@@ -98,7 +98,7 @@
             left: 50%;
             transform: translateX(-50%);
             width: 700px;
-            gap: 20px;
+            gap: 50px;
             height: 400px;
             display: flex;
             flex-direction: column;
@@ -116,10 +116,11 @@
             width: 300px;
             height: 45px;
             font-size: 20px;
-            border: 2px solid #9A6A32;
+            border: 2px solid #9a6a3200;
             border-radius: 10px;
             display: flex;
             align-items: center;
+            justify-content: center;
             padding: 10px;
             color: #7A4E1F
         }
@@ -245,7 +246,7 @@
             border-radius: 12px;
             z-index: 40;
             background: #EAD7AE;
-            display: block;
+            display: none;
             flex-shrink: 0;
             flex-direction: column;
             gap: 50px;
@@ -303,7 +304,7 @@
             inset: 0;
             background: #26170c;
             opacity: 0.5;
-            display: block;
+            display: none;
         }
 
         #userSocialsDisplay {
@@ -317,14 +318,16 @@
             flex-direction: row;
         }
 
-        #saveBtnArea {
+        #saveBtnArea,
+        #buttonArea {
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: flex-end;
         }
 
-        #saveBtn {
+        #saveBtn,
+        #editProfile {
             width: 150px;
             height: 40px;
             display: flex;
@@ -340,6 +343,20 @@
             transition: all 0.1s ease;
             font-weight: 600;
         }
+
+        #githubDisplay,
+        #linkedInDisplay,
+        #discordDisplay {
+            width: 500px;
+            height: 40px;
+            border: 2px solid #d1bb8ece;
+            border-radius: 10px;
+            background: transparent;
+            padding: 0 12px;
+            color: #5E3B1A;
+            font-size: 12px;
+            flex: 1;
+        }
     </style>
 </head>
 
@@ -350,7 +367,7 @@
             <img id="editPfp" src="../static/images/editIcon.png">
         </div>
 
-        <div id="userName">UserName</div>
+        <div id="userName"></div>
 
         <div id="userInfo">
             <div id="userBio">Passionate developer who enjoys turning ideas into polished, functional projects. I love
@@ -365,10 +382,26 @@
             </div>
 
             <div id="userSocials">
+                <div class="socialsClass" id="githubDisplayArea">
+                    <label>Github: </label>
+                    <div id="githubDisplay">
+                    </div>
+                </div>
+                <div class="socialsClass" id="linkedInDisplayArea">
+                    <label>LinkedIn: </label>
+                    <div id="linkedInDisplay">
+                    </div>
+                </div>
+                <div class="socialsClass" id="discordDisplayArea">
+                    <label>Discord: </label>
+                    <div id="discordDisplay">
+                    </div>
+                </div>
+            </div>
+            <div id="buttonArea">
+                <button id="editProfile">EDIT PROFILE</button>
             </div>
         </div>
-
-        <div id="buttonArea"></div>
     </div>
 
     <div id="overlay"></div>
@@ -413,16 +446,51 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { selectedSkills, renderSuggestions, renderSelectedSkills } from "../static/js/profile.js"
+
+
         const userProfile = {{ userProfile | tojson | safe }}
         const userName = document.getElementById("userName")
         const userBio = document.getElementById("userBio")
         // const skills = document.getElementById("skills")
         const profileImg = document.getElementById("profileImg")
-        const savedSkills = ["java", "python", "ai"]
         const selectedSkillsDisplay = document.getElementById("selectedSkillsDisplay")
         profileImg.src = userProfile.avatar
-        
+
+
+        const userSkills = document.getElementById("userSkills")
+
+        const githubDisplay = document.getElementById("githubDisplay")
+        const linkedInDisplay = document.getElementById("linkedInDisplay")
+        const discordDisplay = document.getElementById("discordDisplay")
+
+        const githubDisplayArea = document.getElementById("githubDisplayArea")
+        const linkedInDisplayArea = document.getElementById("linkedInDisplayArea")
+        const discordDisplayArea = document.getElementById("discordDisplayArea")
+
+
+
+
+        if (!userProfile.github) {
+            githubDisplayArea.style.display = "none"
+        } else {
+            githubDisplay.textContent = userProfile.github
+        }
+
+        if (!userProfile.linkedIn) {
+            linkedInDisplayArea.style.display = "none"
+        } else {
+            linkedInDisplay.textContent = userProfile.linkedIn
+        }
+
+        if (!userProfile.discord) {
+            discordDisplayArea.style.display = "none"
+        } else {
+            discordDisplay.textContent = userProfile.discord
+        }
+
+
 
 
 
@@ -433,10 +501,19 @@
         } else {
             userBio.textContent = userProfile.bio
         }
+
         if (!userProfile.skills) {
-            selectedSkillsDisplay.style.display = "none"
+            userSkills.style.display = "none"
         } else {
+            const savedSkills = JSON.parse(userProfile.skills)
             savedSkills.forEach(skill => {
+                selectedSkills.push(skill)
+            })
+
+            renderSelectedSkills()
+            renderSuggestions()
+
+            selectedSkills.forEach(skill => {
                 const chip = document.createElement("div")
                 chip.className = "skill"
                 chip.textContent = skill
@@ -454,6 +531,17 @@
         const discordInput = document.getElementById("discordInput")
         const profileEditPopup = document.getElementById("profileEditPopup")
         const overlay = document.getElementById("overlay")
+        const editProfile = document.getElementById("editProfile")
+
+        editProfile.addEventListener("click", () => {
+            profileEditPopup.style.display = "block"
+            overlay.style.display = "block"
+        })
+
+        overlay.addEventListener("click", () => {
+            profileEditPopup.style.display = "none"
+            overlay.style.display = "none"
+        })
 
         userNameEdit.value = userProfile.user_name
         userBioEdit.textContent = userProfile.bio
@@ -471,6 +559,7 @@
                 github: githubInput.value,
                 linkedIn: linkedInInput.value,
                 discord: discordInput.value,
+                skills: selectedSkills
             }
 
             const response = await fetch("/profilePage", {
@@ -483,9 +572,11 @@
 
             const result = await response.json()
 
-            if(result.success) {
+            if (result.success) {
                 profileEditPopup.style.display = "none"
                 overlay.style.display = "none"
+                window.location.reload();
+
             } else {
                 alert("Failed to save profile")
             }
@@ -497,12 +588,6 @@
 
 
     </script>
-    <script>
-        window.savedSkills = ["java", "python", "ai"];
-    </script>
-
-    <script type="module" src="../static/js/profile.js"></script>
-
 </body>
 
 </html>
