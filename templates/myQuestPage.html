@@ -33,7 +33,6 @@
             overflow-y: auto;
             overflow-x: hidden;
             padding: 30px;
-            padding-left: 100px;
             gap: 30px;
             display: flex;
             flex-direction: column;
@@ -64,7 +63,8 @@
         }
 
         #tagsArea label,
-        #difficultyArea label {
+        #difficultyArea label,
+        #pledgesDisplayArea label {
             font-size: 18px;
         }
 
@@ -116,7 +116,67 @@
 
         #pledgesDisplayArea {
             width: 70%;
-            border-top: 2px solid black ;
+            margin: 0 auto;
+            border-top: 2px solid black;
+            padding: 30px;
+            gap: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #pledgeArea {
+            width: 100%;
+            height: auto;
+        }
+
+        .pledgeCard {
+            width: 100%;
+            height: 100px;
+            background: #F7EED2;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+            border-radius: 10px;
+            color: #7A5A3A;
+        }
+
+        .pledgeInfo {
+            flex: 6;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .btnsArea {
+            flex: 4;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .acceptBtn {
+            width: 150px;
+            height: 40px;
+            background: #6B8E23;
+            border: 2px solid #4F6918;
+            color: #F7EED2;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .rejectBtn {
+            width: 150px;
+            height: 40px;
+            background: #8B3A3A;
+            border: 2px solid #5F2424;
+            color: #F7EED2;
+            cursor: pointer;
+            border-radius: 8px;
         }
     </style>
 </head>
@@ -153,6 +213,21 @@
         </div>
 
         <div id="pledgesDisplayArea">
+            <label>PLEDGES:</label>
+            <div id="pledgeArea">
+                <div class="pledgeCard">
+                    <div class="pledgeInfo">
+                        <div class="pledgedBy">PLEDGED BY:</div>
+                        <div class="pledgedOn">PLEDGED ON:</div>
+                    </div>
+
+                    <div class="btnsArea">
+                        <button class="acceptBtn">ACCEPT</button>
+                        <button class="rejectBtn">REJECT</button>
+                    </div>
+                </div>
+                
+            </div>
 
         </div>
     </div>
