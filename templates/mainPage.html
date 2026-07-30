@@ -713,6 +713,62 @@
             color: #F2DFC0;
             cursor: pointer;
         }
+
+        #notificationBtn {
+            width: 40px;
+            height: 40px;
+            background: #9B6A32;
+            border: 2px solid #4B2E18;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        #notificationBtn img,
+        #menuIcons img {
+            width: 25px;
+            height: 25px;
+        }
+
+        #myQuestsArea {
+            height: 40px;
+            width: auto;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #9B6A32;
+            border: 2px solid #4B2E18;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #F2DFC0;
+            cursor: pointer;
+        }
+
+        #menuIcons {
+            width: 40px;
+            height: 40px;
+            background: #9B6A32;
+            border: 2px solid #4B2E18;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        #bottomArea {
+            position: absolute;
+            left: 45px;
+            bottom: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 10px
+        }
     </style>
 </head>
 
@@ -837,6 +893,20 @@
         <div id="pledgeButtons">
             <button id="cancelPledge">CANCEL</button>
             <button id="confirmPledge">CONFIRM</button>
+        </div>
+    </div>
+
+    <div id="bottomArea">
+        <div id="notificationBtn">
+            <img src="../static/images/icons8-bell-100.png">
+        </div>
+
+        <div id="myQuestsArea">
+            MY QUESTS
+        </div>
+
+        <div id="menuIcons">
+            <img src="../static/images/icons8-menu-100.png">
         </div>
     </div>
 
