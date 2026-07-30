@@ -11,7 +11,8 @@ def pledgeTable():
     quest_id TEXT,
     master_id TEXT,
     pledger_id TEXT,
-    status TEXT
+    status TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
 

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUILDHALL</title>
+
+    <style>
+        @font-face {
+            font-family: "font1";
+            src: url("../static/fonts/Excalifont-Regular.woff2") format("woff2");
+        }
+
+        * {
+            font-family: font1;
+        }
+
+        body {
+            background: #EAD7AE;
+        }
+
+        #topArea {
+            position: absolute;
+            width: 300px;
+            height: 100px;
+            color: #2F1B0F;
+            top: 20px;
+            left: 150px;
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        #notificationsArea {
+            position: absolute;
+            width: calc(100% - 500px);
+            height: calc(100% - 110px);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border: none;
+        }
+
+        .notifications {
+            width: 100%;
+            height: 150px;
+            border-bottom: 2px solid #4B2E18;
+            background: #F3E5BE;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .noticeTitle {
+            font-size: 18px;
+            font-weight: 500;
+            color: #5E3B1A;
+        }
+
+        .notificationBody {
+            color: #8A6A45;
+            padding: 20px;
+            margin-top: 5px;
+        }
+
+        .notificationContent {
+            flex: 1;
+        }
+
+
+        .buttonArea {
+            width: 300px;
+            height: 55px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 12px;
+            margin-left: 30px;
+        }
+
+        .pledgeBtn {
+            width: 150px;
+            height: 70%;
+            border-radius: 10px;
+        }
+
+        #acceptBtn {
+            background: #6B8E23;
+            color: #F7EED2;
+            border: 2px solid #3F5515;
+        }
+
+        #acceptBtn:hover {
+            background: #789A2D;
+            cursor: pointer;
+        }
+
+        #rejectBtn {
+            background: #8B3A3A;
+            color: #F7EED2;
+            border: 2px solid #542020;;
+        }
+
+        #rejectBtn:hover {
+            background: #994646;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="topArea">S
+        HEY, WELCOMME BACK
+    </div>
+
+    <div id="notificationsArea">
+        <div class="notifications">
+            <div class="notificationContent">
+                <div class="noticeTitle">
+                    Pledge Received:
+                </div>
+
+                <div class="notificationBody">
+                    <strong>Suryansh</strong> has pledged to undertake <strong>"Build a Portfolio Website."</strong>
+                    Review
+                    their profile before deciding
+                    whether to Grant or Decline their pledge.
+                </div>
+            </div>
+
+            <div class="buttonArea">
+                <button id="acceptBtn" class="pledgeBtn">ACCEPT</button>
+                <button id="rejectBtn" class="pledgeBtn">REJECT</button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
