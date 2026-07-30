@@ -14,45 +14,148 @@
 
         * {
             font-family: font1;
+            box-sizing: border-box;
         }
 
         body {
             background: #EAD7AE;
-            user-select: none;
+        }
+
+        #mainArea {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
         }
 
         #questDisplayArea {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 900px;
-            height: 88vh;
-            border: 2px solid black
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 30px;
+            padding-left: 100px;
+            gap: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .questCard {
-            width: 100%;
+        #title {
+            width: 70%;
             height: auto;
+            font-size: 25px;
+            font-weight: 700;
+            color: #2F1B0F;
+        }
+
+        #description {
+            font-size: 18px;
+            color: #5B3A29;
+            width: 70%
+        }
+
+        #tagsArea {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            width: 70%;
+            align-items: center;
+        }
+
+        #tagsArea label,
+        #difficultyArea label {
+            font-size: 18px;
+        }
+
+        .tags {
+            background: #9B6A32;
+            color: #F2DFC0;
+            padding: 6px 12px;
+            display: inline-flex;
+            align-items: center;
+            border: 2px solid #6F4721;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #difficultyArea {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            width: 70%;
+            align-items: center;
+        }
+
+        .difficulty {
+            background: #9B6A32;
+            color: #F2DFC0;
+            padding: 6px 12px;
+            display: inline-flex;
+            align-items: center;
+            border: 2px solid #6F4721;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #bottomPanel {
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #createdAt {
+            justify-content: flex-start;
+        }
+
+        #guild {
+            justify-content: flex-end;
+        }
+
+        #pledgesDisplayArea {
+            width: 70%;
+            border-top: 2px solid black ;
         }
     </style>
 </head>
 
 <body>
+    <div id="mainArea">
+        <div id="questDisplayArea">
+            <div id="title">
+                TEST TITLE 1
+            </div>
+            <div id="description">
+                The Guild seeks a skilled artisan to forge a real-time collaborative whiteboard for scholars and
+                adventurers alike. The application must support smooth drawing, shapes, text, and shared editing across
+                multiple users. A secure authentication system, clean interface, and responsive design are essential.
+                Efficient performance, modular code, and thoughtful craftsmanship shall earn the Guild Master's highest
+                praise and a place among the realm's finest builders.
+            </div>
+            <div id="tagsArea">
+                <label>TAGS:</label>
+                <div class="tags">testTag</div>
+            </div>
+            <div id="difficultyArea">
+                <label>DIFFICULTY:</label>
+                <div class="difficulty">LOW</div>
+            </div>
+            <div id="bottomPanel">
+                <div id="createdAt">
+                    CREATED AT:
+                </div>
+                <div id="guild">
+                    GUILD:
+                </div>
+            </div>
+        </div>
 
-    <div id="questDisplayArea">
-        <div class="questCard">
-            <div id="topBar">
-                <div class="questId">W0493NC80R</div>
-                <div class="createdAt">CREATED AT:</div>
-            </div>
-            <div class="title">TEST QUEST 1</div>
-            <div class="tagsArea">
-            </div>
+        <div id="pledgesDisplayArea">
 
         </div>
     </div>
-
 
 </body>
 
