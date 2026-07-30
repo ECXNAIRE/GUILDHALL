@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUILDHALL</title>
+
+    <style>
+        @font-face {
+            font-family: "font1";
+            src: url("../static/fonts/Excalifont-Regular.woff2") format("woff2");
+        }
+
+        * {
+            font-family: font1;
+        }
+
+        body {
+            background: #EAD7AE;
+            user-select: none;
+        }
+
+        #questDisplayArea {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            height: 88vh;
+            border: 2px solid black
+        }
+
+        .questCard {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="questDisplayArea">
+        <div class="questCard">
+            <div id="topBar">
+                <div class="questId">W0493NC80R</div>
+                <div class="createdAt">CREATED AT:</div>
+            </div>
+            <div class="title">TEST QUEST 1</div>
+            <div class="tagsArea">
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

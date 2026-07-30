@@ -18,6 +18,7 @@
 
         body {
             background: #EAD7AE;
+            user-select: none;
         }
 
         #topArea {
@@ -47,16 +48,15 @@
             border-bottom: 2px solid #4B2E18;
             background: #F3E5BE;
             padding: 20px;
-            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .noticeTitle {
-            font-size: 18px;
-            font-weight: 500;
-            color: #5E3B1A;
+            font-size: 22px;
+            font-weight: 900;
+            color: #4B2E18;
         }
 
         .notificationBody {
@@ -100,7 +100,8 @@
         #rejectBtn {
             background: #8B3A3A;
             color: #F7EED2;
-            border: 2px solid #542020;;
+            border: 2px solid #542020;
+            ;
         }
 
         #rejectBtn:hover {
@@ -111,32 +112,49 @@
 </head>
 
 <body>
-    <div id="topArea">S
-        HEY, WELCOMME BACK
+    <div id="topArea">
+        GUILD NOTICES:
     </div>
 
     <div id="notificationsArea">
-        <div class="notifications">
+
+    </div>
+
+    <script>
+        const notifications = {{ notices | tojson | safe }};
+        const notificationsArea = document.getElementById("notificationsArea")
+
+        if (notifications.length === 0) {
+            notificationsArea.style.display = "none"
+        }
+
+        notificationsArea.innerHTML = "";
+
+        if (notifications.length === 0) {
+            notificationsArea.innerHTML = "<h3>No notices.</h3>";
+        } else {
+            notifications.forEach(notification => {
+
+                const card = document.createElement("div");
+                card.className = "notifications";
+
+                card.innerHTML = `
             <div class="notificationContent">
                 <div class="noticeTitle">
-                    Pledge Received:
+                    ${notification[1]}
                 </div>
 
                 <div class="notificationBody">
-                    <strong>Suryansh</strong> has pledged to undertake <strong>"Build a Portfolio Website."</strong>
-                    Review
-                    their profile before deciding
-                    whether to Grant or Decline their pledge.
+                    ${notification[2]}
                 </div>
             </div>
+        `;
 
-            <div class="buttonArea">
-                <button id="acceptBtn" class="pledgeBtn">ACCEPT</button>
-                <button id="rejectBtn" class="pledgeBtn">REJECT</button>
-            </div>
-        </div>
+                notificationsArea.appendChild(card);
+            });
+        }
 
-    </div>
+    </script>
 
 </body>
 

@@ -5,9 +5,10 @@ import os
 from urllib.parse import urlencode
 import requests
 from database.initDB import insertUser, getUser, getUserName, updateProfile
-from database.quest import saveQuest, getQuests
+from database.quest import saveQuest, getQuests, getQuestByID
 import json
 from database.pledges import savePledges
+from database.notifications import insertNotices, getNotice
 
 
 load_dotenv()
@@ -182,8 +183,37 @@ def pledges():
         masterID = data["masterID"]
 
         savePledges(masterID, pledgerID, questID)
+        print(data)
 
+        quest = getQuestByID(questID)
+
+        questTitle = quest[1]
+        body = body = (
+                f"<strong>{pledgerID}</strong> has pledged to undertake "
+                f"<strong>{questTitle}</strong>. Review their profile before "
+                f"deciding whether to Grant or Decline their pledge."
+            )
+
+        title = "Pledge Received"
+                    
+        insertNotices(masterID, title, body, "pledge")
+        
         return "OK"
+
+
+
+
+@app.route("/notificationPage")
+def noticePage():
+    notices = getNotice(session["userDetails"]["user_id"])
+
+    print(notices) 
+
+    return render_template(
+        "notificationsPage.html",
+        notices=notices
+    )
+
 
 
 

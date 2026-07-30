@@ -4,10 +4,12 @@ def showQuests():
     conn = sqlite3.connect("database/database.db")
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM pledges ")
-    quests = cursor.fetchall()
+    cursor.execute("DROP TABLE notifications ")
+    # quests = cursor.fetchall()
 
-    print(quests)
+    # print(quests)
+
+    conn.commit()
 
     conn.close()
 

@@ -57,3 +57,18 @@ def getQuests(guild):
 
     return quest
 
+
+
+def getQuestByID(questID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT * FROM quests WHERE quest_id = ?
+    """, (questID,))
+
+    quest = cursor.fetchone()
+
+    conn.close()
+
+    return quest

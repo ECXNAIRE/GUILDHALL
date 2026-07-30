@@ -1,9 +1,8 @@
 import sqlite3
-from helpers.userID import generateUserId
-from helpers.checkUser import checkUserID
-
+from helpers.userID import generateUserId, checkUserID
 conn = sqlite3.connect("database/database.db")
 cursor = conn.cursor()
+
 
 
 def initTable():

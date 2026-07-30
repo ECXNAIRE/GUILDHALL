@@ -162,6 +162,7 @@ confirmPledge.addEventListener("click", async () => {
     const questId = state.selectedQuest.quest_id
     const pledgerID = document.getElementById("userID").textContent
     const masterID = state.selectedQuest.creator_id
+    
 
 
     const response = await fetch("/pledges", {
@@ -172,7 +173,7 @@ confirmPledge.addEventListener("click", async () => {
         body: JSON.stringify({
             questID: questId,
             pledgerID: pledgerID,
-            masterID: masterID
+            masterID: masterID,
         })
     })
 })
