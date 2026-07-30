@@ -89,6 +89,7 @@ overlay.addEventListener("click", () => {
     overlay.style.display = "none";
     displayPopup.style.display = "none"
     pledgePopup.style.display = "none"
+    myquestsPopup.style.display = "none"
 
 });
 
@@ -162,7 +163,7 @@ confirmPledge.addEventListener("click", async () => {
     const questId = state.selectedQuest.quest_id
     const pledgerID = document.getElementById("userID").textContent
     const masterID = state.selectedQuest.creator_id
-    
+
 
 
     const response = await fetch("/pledges", {
@@ -178,6 +179,67 @@ confirmPledge.addEventListener("click", async () => {
     })
 })
 
+
+
+
+
+
+const myQuestsArea = document.getElementById("myQuestsArea")
+const myquestsPopup = document.getElementById("myquestsPopup")
+const myQuestContent = document.getElementById("myQuestContent")
+
+myQuestsArea.addEventListener("click", async () => {
+    myquestsPopup.style.display = "block"
+    overlay.style.display = "block"
+
+    const userId = document.getElementById("userID").textContent
+
+    const response = await fetch("/myQuest", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            userID: userId
+        })
+    })
+
+    const data = await response.json();
+
+    myQuestContent.innerHTML = ""
+
+    if(data.length === 0) {
+         myQuestContent.textContent = "YOU DONT HAVE ANY QUEST AT THE MOMENT, POST ONE TO SEE IT HERE." 
+    }
+
+    data.forEach(quest => {
+        const card = document.createElement("div")
+        card.className = "myQuestCard"
+
+        card.innerHTML = `
+            <div class="myQuestCreatedAt">
+                Created On: ${quest[8]}
+            </div>
+
+            <div class="myQuestTitle">
+                ${quest[1]}
+            </div>
+
+            <div class="bottomCardArea">
+                <div class="myQuestID">
+                    Quest ID: ${quest[0]}
+                </div>
+
+                <div class="myQuestGuild">
+                    Guild: ${quest[5]}
+                </div>
+            </div>
+        `;
+
+        myQuestContent.appendChild(card);
+    })
+})
 
 
 

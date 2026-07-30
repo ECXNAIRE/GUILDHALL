@@ -5,7 +5,7 @@ import os
 from urllib.parse import urlencode
 import requests
 from database.initDB import insertUser, getUser, getUserName, updateProfile
-from database.quest import saveQuest, getQuests, getQuestByID
+from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest
 import json
 from database.pledges import savePledges
 from database.notifications import insertNotices, getNotice
@@ -213,6 +213,22 @@ def noticePage():
         "notificationsPage.html",
         notices=notices
     )
+
+
+
+
+@app.route("/myQuest", methods=["POST"])
+def myQuest():
+    data = request.get_json()
+
+    userID = data["userID"]
+
+    quests = getMyQuest(userID)
+
+    return jsonify(quests)
+
+
+
 
 
 

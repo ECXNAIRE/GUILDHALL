@@ -72,3 +72,20 @@ def getQuestByID(questID):
     conn.close()
 
     return quest
+
+
+
+
+def getMyQuest(userID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+
+    cursor.execute("""
+    SELECT * FROM quests WHERE creator_id = ?
+    """, (userID,))
+
+
+    quests = cursor.fetchall()
+
+    return quests
