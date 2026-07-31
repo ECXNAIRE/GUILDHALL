@@ -34,3 +34,17 @@ def savePledges(masterID, pledgerID, questID):
     conn.commit()
     conn.close()
 
+
+def getPledgesByQuestId(questID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT * FROM pledges WHERE quest_id = ?
+    """, (questID,))
+
+    pledges = cursor.fetchall()
+
+    return pledges
+
+

@@ -7,7 +7,7 @@ import requests
 from database.initDB import insertUser, getUser, getUserName, updateProfile
 from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest
 import json
-from database.pledges import savePledges
+from database.pledges import savePledges, getPledgesByQuestId
 from database.notifications import insertNotices, getNotice
 
 
@@ -231,6 +231,18 @@ def myQuest():
 
 
 
+@app.route("/viewQuest/<questID>")
+def viewQuest(questID):
+    print(questID)
+
+    quest = getQuestByID(questID)
+    pledges = getPledgesByQuestId(questID)
+    
+
+    return render_template(
+        "myQuestPage.html",
+        quest = quest,
+        pledges = pledges)
 
 
 if (__name__) == "__main__":

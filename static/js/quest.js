@@ -209,13 +209,15 @@ myQuestsArea.addEventListener("click", async () => {
 
     myQuestContent.innerHTML = ""
 
-    if(data.length === 0) {
-         myQuestContent.textContent = "YOU DONT HAVE ANY QUEST AT THE MOMENT, POST ONE TO SEE IT HERE." 
+    if (data.length === 0) {
+        myQuestContent.textContent = "YOU DONT HAVE ANY QUEST AT THE MOMENT, POST ONE TO SEE IT HERE."
     }
 
     data.forEach(quest => {
         const card = document.createElement("div")
         card.className = "myQuestCard"
+
+        card.dataset.questId = quest[0];
 
         card.innerHTML = `
             <div class="myQuestCreatedAt">
@@ -237,6 +239,9 @@ myQuestsArea.addEventListener("click", async () => {
             </div>
         `;
 
+        card.addEventListener("click", () => {
+            window.location.href = `/viewQuest/${card.dataset.questId}`;
+        })
         myQuestContent.appendChild(card);
     })
 })

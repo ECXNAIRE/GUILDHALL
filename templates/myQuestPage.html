@@ -88,7 +88,7 @@
             align-items: center;
         }
 
-        .difficulty {
+        #difficulty {
             background: #9B6A32;
             color: #F2DFC0;
             padding: 6px 12px;
@@ -196,11 +196,10 @@
             </div>
             <div id="tagsArea">
                 <label>TAGS:</label>
-                <div class="tags">testTag</div>
             </div>
             <div id="difficultyArea">
                 <label>DIFFICULTY:</label>
-                <div class="difficulty">LOW</div>
+                <div id="difficulty">LOW</div>
             </div>
             <div id="bottomPanel">
                 <div id="createdAt">
@@ -226,12 +225,81 @@
                         <button class="rejectBtn">REJECT</button>
                     </div>
                 </div>
-                
+
             </div>
 
         </div>
     </div>
 
+    <script>
+        const quest = {{ quest | tojson | safe }};
+        const pledges = {{ pledges | tojson | safe }};
+
+        const title = document.getElementById("title").textContent = quest[1]
+        const description = document.getElementById("description").textContent = quest[2]
+
+        const tagsArea = document.getElementById("tagsArea")
+
+        const tags = JSON.parse(quest[4]);
+
+        tags.forEach(tag => {
+            const chip = document.createElement("div")
+            chip.className = "tags"
+            chip.textContent = tag
+
+            tagsArea.appendChild(chip)
+
+        });
+
+        const difficulty = document.getElementById("difficulty").textContent = quest[3]
+
+        const createdAt = document.getElementById("createdAt").textContent = `POSTED AT: ${quest[8]}`
+        const guild = document.getElementById("guild").textContent = `GUILD: ${quest[5]}`
+
+
+
+        const pledgesDisplayArea = document.getElementById("pledgesDisplayArea")
+
+        if (pledges.length === 0) {
+            pledgesDisplayArea.style.display = "none"
+        }
+
+        const pledgeArea= document.getElementById("pledgeArea")
+
+        pledgeArea.innerHTML = ""
+
+
+        pledges.forEach(pledge => {
+            const card = document.createElement("div");
+            card.className = "pledgeCard";
+
+            card.innerHTML = `
+                <div class="pledgeInfo">
+                    <div class="pledgedBy">
+                        PLEDGED BY: ${pledge[2]}
+                    </div>
+
+                    <div class="pledgedOn">
+                        PLEDGED ON: ${pledge[4]}
+                    </div>
+                </div>
+
+                <div class="btnsArea">
+                    <button class="acceptBtn">ACCEPT</button>
+                    <button class="rejectBtn">REJECT</button>
+                </div>
+            `;
+
+            pledgeArea.appendChild(card);
+        });
+
+
+
+        console.log(quest);
+        console.log(pledges);
+    </script>
+
 </body>
+
 
 </html>
