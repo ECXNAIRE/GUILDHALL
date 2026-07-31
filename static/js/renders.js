@@ -3,6 +3,7 @@ import { uiCanvas, worldCanvas, uiCtx, worldCtx } from "./canvas.js";
 import { addQuestFrame } from "./drawFrame.js";
 import { state } from "./state.js";
 import { drawQuestCard } from "./drawQuest.js"
+import { drawBoardDecoration } from "./boardDecoration.js";
 
 export function renderWorld(worldCtx, worldCanvas) {
 
@@ -13,9 +14,13 @@ export function renderWorld(worldCtx, worldCanvas) {
         worldCanvas.height
     );
 
+    
     worldCtx.save();
     worldCtx.translate(camera.x, camera.y);
     worldCtx.scale(camera.zoom, camera.zoom);
+
+
+    drawBoardDecoration(worldCtx)
 
     for (const quest of state.quests) {
         if (quest !== state.hoveredQuest) {
