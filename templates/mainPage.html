@@ -838,6 +838,36 @@
             align-items: center;
             width: 100%;
         }
+
+        #toast {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: #F7EED2;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        #toast.show {
+            opacity: 1;
+            transform: translate(0);
+        }
+
+        #toast.success {
+            background: #6B8E23;
+            border: 2px solid #4F6918;
+        }
+
+        #toast.error {
+            background: #8B3A3A;
+            border: 2px solid #5F2424;
+        }
     </style>
 </head>
 
@@ -982,9 +1012,11 @@
 
     <div id="myquestsPopup">
         <div id="myQuestContent">
-            
+
         </div>
     </div>
+
+    <div id="toast"></div>
 
     <script type="module" src="../static//js/main.js"></script>
     <script>

@@ -26,6 +26,14 @@ def savePledges(masterID, pledgerID, questID):
     conn = sqlite3.connect("database/database.db")
     cursor = conn.cursor()
 
+
+    cursor.execute("SELECT 1 FROM pledges WHERE pledger_id = ? AND quest_id = ?", (pledgerID, questID))
+
+    if cursor.fetchone():
+        conn.close()
+        return False
+
+
     cursor.execute("""
     INSERT INTO pledges (quest_id, master_id, pledger_id, status)
     VALUES (?, ?, ?, ?)
@@ -33,6 +41,8 @@ def savePledges(masterID, pledgerID, questID):
 
     conn.commit()
     conn.close()
+
+    return True
 
 
 def getPledgesByQuestId(questID):
@@ -48,3 +58,17 @@ def getPledgesByQuestId(questID):
     return pledges
 
 
+
+
+
+def updatePledgeStatus(questID, status):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    UPDATE pledges SET status = ? WHERE quest_id =  ?
+    """, (status, questID))
+
+
+    conn.commit()
+    conn.close()

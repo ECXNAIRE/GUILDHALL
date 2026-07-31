@@ -177,8 +177,28 @@ confirmPledge.addEventListener("click", async () => {
             masterID: masterID,
         })
     })
+
+    const data = await response.json();
+
+    if (data.success) {
+        showToast("PLEDGE SUBMITTED!", "success");
+    } else {
+        showToast("YOU HAVE ALREADY PLEDGED FOR THIS QUEST", "error");
+    }
 })
 
+
+
+function showToast(message, type) {
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+    toast.className = `show ${type}`;
+
+    setTimeout(() => {
+        toast.className = "";
+    }, 3000);
+}
 
 
 
@@ -213,7 +233,7 @@ myQuestsArea.addEventListener("click", async () => {
         myQuestContent.textContent = "YOU DONT HAVE ANY QUEST AT THE MOMENT, POST ONE TO SEE IT HERE."
     }
 
-    data.forEach(quest => {
+    data.reverse().forEach(quest => {
         const card = document.createElement("div")
         card.className = "myQuestCard"
 
@@ -245,8 +265,5 @@ myQuestsArea.addEventListener("click", async () => {
         myQuestContent.appendChild(card);
     })
 })
-
-
-
 
 

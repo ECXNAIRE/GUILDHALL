@@ -376,6 +376,37 @@
             gap: 10px;
             width: 550px;
         }
+
+        #toast {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: #F7EED2;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        #toast.show {
+            opacity: 1;
+            transform: translate(0);
+        }
+
+        #toast.success {
+            background: #6B8E23;
+            border: 2px solid #4F6918;
+        }
+
+
+        #toast.error {
+            background: #8B3A3A;
+            border: 2px solid #5F2424;
+        }
     </style>
 </head>
 
@@ -466,6 +497,8 @@
             </div>
         </div>
     </div>
+
+    <div id="toast"></div>
 
     <script type="module">
         import { selectedSkills, renderSuggestions, renderSelectedSkills } from "../static/js/profile.js"
@@ -606,13 +639,30 @@
             if (result.success) {
                 profileEditPopup.style.display = "none"
                 overlay.style.display = "none"
-                window.location.reload();
+                showToast("YOUR PROFILE IS UPDATED!", "success")
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000)
+
+
 
             } else {
-                alert("Failed to save profile")
+                showToast("YOUR PROFILE CANT BE SAVED!", "error")
             }
-            profileEditPopup.style.display = "none"
         })
+
+
+        function showToast(message, type) {
+            const toast = document.getElementById("toast");
+
+            toast.textContent = message;
+            toast.className = `show ${type}`;
+
+            setTimeout(() => {
+                toast.className = "";
+            }, 3000);
+        }
 
 
 

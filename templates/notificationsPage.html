@@ -133,7 +133,7 @@
         if (notifications.length === 0) {
             notificationsArea.innerHTML = "<h3>No notices.</h3>";
         } else {
-            notifications.forEach(notification => {
+            notifications.reverse().forEach(notification => {
 
                 const card = document.createElement("div");
                 card.className = "notifications";

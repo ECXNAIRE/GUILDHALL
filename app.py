@@ -7,7 +7,7 @@ import requests
 from database.initDB import insertUser, getUser, getUserName, updateProfile
 from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest
 import json
-from database.pledges import savePledges, getPledgesByQuestId
+from database.pledges import savePledges, getPledgesByQuestId, updatePledgeStatus
 from database.notifications import insertNotices, getNotice
 
 
@@ -182,9 +182,7 @@ def pledges():
         pledgerID = data["pledgerID"]
         masterID = data["masterID"]
 
-        savePledges(masterID, pledgerID, questID)
-        print(data)
-
+        success = savePledges(masterID, pledgerID, questID)
         quest = getQuestByID(questID)
 
         questTitle = quest[1]
@@ -198,7 +196,9 @@ def pledges():
                     
         insertNotices(masterID, title, body, "pledge")
         
-        return "OK"
+        return jsonify({
+            "success": success
+        })
 
 
 
@@ -243,6 +243,46 @@ def viewQuest(questID):
         "myQuestPage.html",
         quest = quest,
         pledges = pledges)
+
+
+
+@app.route("/acceptedPledge", methods=["POST"])
+def acceptedPledge():
+    data = request.get_json()
+
+    questID = data["questID"]
+    pledgerID = data["pledgerID"]
+    questTitle = data["questTitle"]
+
+
+    title= "Pledge Accepted"
+
+    body = f"Your pleadge for {questTitle}, Quest ID: {questID} has been accepted,"
+
+
+    insertNotices(pledgerID, title, body, "pledgeAccepted" )
+    updatePledgeStatus(questID, "ACCEPTED")
+
+    return jsonify({"success": True})
+
+
+
+@app.route("/rejectedPledge", methods=["POST"])
+def rejectedPledge():
+    data = request.get_json()
+
+    questID = data["questID"]
+    pledgerID = data["pledgerID"]
+    questTitle = data["questTitle"]
+
+    title = "Pledge Rejected"
+
+    body = f"Your pleadge for {questTitle}, Quest ID: {questID} has been rejected,"
+
+    insertNotices(pledgerID, title, body, "pledgeRejected" )
+    updatePledgeStatus(questID, "REJECTED")
+
+    return jsonify({"success": True})
 
 
 if (__name__) == "__main__":

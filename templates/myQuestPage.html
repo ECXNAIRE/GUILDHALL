@@ -264,12 +264,12 @@
             pledgesDisplayArea.style.display = "none"
         }
 
-        const pledgeArea= document.getElementById("pledgeArea")
+        const pledgeArea = document.getElementById("pledgeArea")
 
         pledgeArea.innerHTML = ""
 
 
-        pledges.forEach(pledge => {
+        pledges.reverse().forEach(pledge => {
             const card = document.createElement("div");
             card.className = "pledgeCard";
 
@@ -289,6 +289,51 @@
                     <button class="rejectBtn">REJECT</button>
                 </div>
             `;
+
+
+            const acceptBtn = card.querySelector(".acceptBtn")
+            const rejectBtn = card.querySelector('.rejectBtn')
+
+            acceptBtn.addEventListener("click", async () => {
+                const response = await fetch("/acceptedPledge", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        questID: pledge[0],
+                        questTitle: quest[1],
+                        pledgerID: pledge[2]
+                    })
+                })
+
+                const data = await response.json();
+
+                if (data.success) {
+                    console.log("Accepted successfully");
+                }
+            });
+
+            rejectBtn.addEventListener("click", async () => {
+                const response = await fetch("/rejectedPledge", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        questID: pledge[0],
+                        questTitle: quest[1],
+                        pledgerID: pledge[2]
+                    })
+                })
+
+                const data = await response.json();
+                if (data.success) {
+                    console.log("Rejected successfully");
+                    card.remove()
+                }
+            })
 
             pledgeArea.appendChild(card);
         });
