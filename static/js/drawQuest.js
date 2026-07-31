@@ -85,17 +85,31 @@ export function drawQuestCard(ctx, quest) {
     ctx.font = "bold 24px font1";
     const titleLines = wrapText(ctx, quest.title, width - padding * 2);
 
+    ctx.font = "15px font1"
+
+    const descriptionLines = wrapTextLimited(
+        ctx,
+        quest.description,
+        width - padding * 2,
+        3
+    )
+
     ctx.font = "24px font1";
     const tagLineHeight = 22;
     const titleLineHeight = 30;
     const titleGap = 18;
     const tagGap = 18;
     const bottomPadding = 18;
+    const descriptionLineHeight = 20;
+    const descriptionGap = 15;
+
 
     const height =
         padding +
         titleLines.length * titleLineHeight +
         titleGap +
+        descriptionLines.length * descriptionLineHeight +
+        descriptionGap +
         quest.tags.length * tagLineHeight +
         tagGap +
         20 +
@@ -305,6 +319,22 @@ export function drawQuestCard(ctx, quest) {
     });
 
 
+    y += 15
+
+    ctx.font = "15px font1"
+    ctx.fillStyle = "rgba(70,55,35,0.9)";
+
+    descriptionLines.forEach(line => {
+        ctx.fillText(
+            line,
+            -width / 2 + padding,
+            y
+        );
+
+        y += descriptionLineHeight;
+    });
+
+
     y += 15;
 
     ctx.fillStyle = "#5E3B1A";
@@ -360,4 +390,36 @@ function wrapText(ctx, text, maxWidth) {
     }
 
     return lines
+}
+
+
+
+function wrapTextLimited(ctx, text, maxWidth, maxLines) {
+    const words = text.split(" ");
+
+    const lines = [];
+    let line = "";
+
+    for (const word of words) {
+        const testLine = line + word + " ";
+
+        if (ctx.measureText(testLine).width > maxWidth && line !== "") {
+            lines.push(line.trim());
+            line = word + " ";
+
+            if (lines.length === maxLines) break;
+        } else {
+            line = testLine;
+        }
+    }
+
+    if (lines.length < maxLines && line) {
+        lines.push(line.trim());
+    }
+
+    if (lines.length === maxLines) {
+        lines[maxLines - 1] += "...";
+    }
+
+    return lines;
 }
