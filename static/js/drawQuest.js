@@ -82,7 +82,7 @@ export function drawQuestCard(ctx, quest) {
     const padding = 20
     const seed = new Date(quest.created_at).getTime();
 
-    ctx.font = "bold 20px font1";
+    ctx.font = "bold 24px font1";
     const titleLines = wrapText(ctx, quest.title, width - padding * 2);
 
     ctx.font = "24px font1";
@@ -121,13 +121,13 @@ export function drawQuestCard(ctx, quest) {
     ctx.translate(quest.x, quest.y + yOffset)
     ctx.rotate(quest.rotation)
 
-
+    let paperColor = "#F4E7BE"
 
     ctx.shadowColor = "rgba(0,0,0,0.28)";
     ctx.shadowBlur = 12;
     ctx.shadowOffsetX = 4;
     ctx.shadowOffsetY = 5;
-    ctx.fillStyle = "#F4E7BE";
+    ctx.fillStyle = paperColor
     ctx.fillRect(-width / 2, -height / 2, width, height)
     ctx.shadowColor = "transparent";
     ctx.shadowBlur = 0;
@@ -211,15 +211,58 @@ export function drawQuestCard(ctx, quest) {
     ctx.arc(pinX + 2, pinY + 2, 8, 0, Math.PI * 2);
     ctx.fill()
 
+    let outerLight, outerMid, outerDark
+    let gemLight = null
+    let gemDark = null
+
+
+    switch (quest.difficulty.toLowerCase()) {
+
+        case "low":
+            outerLight = "#F6D58A"
+            outerMid = "#C58A2C"
+            outerDark = "#7A4F16"
+            break
+
+
+        case "medium":
+            outerLight = "#FFFFFF"
+            outerMid = "#C7CDD2"
+            outerDark = "#7A828A"
+            break
+
+
+        case "hard":
+            outerLight = "#FFF2A8"
+            outerMid = "#E2B43B"
+            outerDark = "#8A5A10"
+            break
+
+
+        case "legendary":
+            outerLight = "#FF7C88";
+            outerMid = "#C61E3A";
+            outerDark = "#5E0013";
+
+            gemLight = null
+            gemDark = null
+            break
+    }
+
 
     const gradient = ctx.createRadialGradient(
-        pinX - 2, pinY - 2, 1,
-        pinX, pinY, 8
-    )
+        pinX - 2,
+        pinY - 2,
+        1,
+        pinX,
+        pinY,
+        8
+    );
+    gradient.addColorStop(0, outerLight);
+    gradient.addColorStop(0.45, outerMid);
+    gradient.addColorStop(1, outerDark);
 
-    gradient.addColorStop(0, "#FFE79A");
-    gradient.addColorStop(0.4, "#D8A73B");
-    gradient.addColorStop(1, "#8C5B10");
+
 
     ctx.beginPath()
     ctx.fillStyle = gradient
@@ -228,7 +271,7 @@ export function drawQuestCard(ctx, quest) {
 
 
     ctx.lineWidth = 1.5
-    ctx.strokeStyle = "#6F4510";
+    ctx.strokeStyle = outerDark;
     ctx.stroke();
 
 
@@ -237,8 +280,7 @@ export function drawQuestCard(ctx, quest) {
     ctx.arc(pinX - 2.5, pinY - 2.5, 2.2, 0, Math.PI * 2)
     ctx.fill()
 
-
-    ctx.texAlign = "lefft"
+    ctx.texAlign = "left"
     let y = -height / 2 + padding + 10
 
     y += 16

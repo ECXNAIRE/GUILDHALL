@@ -759,7 +759,8 @@
             height: 25px;
         }
 
-        #myQuestsArea {
+        #myQuestsArea,
+        #myPledgesArea {
             height: 40px;
             width: auto;
             padding: 10px;
@@ -788,7 +789,7 @@
 
         #bottomArea {
             position: absolute;
-            left: 45px;
+            left: 30px;
             bottom: 20px;
             display: flex;
             flex-direction: row;
@@ -867,6 +868,15 @@
         #toast.error {
             background: #8B3A3A;
             border: 2px solid #5F2424;
+        }
+
+        #rightMenuArea {
+            position: absolute;
+            right: 40px;
+            top: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px
         }
     </style>
 </head>
@@ -996,12 +1006,20 @@
     </div>
 
     <div id="bottomArea">
-        <div id="notificationBtn" onclick="window.location.href='/notificationPage'">
-            <img src="../static/images/icons8-bell-100.png">
-        </div>
-
         <div id="myQuestsArea">
             MY QUESTS
+        </div>
+
+        <div id="myPledgesArea">
+            MY PLEDGES
+        </div>
+
+
+    </div>
+
+    <div id="rightMenuArea">
+        <div id="notificationBtn" onclick="window.location.href='/notificationPage'">
+            <img src="../static/images/icons8-bell-100.png">
         </div>
 
         <div id="menuIcons">
