@@ -297,7 +297,7 @@ myPledgesArea.addEventListener("click", async () => {
     myPledgesContent.innerHTML = ""
 
 
-    data.forEach(item => {
+    data.reverse().forEach(item => {
 
         const pledge = item.pledge
 

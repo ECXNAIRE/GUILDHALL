@@ -802,7 +802,7 @@
         }
 
         #notificationBtn img,
-        #menuIcons img {
+        #audioIcon img {
             width: 25px;
             height: 25px;
         }
@@ -823,7 +823,8 @@
             cursor: pointer;
         }
 
-        #menuIcons {
+        #audioIcon {
+            position: relative;
             width: 40px;
             height: 40px;
             background: #9B6A32;
@@ -833,6 +834,23 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+        }
+
+
+        #audioIcon::after {
+            content: "";
+            position: absolute;
+            width: 32px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transform: rotate(-45deg);
+            display: none;
+        }
+
+
+        #audioIcon.muted::after {
+            display: block;
         }
 
         #bottomArea {
@@ -990,6 +1008,48 @@
             font-size: 15px;
             color: #355C7D;
         }
+
+        #audioArea {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        #audioExpand {
+            cursor: pointer;
+            font-size: 20px;
+            color: #4B2E18;
+        }
+
+        #audioMenu {
+            position: absolute;
+            z-index: 101;
+            top: 48px;
+            right: 0;
+            width: 170px;
+            display: block;
+            background: #F7EED2;
+            border: 2px solid #4B2E18;
+            border-radius: 8px;
+            display: none;
+        }
+
+
+        #audioMenu.show {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .audioOption {
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .audioOption:hover {
+            background: #EAD7AE;
+        }
     </style>
 </head>
 
@@ -1139,10 +1199,30 @@
             {% endif %}
         </div>
 
-        <div id="menuIcons">
-            <img src="../static/images/icons8-menu-100.png">
+        <div id="audioArea">
+
+            <div id="audioIcon" class="muted">
+                <img src="../static/images/icons8-speaker-96.png">
+            </div>
+
+            <div id="audioExpand">
+                >
+            </div>
+
+            <div id="audioMenu">
+                <div class="audioOption" data-song="tavern1.mp3">
+                    Tavern 1
+                </div>
+
+                <div class="audioOption" data-song="tavern2.mp3">
+                    Tavern 2
+                </div>
+            </div>
+
         </div>
     </div>
+
+    <audio id="bgMusic" loop></audio>
 
 
     <div id="myquestsPopup">
@@ -1153,7 +1233,7 @@
 
     <div id="myPledgesPopup">
         <div id="myPledgesContent">
-            
+
         </div>
     </div>
 
@@ -1195,6 +1275,48 @@
             }
             window.location.href = "/notificationPage";
         };
+
+
+        const audio = document.getElementById("bgMusic")
+        const audioExpand = document.getElementById("audioExpand")
+        const audioMenu = document.getElementById("audioMenu")
+
+
+        let muted = true
+
+
+        audioExpand.addEventListener("click", () => {
+            audioMenu.classList.toggle("show")
+        })
+
+
+        document.querySelectorAll(".audioOption").forEach(option => {
+            option.addEventListener("click", () => {
+                const song = option.dataset.song
+
+                audio.src = `../static/audio/${song}`
+
+                if (!muted) {
+                    audio.play()
+                }
+
+                audioMenu.classList.remove("show")
+            })
+        })
+
+        const audioIcon = document.getElementById("audioIcon")
+
+        audioIcon.addEventListener("click", () => {
+
+            muted = !muted
+            audioIcon.classList.toggle("muted")
+
+            if (muted) {
+                audio.pause()
+            } else {
+                audio.play()
+            }
+        })
 
     </script>
 
