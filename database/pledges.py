@@ -72,3 +72,20 @@ def updatePledgeStatus(questID, status):
 
     conn.commit()
     conn.close()
+
+
+
+def getMyPledges(userID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT * FROM pledges WHERE pledger_id = ?
+    """, (userID,))
+
+
+    pledges = cursor.fetchall()
+
+    conn.close()
+
+    return pledges

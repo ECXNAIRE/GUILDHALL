@@ -7,7 +7,7 @@ import requests
 from database.initDB import insertUser, getUser, getUserName, updateProfile
 from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest
 import json
-from database.pledges import savePledges, getPledgesByQuestId, updatePledgeStatus
+from database.pledges import savePledges, getPledgesByQuestId, updatePledgeStatus, getMyPledges
 from database.notifications import insertNotices, getNotice,updateNotification, getUnreadNotificationsCount
 
 
@@ -287,6 +287,33 @@ def rejectedPledge():
     updatePledgeStatus(questID, "REJECTED")
 
     return jsonify({"success": True})
+
+
+
+
+
+@app.route("/myPledges", methods=["POST"])
+def mypledges():
+    data = request.get_json()
+
+    userID = data["userID"]
+
+    pledges = getMyPledges(userID)
+
+    result = []
+
+    for pledge in pledges:
+        questID = pledge[0]
+
+        questTitle = getQuestByID(questID)[1]
+
+        result.append({
+            "pledge": pledge,
+            "questTitle": questTitle
+        })
+
+    return jsonify(result)
+
 
 
 if (__name__) == "__main__":

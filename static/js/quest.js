@@ -90,6 +90,7 @@ overlay.addEventListener("click", () => {
     displayPopup.style.display = "none"
     pledgePopup.style.display = "none"
     myquestsPopup.style.display = "none"
+    myPledgesPopup.style.display = "none"
 
 });
 
@@ -267,3 +268,68 @@ myQuestsArea.addEventListener("click", async () => {
 })
 
 
+
+
+
+const myPledgesArea = document.getElementById("myPledgesArea")
+const myPledgesPopup = document.getElementById("myPledgesPopup")
+
+myPledgesArea.addEventListener("click", async () => {
+    myPledgesPopup.style.display = "block"
+    overlay.style.display = "block"
+
+    const userId = document.getElementById("userID").textContent
+
+    const response = await fetch("/myPledges", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            userID: userId
+        })
+    })
+
+    const data = await response.json();
+
+    const myPledgesContent = document.getElementById("myPledgesContent")
+
+    myPledgesContent.innerHTML = ""
+
+
+    data.forEach(item => {
+
+        const pledge = item.pledge
+
+        const card = document.createElement("div");
+        card.className = "myPledgeCard";
+
+        card.innerHTML = `
+        <div class="pledgeTopBlock">
+            <div class="pledgeCreatedOn">
+                CREATED ON: ${pledge[4]}
+            </div>
+
+            <div class="pledgeStatus ${pledge[3].toLowerCase()}">
+                STATUS: ${pledge[3]}
+            </div>
+        </div>
+
+        <div class="myPledgeTitle">
+            ${item.questTitle}
+        </div>
+
+        <div class="pledgeBottomBlock">
+            <div class="myPledgedQuestId">
+                QUEST ID: ${pledge[0]}
+            </div>
+
+            <div class="myPledgeMaster">
+                QUEST MASTER: ${pledge[1]}
+            </div>
+        </div>
+    `;
+
+        myPledgesContent.appendChild(card);
+    });
+})

@@ -336,9 +336,34 @@
             overflow-x: hidden;
         }
 
+        #myPledgesPopup {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 760px;
+            height: 500px;
+            background: white;
+            border-top: 4px solid #D8B46A;
+            border-left: 4px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
+            border-radius: 12px;
+            z-index: 40;
+            background: #EAD7AE;
+            display: none;
+            flex-shrink: 0;
+            flex-direction: column;
+            gap: 30px;
+            overflow-y: hidden;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
         #popupContent,
         #popupDisplayContent,
-        #myQuestContent {
+        #myQuestContent,
+        #myPledgesContent {
             height: 100%;
             width: 100%;
             overflow-y: auto;
@@ -354,27 +379,31 @@
 
         #popupContent::-webkit-scrollbar,
         #popupDisplayContent::-webkit-scrollbar,
-        #myQuestContent::-webkit-scrollbar {
+        #myQuestContent::-webkit-scrollbar,
+        #myPledgesContent::-webkit-scrollbar {
             width: 6px;
         }
 
         #popupContent::-webkit-scrollbar-track,
         #popupDisplayContent::-webkit-scrollbar-track,
-        #myQuestContent::-webkit-scrollbar-track {
+        #myQuestContent::-webkit-scrollbar-track,
+        #myPledgesContent::-webkit-scrollbar-track {
             background: #D8C08F;
             border-radius: 10px;
         }
 
         #popupContent::-webkit-scrollbar-thumb,
         #popupDisplayContent::-webkit-scrollbar-thumb,
-        #myQuestContent::-webkit-scrollbar-thumb {
+        #myQuestContent::-webkit-scrollbar-thumb,
+        #myPledgesContent::-webkit-scrollbar-thumb {
             background: #7A4F25;
             border-radius: 10px;
         }
 
         #popupContent::-webkit-scrollbar-thumb:hover,
         #popupDisplayContent::-webkit-scrollbar-thumb,
-        #myQuestContent::-webkit-scrollbar-thumb {
+        #myQuestContent::-webkit-scrollbar-thumb,
+        #myPledgesContent::-webkit-scrollbar-thumb {
             background: #5E3B1A;
         }
 
@@ -830,7 +859,6 @@
 
         .myQuestTitle {
             font-size: 22px;
-            font-weight: 700px;
             color: #4B2E18;
             text-align: center;
         }
@@ -896,6 +924,71 @@
             display: flex;
             flex-direction: column;
             gap: 10px
+        }
+
+        .myPledgeCard {
+            width: 100%;
+            height: auto;
+            border: 2px solid black;
+            padding: 10px;
+            background: #F7EED2;
+            border: 2px solid #4B2E18;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .pledgeTopBlock {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .pledgeCreatedOn {
+            font-size: 14px;
+            color: #8A6A45;
+        }
+
+        .pledgeStatus {
+            font-size: 14px;
+            font-weight: bold;
+            color: #6E7B4A;
+        }
+
+        .pledgeStatus.pending {
+            color: #B8860B;
+        }
+
+        .pledgeStatus.accepted {
+            color: #4F8A10;
+        }
+
+        .pledgeStatus.rejected {
+            color: #B22222;
+        }
+
+        .myPledgeTitle {
+            font-size: 22px;
+            color: #4B2E18;
+            text-align: center;
+        }
+
+        .pledgeBottomBlock {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .myPledgedQuestId {
+            font-size: 15px;
+            color: #8A6A45;
+        }
+
+        .myPledgeMaster {
+            font-size: 15px;
+            color: #355C7D;
         }
     </style>
 </head>
@@ -1055,6 +1148,12 @@
     <div id="myquestsPopup">
         <div id="myQuestContent">
 
+        </div>
+    </div>
+
+    <div id="myPledgesPopup">
+        <div id="myPledgesContent">
+            
         </div>
     </div>
 
