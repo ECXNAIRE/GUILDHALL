@@ -48,8 +48,41 @@ def getNotice(receriverID):
 
     notifications = cursor.fetchall()
 
+    conn.close()
+
     return notifications
 
 
+
+def updateNotification(receiverId):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    UPDATE notifications SET is_read = 1 WHERE receiver_id = ? AND is_read = 0
+    """, (receiverId,))
+
+    conn.commit()
+    conn.close()
+
+
+
+
+def getUnreadNotificationsCount(receiverID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM notifications
+        WHERE receiver_id = ?
+        AND is_read = 0
+    """,(receiverID, ))
+
+
+    count = cursor.fetchone()[0]
+
+    conn.close()
+    return count
 
 createNoticeTable()

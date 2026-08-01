@@ -742,6 +742,7 @@
         }
 
         #notificationBtn {
+            position: relative;
             width: 40px;
             height: 40px;
             background: #9B6A32;
@@ -751,6 +752,24 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+        }
+
+        #notificationBadge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 5px;
+            background: #D33;
+            color: white;
+            border-radius: 999px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            font-weight: bold;
+            border: 2px solid #EAD7AE;
         }
 
         #notificationBtn img,
@@ -1018,8 +1037,13 @@
     </div>
 
     <div id="rightMenuArea">
-        <div id="notificationBtn" onclick="window.location.href='/notificationPage'">
+        <div id="notificationBtn">
             <img src="../static/images/icons8-bell-100.png">
+            {% if unreadCount > 0 %}
+            <div id="notificationBadge">
+                {{ unreadCount }}
+            </div>
+            {% endif %}
         </div>
 
         <div id="menuIcons">
@@ -1063,6 +1087,15 @@
             descriptionCounter.textContent = `${descriptionInput.value.length} / 500`
         })
 
+        const badge = document.getElementById("notificationBadge");
+
+        document.getElementById("notificationBtn").onclick = () => {
+            const badge = document.getElementById("notificationBadge");
+            if (badge) {
+                badge.style.display = "none";
+            }
+            window.location.href = "/notificationPage";
+        };
 
     </script>
 

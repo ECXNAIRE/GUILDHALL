@@ -8,7 +8,7 @@ from database.initDB import insertUser, getUser, getUserName, updateProfile
 from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest
 import json
 from database.pledges import savePledges, getPledgesByQuestId, updatePledgeStatus
-from database.notifications import insertNotices, getNotice
+from database.notifications import insertNotices, getNotice,updateNotification, getUnreadNotificationsCount
 
 
 load_dotenv()
@@ -100,9 +100,12 @@ def mainPage():
     providerID = session["userDetails"]["provider_id"]
     userDetails = getUser(providerID)
 
+    userID = userDetails["user_id"]
+
     return render_template(
         "mainPage.html",
-        user=userDetails
+        user=userDetails,
+        unreadCount=getUnreadNotificationsCount(userID)
         )
 
 
@@ -207,7 +210,8 @@ def pledges():
 def noticePage():
     notices = getNotice(session["userDetails"]["user_id"])
 
-    print(notices) 
+    updateNotification(session["userDetails"]["user_id"])
+
 
     return render_template(
         "notificationsPage.html",
