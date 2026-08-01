@@ -1,4 +1,4 @@
-import { worldCanvas } from "./canvas.js";
+import { worldCanvas, worldCtx } from "./canvas.js";
 import { roughLine } from "./strokeEditor.js";
 import { state } from "./state.js";
 
@@ -6,13 +6,10 @@ export function questLayout(quests) {
     quests.sort((a, b) =>
         new Date(a.created_at) - new Date(b.created_at)
     );
+    const GAP = 150
 
-    const CARD_W = 380
-    const CARD_H = 180
-    const GAP = 40
 
     const latest = quests.length - 1
-
 
     quests.forEach((quest, i) => {
         if (i === latest) {
@@ -22,40 +19,77 @@ export function questLayout(quests) {
             return
         }
 
+        if (!quest.width) {
+            const size = getQuestSize(worldCtx, quest)
+
+            quest.width = size.width
+            quest.height = size.height
+        }
+
+
+        const currentWidth = quest.width;
+        const currentHeight = quest.height;
+
         const seed = new Date(quest.created_at).getTime()
 
-        let tries = 0
+        const ANGLE_STEP = Math.PI / 18
+        const RADIUS_STEP = 90
 
-        while (tries < 300) {
-            const angle = seededRandom(seed + tries) * Math.PI * 2
-            const distance = 100 + seededRandom(seed + tries + 100) * 450
+        let maxRadius = 6000
+        let startRadius = 250
 
-            const x = Math.cos(angle) * distance
-            const y = Math.sin(angle) * distance
+        let placedSuccessfully = false
 
-            let overlaps = false
+        while (!placedSuccessfully) {
+            for (
+                let radius = startRadius;
+                radius <= maxRadius && !placedSuccessfully;
+                radius += RADIUS_STEP
+            ) {
+                const angleOffset = seededRandom(seed) * Math.PI * 2
 
-            for (const placed of quests.slice(0, i)) {
-                if (!placed.hasOwnProperty("x")) continue;
-
-                if (
-                    Math.abs(x - placed.x) < CARD_W + GAP &&
-                    Math.abs(y - placed.y) < CARD_H + GAP
+                for (let angle = 0;
+                    angle < Math.PI * 2;
+                    angle += ANGLE_STEP
                 ) {
-                    overlaps = true;
-                    break;
+                    const finalAngle = angle + angleOffset
+                    const x = Math.cos(finalAngle) * radius
+                    const y = Math.sin(finalAngle) * radius
+
+                    let overlaps = false
+
+                    for (const placed of quests.slice(0, i)) {
+                        if (placed.x === undefined) continue
+
+                        const dx = x - placed.x
+                        const dy = y - placed.y
+
+                        const distance = Math.hypot(dx, dy)
+
+                        const minDistance = Math.max(currentWidth, currentHeight) / 2 +
+                            Math.max(placed.width, placed.height) / 2 +
+                            GAP
+
+
+                        if (distance < minDistance) {
+                            overlaps = true
+                            break
+                        }
+                    }
+
+                    if (!overlaps) {
+                        quest.x = x
+                        quest.y = y
+                        quest.rotation = (seededRandom(seed + 500) - 0.5) * 0.12
+
+                        placedSuccessfully = true
+                        break
+                    }
                 }
             }
-
-
-
-            tries++
-
-            if (!overlaps) {
-                quest.x = x;
-                quest.y = y;
-                quest.rotation = (seededRandom(seed + 500) - 0.5) * 0.12;
-                break;
+            if (!placedSuccessfully) {
+                startRadius = maxRadius + RADIUS_STEP
+                maxRadius += 1000
             }
         }
     })
@@ -78,44 +112,20 @@ export function drawQuestCard(ctx, quest) {
     let yOffset = 0
 
 
-    const width = 380 //FOR NOW ITS FIXED
-    const padding = 20
+    const {
+        width,
+        height,
+        titleLines,
+        descriptionLines
+    } = getQuestSize(ctx, quest);
+
     const seed = new Date(quest.created_at).getTime();
-
-    ctx.font = "bold 24px font1";
-    const titleLines = wrapText(ctx, quest.title, width - padding * 2);
-
-    ctx.font = "15px font1"
-
-    const descriptionLines = wrapTextLimited(
-        ctx,
-        quest.description,
-        width - padding * 2,
-        3
-    )
-
-    ctx.font = "24px font1";
-    const tagLineHeight = 22;
+    const padding = 20;
     const titleLineHeight = 30;
-    const titleGap = 18;
-    const tagGap = 18;
-    const bottomPadding = 18;
     const descriptionLineHeight = 20;
-    const descriptionGap = 15;
+    const tagLineHeight = 22;
 
 
-    const height =
-        padding +
-        titleLines.length * titleLineHeight +
-        titleGap +
-        descriptionLines.length * descriptionLineHeight +
-        descriptionGap +
-        quest.tags.length * tagLineHeight +
-        tagGap +
-        20 +
-        bottomPadding +
-        25 +
-        16
 
     quest.width = width;
     quest.height = height;
@@ -422,4 +432,50 @@ function wrapTextLimited(ctx, text, maxWidth, maxLines) {
     }
 
     return lines;
+}
+
+
+function getQuestSize(ctx, quest) {
+
+    const width = 380 //FOR NOW ITS FIXED
+    const padding = 20
+
+    ctx.font = "bold 24px font1";
+    const titleLines = wrapText(ctx, quest.title, width - padding * 2);
+
+    ctx.font = "15px font1"
+
+    const descriptionLines = wrapTextLimited(
+        ctx,
+        quest.description,
+        width - padding * 2,
+        3
+    )
+
+    ctx.font = "24px font1";
+    const tagLineHeight = 22;
+    const titleLineHeight = 30;
+    const titleGap = 18;
+    const tagGap = 18;
+    const bottomPadding = 18;
+    const descriptionLineHeight = 20;
+    const descriptionGap = 15;
+
+
+    const height =
+        padding +
+        titleLines.length * titleLineHeight +
+        titleGap +
+        descriptionLines.length * descriptionLineHeight +
+        descriptionGap +
+        quest.tags.length * tagLineHeight +
+        tagGap +
+        20 +
+        bottomPadding +
+        25 +
+        16
+
+
+
+    return { width, height, titleLines, descriptionLines }
 }
