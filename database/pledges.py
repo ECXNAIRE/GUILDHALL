@@ -89,3 +89,31 @@ def getMyPledges(userID):
     conn.close()
 
     return pledges
+
+
+
+
+def deletePledge(questID, pledgerID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+
+    cursor.execute("""
+    DELETE FROM quests WHERE quest_id = ? AND pledger_id = ?
+    """, (questID, pledgerID))
+
+    conn.commit()
+    conn.close()
+
+
+
+def deleteAll(questID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    DELETE FROM quests WHERE quest_id = ?
+    """, (questID,))
+
+    conn.commit()
+    conn.close()

@@ -5,9 +5,9 @@ import os
 from urllib.parse import urlencode
 import requests
 from database.initDB import insertUser, getUser, getUserName, updateProfile
-from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest
+from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest, updatePledgedTo, updateStatus
 import json
-from database.pledges import savePledges, getPledgesByQuestId, updatePledgeStatus, getMyPledges
+from database.pledges import savePledges, getPledgesByQuestId, updatePledgeStatus, getMyPledges, deleteAll, deletePledge
 from database.notifications import insertNotices, getNotice,updateNotification, getUnreadNotificationsCount
 
 
@@ -266,6 +266,9 @@ def acceptedPledge():
 
     insertNotices(pledgerID, title, body, "pledgeAccepted" )
     updatePledgeStatus(questID, "ACCEPTED")
+    updateStatus(questID, "PLEDGED")
+    updatePledgedTo(questID, pledgerID)
+    deleteAll(questID)
 
     return jsonify({"success": True})
 
@@ -285,6 +288,7 @@ def rejectedPledge():
 
     insertNotices(pledgerID, title, body, "pledgeRejected" )
     updatePledgeStatus(questID, "REJECTED")
+    deletePledge(questID, pledgerID)
 
     return jsonify({"success": True})
 

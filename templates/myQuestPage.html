@@ -178,6 +178,46 @@
             cursor: pointer;
             border-radius: 8px;
         }
+
+        #statusPanel {
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        #questStatus {
+            color: #F2DFC0;
+            border: 2px solid;
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-weight: bold;
+        }
+
+        #pledgedTo {
+            background: #355C7D;
+            color: #F2DFC0;
+            border: 2px solid #27445E;
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-weight: bold;
+        }
+
+        #questStatus.available {
+            background: #6B8E23;
+            border-color: #4F6918;
+        }
+
+        #questStatus.pledged {
+            background: #B8860B;
+            border-color: #8C6500;
+        }
+
+        #questStatus.unavailable {
+            background: #8B3A3A;
+            border-color: #5F2424;
+        }
     </style>
 </head>
 
@@ -209,6 +249,16 @@
                     GUILD:
                 </div>
             </div>
+
+            <div id="statusPanel">
+                <div id="questStatus">
+                    STATUS: AVAILABLE
+                </div>
+
+                <div id="pledgedTo">
+                    PLEDGED TO: NONE
+                </div>
+            </div>
         </div>
 
         <div id="pledgesDisplayArea">
@@ -238,6 +288,7 @@
         const title = document.getElementById("title").textContent = quest[1]
         const description = document.getElementById("description").textContent = quest[2]
 
+
         const tagsArea = document.getElementById("tagsArea")
 
         const tags = JSON.parse(quest[4]);
@@ -253,10 +304,32 @@
 
         const difficulty = document.getElementById("difficulty").textContent = quest[3]
 
-        const createdAt = document.getElementById("createdAt").textContent = `POSTED AT: ${quest[8]}`
+        const createdAt = document.getElementById("createdAt").textContent = `POSTED AT: ${quest[10]}`
         const guild = document.getElementById("guild").textContent = `GUILD: ${quest[5]}`
 
+        const status = document.getElementById("questStatus")
 
+        status.textContent = `STATUS: ${quest[8]}`
+
+        if (quest[8] === "AVAILABLE") {
+            status.classList.add("available")
+        } else if (quest[8] === "PLEDGED") {
+            status.classList.add("pledged")
+        } else if (quest[8] === "UNAVAILABLE") {
+            status.classList.add("unavailable")
+        }
+
+
+
+        const pledgedTo = document.getElementById("pledgedTo")
+
+
+        if (quest[9] == null) {
+            pledgedTo.style.display = "none"
+        } else {
+            pledgedTo.textContent = `PLEDGED TO: ${quest[9]}`
+
+        }
 
         const pledgesDisplayArea = document.getElementById("pledgesDisplayArea")
 
@@ -267,6 +340,10 @@
         const pledgeArea = document.getElementById("pledgeArea")
 
         pledgeArea.innerHTML = ""
+
+        if (quest[8] === "PLEDGED" || quest[8] !== "AVAILABLE") {
+            pledgesDisplayArea.style.display = "none"
+        }
 
 
         pledges.reverse().forEach(pledge => {

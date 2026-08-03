@@ -15,6 +15,8 @@ def createQuestTable():
     guild TEXT,
     creator TEXT,
     creator_id TEXT,
+    status TEXT,
+    pledged_to TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
 
@@ -32,9 +34,9 @@ def saveQuest(title, description, difficulty, tags, creator, guild, userID):
     cursor = conn.cursor()
 
     cursor.execute(""" 
-    INSERT INTO quests (quest_id, title, description, difficulty, tags, creator, guild, creator_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    """, (quest_id, title, description, difficulty, tags, creator, guild, userID))
+    INSERT INTO quests (quest_id, title, description, difficulty, tags, creator, guild, creator_id, status, pledged_to)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (quest_id, title, description, difficulty, tags, creator, guild, userID, "AVAILABLE", None))
 
     conn.commit()
     conn.close()
@@ -89,3 +91,35 @@ def getMyQuest(userID):
     quests = cursor.fetchall()
 
     return quests
+
+
+
+
+def updateStatus(questID, status):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+
+    cursor.execute("""
+    UPDATE quests SET status = ? WHERE quest_id = ?
+    """, (status, questID))
+
+    conn.commit()
+    conn.close()
+
+
+
+
+def updatePledgedTo(questID, pledgerID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    UPDATE quests SET pledged_to = ? WHERE quest_id = ? 
+    """, (pledgerID, questID))
+
+    conn.commit()
+    conn.close()
+
+
+        
