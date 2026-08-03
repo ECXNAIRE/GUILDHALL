@@ -122,4 +122,18 @@ def updatePledgedTo(questID, pledgerID):
     conn.close()
 
 
+
+def deleteQuest(questID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    DELETE FROM quests
+    WHERE quest_id = ?
+    """, (questID,))
+
+    conn.commit()
+    conn.close()
+    
+
         

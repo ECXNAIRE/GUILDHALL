@@ -5,7 +5,7 @@ import os
 from urllib.parse import urlencode
 import requests
 from database.initDB import insertUser, getUser, getUserName, updateProfile
-from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest, updatePledgedTo, updateStatus
+from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest, updatePledgedTo, updateStatus, deleteQuest
 import json
 from database.pledges import savePledges, getPledgesByQuestId, updatePledgeStatus, getMyPledges, deleteAll, deletePledge
 from database.notifications import insertNotices, getNotice,updateNotification, getUnreadNotificationsCount
@@ -188,6 +188,7 @@ def pledges():
         success = savePledges(masterID, pledgerID, questID)
         quest = getQuestByID(questID)
 
+
         questTitle = quest[1]
         body = body = (
                 f"<strong>{pledgerID}</strong> has pledged to undertake "
@@ -309,7 +310,11 @@ def mypledges():
     for pledge in pledges:
         questID = pledge[0]
 
-        questTitle = getQuestByID(questID)[1]
+        quest= getQuestByID(questID)
+        if quest is None:
+                    continue
+
+        questTitle = quest[1]
 
         result.append({
             "pledge": pledge,
@@ -334,6 +339,21 @@ def toggleQuestStatus():
         "success": True
     })
 
+
+
+
+@app.route("/deleteQuest", methods=["POST"])
+def questDeletion():
+    data = request.get_json()
+
+    questID = data["questID"]
+
+    deleteQuest(questID)
+
+    return jsonify({
+            "success": True
+        })
+    
 
 
 if (__name__) == "__main__":

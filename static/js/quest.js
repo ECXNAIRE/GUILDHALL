@@ -171,7 +171,7 @@ confirmPledge.addEventListener("click", async () => {
         return
     }
 
-    if(state.selectedQuest.status !== "AVAILABLE") {
+    if (state.selectedQuest.status !== "AVAILABLE") {
         showToast("THE QUEST IS NO LONGER AVAILABLE FOR PLEDGING.", "error")
         return
     }
@@ -302,10 +302,20 @@ myPledgesArea.addEventListener("click", async () => {
     })
 
     const data = await response.json();
+    console.log(data);
+    console.log("Length:", data.length);
 
     const myPledgesContent = document.getElementById("myPledgesContent")
 
+
+
     myPledgesContent.innerHTML = ""
+
+
+
+    if (data.length === 0) {
+        myPledgesContent.textContent = "YOU HAVEN'T PLEDGED TO ANY QUEST."
+    }
 
 
     data.reverse().forEach(item => {

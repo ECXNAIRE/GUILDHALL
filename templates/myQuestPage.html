@@ -520,6 +520,29 @@
 
 
 
+        const deleteQuest = document.getElementById("deleteQuest")
+
+        deleteQuest.addEventListener("click",async () => {
+            const response = await fetch("/deleteQuest", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    questID: quest[0]
+                })
+            })
+
+            const data = await response.json()
+
+            if(data.success) {
+                window.location.href = "/main";
+            }
+
+        })
+
+
+
 
 
 
