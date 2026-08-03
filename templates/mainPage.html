@@ -1280,10 +1280,31 @@
         const audio = document.getElementById("bgMusic")
         const audioExpand = document.getElementById("audioExpand")
         const audioMenu = document.getElementById("audioMenu")
+        const audioIcon = document.getElementById("audioIcon")
 
 
         let muted = true
 
+        const savedSong = localStorage.getItem("bgMusic");
+        const savedMuted = localStorage.getItem("bgMuted");
+
+        if (savedSong) {
+            audio.src = `../static/audio/${savedSong}`
+        }
+
+        if (savedMuted !== null) {
+            muted = savedMuted === "true"
+        }
+
+
+        audioIcon.classList.toggle("muted", muted)
+
+
+        audio.load();
+
+        if (!muted && savedSong) {
+            audio.play().catch(() => { });
+        }
 
         audioExpand.addEventListener("click", () => {
             audioMenu.classList.toggle("show")
@@ -1295,6 +1316,10 @@
                 const song = option.dataset.song
 
                 audio.src = `../static/audio/${song}`
+                audio.load();
+                localStorage.setItem("bgMusic", song);
+
+                audio.currentTime = 0
 
                 if (!muted) {
                     audio.play()
@@ -1304,12 +1329,13 @@
             })
         })
 
-        const audioIcon = document.getElementById("audioIcon")
+
 
         audioIcon.addEventListener("click", () => {
 
             muted = !muted
-            audioIcon.classList.toggle("muted")
+            localStorage.setItem("bgMuted", muted);
+            audioIcon.classList.toggle("muted", muted)
 
             if (muted) {
                 audio.pause()

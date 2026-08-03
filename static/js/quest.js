@@ -166,6 +166,12 @@ confirmPledge.addEventListener("click", async () => {
     const masterID = state.selectedQuest.creator_id
 
 
+    if (pledgerID === masterID) {
+        showToast("You cannot pledge your own quest.", "error")
+        return
+    }
+
+
 
     const response = await fetch("/pledges", {
         method: "POST",
