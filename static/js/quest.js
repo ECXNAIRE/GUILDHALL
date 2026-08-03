@@ -167,7 +167,12 @@ confirmPledge.addEventListener("click", async () => {
 
 
     if (pledgerID === masterID) {
-        showToast("You cannot pledge your own quest.", "error")
+        showToast("YOU CANNOT PLEDGE TO YOUR OWN QUEST.", "error")
+        return
+    }
+
+    if(state.selectedQuest.status !== "AVAILABLE") {
+        showToast("THE QUEST IS NO LONGER AVAILABLE FOR PLEDGING.", "error")
         return
     }
 

@@ -366,11 +366,37 @@ export function drawQuestCard(ctx, quest) {
 
     ctx.font = "bold 16px font1";
 
+    ctx.texAlign = "left"
+    ctx.fillStyle = "#5E3B1A"
+
     ctx.fillText(
         quest.difficulty,
         -width / 2 + padding,
         y
     );
+
+    ctx.textAlign = "right"
+    switch(quest.status) {
+        case "AVAILABLE":
+            ctx.fillStyle = "#4F8A10"
+            break
+
+        case "PLEDGED":
+            ctx.fillStyle = "#C28A00"
+            break
+
+        case "UNAVAILABLE":
+            ctx.fillStyle = "#B22222"
+            break
+    }
+
+    ctx.fillText (
+        quest.status,
+        width / 2 - padding,
+        y
+    )
+
+    ctx.texAlign = "left"
     ctx.restore()
 
 }
