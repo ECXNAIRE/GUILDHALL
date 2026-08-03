@@ -23,6 +23,7 @@ def initTable():
     discord TEXT,
     linkedIn TEXT,
     github TEXT,
+    points INTEGER DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
@@ -98,6 +99,21 @@ def updateProfile(username, bio, skills, discord, linkedIn, github, userId):
     UPDATE users SET user_name = ?, bio = ?, skills = ?, discord = ?, linkedIn = ?, github = ?
     WHERE user_id = ?
     """, (username, bio, skills, discord, linkedIn, github, userId))
+
+
+    conn.commit()
+    conn.close()
+
+
+
+
+def updatePoints(userID, points):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    UPDATE users SET points = ? WHERE user_id = ?
+    """, (points, userID))
 
 
     conn.commit()

@@ -407,6 +407,24 @@
             background: #8B3A3A;
             border: 2px solid #5F2424;
         }
+
+        #userPoints {
+            position: absolute;
+            top: 285px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #9B6A32;
+            color: #F2DFC0;
+            border: 2px solid #6F4721;
+            border-radius: 999px;
+            padding: 8px 18px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
     </style>
 </head>
 
@@ -417,6 +435,7 @@
         </div>
 
         <div id="userName"></div>
+        <div id="userPoints"></div>
 
         <div id="userInfo">
             <div id="userBio">Passionate developer who enjoys turning ideas into polished, functional projects. I love
@@ -506,6 +525,8 @@
 
         const userProfile = {{ userProfile | tojson | safe }}
         const userName = document.getElementById("userName")
+        const userPoints = document.getElementById("userPoints")
+        userPoints.textContent = `GUILD POINTS: ${userProfile.points}`
         const userBio = document.getElementById("userBio")
         // const skills = document.getElementById("skills")
         const profileImg = document.getElementById("profileImg")

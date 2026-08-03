@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 from urllib.parse import urlencode
 import requests
-from database.initDB import insertUser, getUser, getUserName, updateProfile
+from database.initDB import insertUser, getUser, getUserName, updateProfile, updatePoints
 from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest, updatePledgedTo, updateStatus, deleteQuest
 import json
 from database.pledges import savePledges, getPledgesByQuestId, updatePledgeStatus, getMyPledges, deleteAll, deletePledge
@@ -363,8 +363,24 @@ def completedQuest():
     data = request.get_json()
 
     questID = data["questID"]
+    pledgerID = data["pledgedTo"]
+    difficulty = data["difficulty"]
+
+
+    if difficulty == "LOW":
+        points = 10
+    elif difficulty == "MEDIUM":
+        points = 25
+    elif difficulty == "HARD":
+        points = 50
+    elif difficulty == "LEGENDARY":
+        points = 100
 
     updateStatus(questID, "COMPLETED")
+
+    print(type(pledgerID))
+
+    updatePoints(pledgerID, points)
 
     return jsonify({
         "success": True
