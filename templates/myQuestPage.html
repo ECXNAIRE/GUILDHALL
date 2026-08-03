@@ -218,6 +218,60 @@
             background: #8B3A3A;
             border-color: #5F2424;
         }
+
+        #statusBtn {
+            width: auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            height: 42px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            color: #F2DFC0;
+            font-weight: bold;
+        }
+
+        .markUnavailable {
+            background: #B8860B;
+            border: 2px solid #8C6500;
+        }
+
+        .markAvailable {
+            background: #6B8E23;
+            border: 2px solid #4F6918;
+        }
+
+        #deleteQuest {
+            width: 190px;
+            height: 42px;
+            background: #8B3A3A;
+            color: #F2DFC0;
+            border: 2px solid #5F2424;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+            border-radius: 8px;
+        }
+
+        #deleteQuest:hover {
+            background: #A44444;
+            border-color: #742D2D;
+        }
+
+        #deleteQuest:active {
+            background: #6E2B2B;
+            transform: translateY(1px);
+        }
+
+        #operationBlock {
+            width: 70%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            margin-top: 25px;
+        }
     </style>
 </head>
 
@@ -258,6 +312,11 @@
                 <div id="pledgedTo">
                     PLEDGED TO: NONE
                 </div>
+            </div>
+
+            <div id="operationBlock">
+                <button id="statusBtn"></button>
+                <button id="deleteQuest">DELETE QUEST</button>
             </div>
         </div>
 
@@ -414,6 +473,55 @@
 
             pledgeArea.appendChild(card);
         });
+
+
+        const statusBtn = document.getElementById("statusBtn")
+        if (quest[8] === "AVAILABLE") {
+            statusBtn.textContent = "MARK AS UNAVAILABLE"
+            statusBtn.classList.add("markUnavailable")
+        } else if (quest[8] === "UNAVAILABLE") {
+            statusBtn.textContent = "MARK AS AVAILABLE"
+            statusBtn.classList.add("markAvailable")
+        } else if (quest[8] === "PLEDGED") {
+            statusBtn.style.display = "none"
+        }
+
+
+
+
+        statusBtn.addEventListener("click", async () => {
+            let questStatus
+
+
+            if (quest[8] === "AVAILABLE") {
+                questStatus = "UNAVAILABLE"
+            } else if (quest[8] === "UNAVAILABLE") {
+                questStatus = "AVAILABLE"
+            }
+
+
+            const response = await fetch("/toggleQuestStatus", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    questID: quest[0],
+                    status: questStatus
+                })
+            })
+
+            const data = await response.json();
+
+            if (data.success) {
+                window.location.reload();
+            }
+        })
+
+
+
+
+
 
     </script>
 

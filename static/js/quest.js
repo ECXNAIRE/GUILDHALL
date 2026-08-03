@@ -253,7 +253,7 @@ myQuestsArea.addEventListener("click", async () => {
 
         card.innerHTML = `
             <div class="myQuestCreatedAt">
-                Created On: ${quest[8]}
+                Created On: ${quest[10]}
             </div>
 
             <div class="myQuestTitle">

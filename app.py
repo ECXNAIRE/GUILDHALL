@@ -320,6 +320,22 @@ def mypledges():
 
 
 
+
+@app.route("/toggleQuestStatus", methods=["POST"])
+def toggleQuestStatus():
+    data = request.get_json()
+    questID = data["questID"]
+    status = data["status"]
+
+    updateStatus(questID, status)
+
+
+    return jsonify({
+        "success": True
+    })
+
+
+
 if (__name__) == "__main__":
     app.run(debug=True)
 
