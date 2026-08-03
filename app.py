@@ -311,6 +311,7 @@ def mypledges():
         questID = pledge[0]
 
         quest= getQuestByID(questID)
+
         if quest is None:
                     continue
 
@@ -349,11 +350,26 @@ def questDeletion():
     questID = data["questID"]
 
     deleteQuest(questID)
+    deleteAll(questID)
 
     return jsonify({
             "success": True
         })
     
+
+
+@app.route("/completedQuest", methods=["POST"])
+def completedQuest():
+    data = request.get_json()
+
+    questID = data["questID"]
+
+    updateStatus(questID, "COMPLETED")
+
+    return jsonify({
+        "success": True
+    })
+
 
 
 if (__name__) == "__main__":

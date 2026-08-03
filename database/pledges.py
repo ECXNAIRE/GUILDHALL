@@ -112,7 +112,7 @@ def deleteAll(questID):
     cursor = conn.cursor()
 
     cursor.execute("""
-    DELETE FROM quests WHERE quest_id = ?
+    DELETE FROM pledges WHERE quest_id = ?
     """, (questID,))
 
     conn.commit()

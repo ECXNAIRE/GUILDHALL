@@ -219,6 +219,12 @@
             border-color: #5F2424;
         }
 
+
+        #questStatus.completed {
+            background: #2E8B57;
+            border-color: #20603D;
+        }
+
         #statusBtn {
             width: auto;
             padding-left: 20px;
@@ -272,6 +278,31 @@
             gap: 12px;
             margin-top: 25px;
         }
+
+        #completedBtn {
+            width: 170px;
+            height: 42px;
+            background: #2E8B57;
+            color: #F2DFC0;
+            border: 2px solid #20603D;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+            border-radius: 8px;
+            display: none;
+        }
+
+
+        #completedBtn:hover {
+            background: #379C63;
+            border-color: #285E43;
+        }
+
+        #completedBtn:active {
+            background: #246b45;
+            transform: translateY(1px);
+        }
     </style>
 </head>
 
@@ -315,6 +346,7 @@
             </div>
 
             <div id="operationBlock">
+                <button id="completedBtn">COMPLETED</button>
                 <button id="statusBtn"></button>
                 <button id="deleteQuest">DELETE QUEST</button>
             </div>
@@ -368,6 +400,8 @@
 
         const status = document.getElementById("questStatus")
 
+
+        const deleteQuest = document.getElementById("deleteQuest")
         status.textContent = `STATUS: ${quest[8]}`
 
         if (quest[8] === "AVAILABLE") {
@@ -376,6 +410,9 @@
             status.classList.add("pledged")
         } else if (quest[8] === "UNAVAILABLE") {
             status.classList.add("unavailable")
+        } else if (quest[8] === "COMPLETED") {
+            status.classList.add("completed");
+            deleteQuest.style.display = "none"
         }
 
 
@@ -447,7 +484,7 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    console.log("Accepted successfully");
+                    window.location.reload()
                 }
             });
 
@@ -466,8 +503,7 @@
 
                 const data = await response.json();
                 if (data.success) {
-                    console.log("Rejected successfully");
-                    card.remove()
+                    window.location.reload()
                 }
             })
 
@@ -483,6 +519,8 @@
             statusBtn.textContent = "MARK AS AVAILABLE"
             statusBtn.classList.add("markAvailable")
         } else if (quest[8] === "PLEDGED") {
+            statusBtn.style.display = "none"
+        } else {
             statusBtn.style.display = "none"
         }
 
@@ -519,10 +557,7 @@
         })
 
 
-
-        const deleteQuest = document.getElementById("deleteQuest")
-
-        deleteQuest.addEventListener("click",async () => {
+        deleteQuest.addEventListener("click", async () => {
             const response = await fetch("/deleteQuest", {
                 method: "POST",
                 headers: {
@@ -535,13 +570,39 @@
 
             const data = await response.json()
 
-            if(data.success) {
+            if (data.success) {
                 window.location.href = "/main";
             }
 
         })
 
 
+        const completedBtn = document.getElementById("completedBtn")
+
+        if (quest[8] === "PLEDGED") {
+            completedBtn.style.display = "block";
+        } else {
+            completedBtn.style.display = "none";
+        }
+
+        completedBtn.addEventListener("click", async () => {
+            const response = await fetch("/completedQuest", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    questID: quest[0]
+                })
+            })
+
+            const data = await response.json()
+
+            if (data.success) {
+                window.location.reload();
+            }
+
+        })
 
 
 
