@@ -153,9 +153,9 @@
         #githubBtn {
             width: 170px;
             height: 42px;
-            background: #2F2F2F;
+            background: #6A5A4A;
+            border: 2px solid #4B3C2F;
             color: #F2DFC0;
-            border: 2px solid #1C1C1C;
             border-radius: 10px;
             font-size: 15px;
             font-weight: bold;
@@ -164,20 +164,16 @@
         }
 
         #githubBtn:hover {
-            background: #3B3B3B;
-        }
-
-        #githubBtn:active {
-            background: #1F1F1F;
-            transform: translateY(1px);
+            background: #5A4B3C;
+            border-color: #3A2E24;
         }
 
         #linkedInBtn {
             width: 170px;
             height: 42px;
-            background: #0A66C2;
-            color: white;
-            border: 2px solid #084B91;
+            background: #4A6C8C;
+            border: 2px solid #2F4F6B;
+            color: #F2DFC0;
             border-radius: 10px;
             font-size: 15px;
             font-weight: bold;
@@ -186,41 +182,53 @@
         }
 
         #linkedInBtn:hover {
-            background: #1577D4;
+            background: #5B7FA2;
+            border-color: #3A5D7C;
         }
 
-        #linkedInBtn:active {
-            background: #084B91;
-            transform: translateY(1px);
-        }
 
         #discordBtn {
             width: 170px;
             height: 42px;
-            background: #5865F2;
-            color: white;
-            border: 2px solid #3F4CCF;
-            border-radius: 10px;
+            background: #6C5A8D;
+            border: 2px solid #4E3F6B;
+            color: #F2DFC0;
             font-size: 15px;
             font-weight: bold;
             cursor: pointer;
             transition: .2s ease;
+            border-radius: 10px;
         }
 
         #discordBtn:hover {
-            background: #6A75F7;
+            background: #7A68A0;
+            border-color: #5C4A7A;
         }
 
-        #discordBtn:active {
-            background: #3F4CCF;
-            transform: translateY(1px);
-        }
 
         #userSocials {
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-evenly;
+        }
+
+        #selectedSkillsDisplay {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .skill {
+            background: #9B6A32;
+            color: #F2DFC0;
+            padding: 6px 12px;
+            display: inline-flex;
+            align-items: center;
+            border: 2px solid #6F4721;
+            border-radius: 10px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -260,6 +268,88 @@
         </div>
     </div>
 
+
+    <script>
+        const user = {{ user | tojson | safe }};
+
+        const userData = user[0]
+
+        const profileImg = document.getElementById("profileImg")
+        profileImg.src = userData[5]
+
+        const userName = document.getElementById("userName")
+        userName.textContent = userData[3]
+
+
+        const userBio = document.getElementById("userBio")
+
+        if (userData[6] === null) {
+            userBio.style.display = "none"
+        } else {
+            userBio.textContent = userData[6]
+        }
+
+
+        const userSkills = document.getElementById("userSkills")
+        const selectedSkillsDisplay = document.getElementById("selectedSkillsDisplay");
+
+        if (userData[7] === null) {
+            document.getElementById("userSkills").style.display = "none";
+        } else {
+            const skills = JSON.parse(userData[7]);
+
+            skills.forEach(skill => {
+                const chip = document.createElement("div");
+                chip.className = "skill";
+                chip.textContent = skill;
+
+                selectedSkillsDisplay.appendChild(chip);
+            });
+        }
+
+
+        const githubBtn = document.getElementById("githubBtn")
+        const linkedInBtn = document.getElementById("linkedInBtn")
+        const discordBtn = document.getElementById("discordBtn")
+
+        if (!userData[8]) {
+            discordBtn.style.display = "none"
+        } else {
+            discordBtn.addEventListener("click", () => {
+                window.open(userData[10], "_blank")
+            })
+        }
+
+        if (!userData[9]) {
+            linkedInBtn.style.display = "none"
+        } else {
+            linkedInBtn.addEventListener("click", () => {
+                window.open(userData[10], "_blank")
+            })
+        }
+
+
+        if (!userData[10]) {
+            githubBtn.style.display = "none"
+        } else {
+            githubBtn.addEventListener("click", () => {
+                window.open(userData[10], "_blank")
+            })
+        }
+
+
+
+        const userSocials = document.getElementById("userSocials")
+
+        if (userData[8] === null && userData[9] === null && userData[10] === null) {
+            userSocials.style.display = "none"
+        }
+
+
+        const userPoints = document.getElementById("userPoints")
+        userPoints.textContent = `GUILD POINTS: ${userData[11]}`
+
+    </script>
 
 </body>
 

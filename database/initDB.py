@@ -118,3 +118,19 @@ def updatePoints(userID, points):
 
     conn.commit()
     conn.close()
+
+
+
+def getUserWithUserID(userID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT * FROM users WHERE user_id = ?
+    """, (userID,))
+
+    user = cursor.fetchall()
+
+    conn.close()
+
+    return user

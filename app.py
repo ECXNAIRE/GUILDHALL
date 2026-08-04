@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 from urllib.parse import urlencode
 import requests
-from database.initDB import insertUser, getUser, getUserName, updateProfile, updatePoints
+from database.initDB import insertUser, getUser, getUserName, updateProfile, updatePoints, getUserWithUserID
 from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest, updatePledgedTo, updateStatus, deleteQuest
 import json
 from database.pledges import savePledges, getPledgesByQuestId, updatePledgeStatus, getMyPledges, deleteAll, deletePledge
@@ -390,10 +390,14 @@ def completedQuest():
 
 
 
-@app.route("/viewProfile/<userID>", methods=["POST"])
+@app.route("/viewProfile/<userID>")
 def viewProfile(userID):
+    user = getUserWithUserID(userID)
 
-    return 
+    return render_template(
+        "viewprofilePage.html",
+        user=user
+    )
 
 if (__name__) == "__main__":
     app.run(debug=True)

@@ -143,7 +143,7 @@
         }
 
         .pledgeInfo {
-            flex: 6;
+            flex: 5;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -152,11 +152,12 @@
         }
 
         .btnsArea {
-            flex: 4;
+            flex: 5;
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-evenly;
+            gap: 12px;
         }
 
         .acceptBtn {
@@ -178,6 +179,17 @@
             cursor: pointer;
             border-radius: 8px;
         }
+
+        .viewProfileBtn {
+            width: 150px;
+            height: 40px;
+            background: #4A6C8C;
+            border: 2px solid #2F4F6B;
+            color: #F7EED2;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
 
         #statusPanel {
             width: 70%;
@@ -458,6 +470,7 @@
                 </div>
 
                 <div class="btnsArea">
+                    <button class="viewProfileBtn">VIEW PROFILE</button>
                     <button class="acceptBtn">ACCEPT</button>
                     <button class="rejectBtn">REJECT</button>
                 </div>
@@ -505,6 +518,12 @@
                 if (data.success) {
                     window.location.reload()
                 }
+            })
+
+            const viewProfile = card.querySelector(".viewProfileBtn")
+
+            viewProfile.addEventListener("click", () => {
+                window.location.href = `/viewProfile/${pledge[2]}`;
             })
 
             pledgeArea.appendChild(card);
