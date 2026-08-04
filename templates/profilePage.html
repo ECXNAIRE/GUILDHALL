@@ -472,6 +472,11 @@
             font-weight: bold;
             color: #7A4E1F;
         }
+
+        #profileDisplayArea {
+            position: relative;
+            min-height: 1050px;
+        }
     </style>
 </head>
 
@@ -764,8 +769,33 @@
             }, 3000);
         }
 
+        const questCount = {{ questCount | tojson }};
+        const completedQuest = {{ completedQuest | tojson }};
+        const activeQuests = {{ activeQuests | tojson }};
+        const pledgesCount = {{ pledgesCount | tojson }};
 
 
+        const questMade = document.getElementById("questMade");
+        const questCompleted = document.getElementById("questCompleted");
+        const guildPoints = document.getElementById("guildPoints");
+        const activeQuest = document.getElementById("activeQuest");
+        const pledgesStat = document.getElementById("pledgesStat");
+        const successRate = document.getElementById("successRate");
+
+
+        questMade.textContent = questCount;
+        questCompleted.textContent = completedQuest;
+        guildPoints.textContent = userProfile.points;
+        activeQuest.textContent = activeQuests;
+        pledgesStat.textContent = pledgesCount;
+
+
+        let rate = 0
+        if (completedQuest > 0) {
+            rate = Math.round((completedQuest / (completedQuest + activeQuests)) * 100)
+        }
+
+        successRate.textContent = `${rate}%`
     </script>
 </body>
 

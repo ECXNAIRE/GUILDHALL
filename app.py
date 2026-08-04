@@ -5,9 +5,9 @@ import os
 from urllib.parse import urlencode
 import requests
 from database.initDB import insertUser, getUser, getUserName, updateProfile, updatePoints, getUserWithUserID
-from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest, updatePledgedTo, updateStatus, deleteQuest
+from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest, updatePledgedTo, updateStatus, deleteQuest, getActiveQuests, getCompletedCount, getQuestCounts
 import json
-from database.pledges import savePledges, getPledgesByQuestId, updatePledgeStatus, getMyPledges, deleteAll, deletePledge
+from database.pledges import savePledges, getPledgesByQuestId, updatePledgeStatus, getMyPledges, deleteAll, deletePledge, getPledgesCount
 from database.notifications import insertNotices, getNotice,updateNotification, getUnreadNotificationsCount
 
 
@@ -164,12 +164,25 @@ def profilePage():
 
     providerId = session["userDetails"]["provider_id"]
     userDetails = getUser(providerId)
+    userID = userDetails["user_id"]
+    print(userID)
+
+    pledgesCount = getPledgesCount(userID)
+    questCount = getQuestCounts(userID)
+    activeQuests = getActiveQuests(userID)
+    completedQuest = getCompletedCount(userID)
+
+    print(pledgesCount, questCount, activeQuests, completedQuest)
 
 
 
     return render_template(
         "profilePage.html",
-        userProfile=userDetails
+        userProfile=userDetails,
+        pledgesCount=pledgesCount,
+        questCount=questCount,
+        activeQuests=activeQuests,
+        completedQuest=completedQuest
         )
 
 
@@ -393,10 +406,19 @@ def completedQuest():
 @app.route("/viewProfile/<userID>")
 def viewProfile(userID):
     user = getUserWithUserID(userID)
+    
+    pledgesCount = getPledgesCount(userID)
+    questCount = getQuestCounts(userID)
+    activeQuests = getActiveQuests(userID)
+    completedQuest = getCompletedCount(userID)
 
     return render_template(
         "viewprofilePage.html",
-        user=user
+        user=user,
+        pledgesCount=pledgesCount,
+        questCount=questCount,
+        activeQuests=activeQuests,
+        completedQuest=completedQuest
     )
 
 if (__name__) == "__main__":

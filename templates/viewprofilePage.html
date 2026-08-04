@@ -230,6 +230,57 @@
             border-radius: 10px;
             cursor: pointer;
         }
+
+        #statsArea {
+            position: absolute;
+            top: 700px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            margin: 40px 20px 80px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+
+        .statsCard {
+            background: #F3E5BE;
+            border-top: 2px solid #D8B46A;
+            border-left: 2px solid #D8B46A;
+            border-right: 4px solid #4B2E18;
+            border-bottom: 4px solid #4B2E18;
+            border-radius: 12px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.15s ease;
+        }
+
+        .statsCard:hover {
+            transform: translateY(-3px);
+        }
+
+        .statsTitle {
+            font-size: 14px;
+            color: #6F4721;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .statsValue {
+            font-size: 34px;
+            font-weight: bold;
+            color: #7A4E1F;
+        }
+
+        #profileDisplayArea {
+            position: relative;
+            min-height: 1050px;
+        }
     </style>
 </head>
 
@@ -264,6 +315,38 @@
                 <div class="socialsClass" id="discordDisplayArea">
                     <button id="discordBtn">DISCORD</button>
                 </div>
+            </div>
+        </div>
+
+        <div id="statsArea">
+            <div class="statsCard">
+                <div class="statsTitle">Quests Made</div>
+                <div class="statsValue" id="questMade">0</div>
+            </div>
+
+            <div class="statsCard">
+                <div class="statsTitle">Completed</div>
+                <div class="statsValue" id="questCompleted">0</div>
+            </div>
+
+            <div class="statsCard">
+                <div class="statsTitle">Guild Points</div>
+                <div class="statsValue" id="guildPoints">0</div>
+            </div>
+
+            <div class="statsCard">
+                <div class="statsTitle">Active Quest</div>
+                <div class="statsValue" id="activeQuest">0</div>
+            </div>
+
+            <div class="statsCard">
+                <div class="statsTitle">Pledges</div>
+                <div class="statsValue" id="pledgesStat">0</div>
+            </div>
+
+            <div class="statsCard">
+                <div class="statsTitle">Success Rate</div>
+                <div class="statsValue" id="successRate">0%</div>
             </div>
         </div>
     </div>
@@ -348,6 +431,35 @@
 
         const userPoints = document.getElementById("userPoints")
         userPoints.textContent = `GUILD POINTS: ${userData[11]}`
+
+
+        const questCount = {{ questCount | tojson }};
+        const completedQuest = {{ completedQuest | tojson }};
+        const activeQuests = {{ activeQuests | tojson }};
+        const pledgesCount = {{ pledgesCount | tojson }};
+
+
+        const questMade = document.getElementById("questMade");
+        const questCompleted = document.getElementById("questCompleted");
+        const guildPoints = document.getElementById("guildPoints");
+        const activeQuest = document.getElementById("activeQuest");
+        const pledgesStat = document.getElementById("pledgesStat");
+        const successRate = document.getElementById("successRate");
+
+
+        questMade.textContent = questCount;
+        questCompleted.textContent = completedQuest;
+        guildPoints.textContent = userData[11];
+        activeQuest.textContent = activeQuests;
+        pledgesStat.textContent = pledgesCount;
+
+
+        let rate = 0
+        if (completedQuest > 0) {
+            rate = Math.round((completedQuest / (completedQuest + activeQuests)) * 100)
+        }
+
+        successRate.textContent = `${rate}%`
 
     </script>
 
