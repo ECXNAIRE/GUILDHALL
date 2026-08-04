@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUILDHALL</title>
+    <style>
+        @font-face {
+            font-family: "font1";
+            src: url("../static/fonts/Excalifont-Regular.woff2") format("woff2");
+        }
+
+        * {
+            font-family: font1;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            user-select: none;
+            overflow-x: hidden;
+            overflow-y: auto;
+            font-family: font1;
+        }
+
+        body::-webkit-scrollbar,
+        #profileEditContainer::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        body::-webkit-scrollbar-track,
+        #profileEditContainer::-webkit-scrollbar-track {
+            background: #D8C08F;
+            border-radius: 10px;
+        }
+
+        body::-webkit-scrollbar-thumb,
+        #profileEditContainer::-webkit-scrollbar-thumb {
+            background: #7A4F25;
+            border-radius: 10px;
+        }
+
+        body::-webkit-scrollbar-thumb:hover,
+        #profileEditContainer::-webkit-scrollbar-thumb:hover {
+            background: #5E3B1A;
+        }
+
+        body {
+            font-family: font1;
+            background: #EAD7AE;
+        }
+
+        #profileDisplayArea {
+            width: 100%;
+            height: 100%;
+        }
+
+        #profilePic {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 2px solid #9A6A32;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 13px;
+            overflow: visible;
+        }
+
+        #profilePic>img:first-child {
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+        }
+
+        #userInfo {
+            position: absolute;
+            top: 350px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            gap: 50px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #userInfo label {
+            font-size: 20px;
+        }
+
+        #userName {
+            position: absolute;
+            top: 240px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 45px;
+            font-size: 20px;
+            border: 2px solid #9a6a3200;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            color: #7A4E1F
+        }
+
+        #userBio {
+            width: 100%;
+            height: auto;
+            border: 2px solid #9A6A32;
+            color: #7A4E1F;
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        #userSkills {
+            width: 100%;
+            min-height: 80px;
+            border: 2px solid #9a6a3200;
+            color: #7A4E1F;
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        #userSkills label {
+            color: black;
+        }
+
+        #userPoints {
+            position: absolute;
+            top: 285px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #9B6A32;
+            color: #F2DFC0;
+            border: 2px solid #6F4721;
+            border-radius: 999px;
+            padding: 8px 18px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        #githubBtn {
+            width: 170px;
+            height: 42px;
+            background: #2F2F2F;
+            color: #F2DFC0;
+            border: 2px solid #1C1C1C;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        #githubBtn:hover {
+            background: #3B3B3B;
+        }
+
+        #githubBtn:active {
+            background: #1F1F1F;
+            transform: translateY(1px);
+        }
+
+        #linkedInBtn {
+            width: 170px;
+            height: 42px;
+            background: #0A66C2;
+            color: white;
+            border: 2px solid #084B91;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        #linkedInBtn:hover {
+            background: #1577D4;
+        }
+
+        #linkedInBtn:active {
+            background: #084B91;
+            transform: translateY(1px);
+        }
+
+        #discordBtn {
+            width: 170px;
+            height: 42px;
+            background: #5865F2;
+            color: white;
+            border: 2px solid #3F4CCF;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        #discordBtn:hover {
+            background: #6A75F7;
+        }
+
+        #discordBtn:active {
+            background: #3F4CCF;
+            transform: translateY(1px);
+        }
+
+        #userSocials {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="profileDisplayArea">
+        <div id="profilePic">
+            <img id="profileImg">
+        </div>
+
+        <div id="userName">USERNAME</div>
+        <div id="userPoints">GUILD POINTS</div>
+
+        <div id="userInfo">
+            <div id="userBio">Passionate developer who enjoys turning ideas into polished, functional projects. I love
+                solving challenging problems, learning new technologies, and crafting clean, intuitive user experiences.
+                From frontend design to backend logic, I strive to build software that's fast, reliable, and enjoyable
+                to use. Always exploring, always improving, and always ready for the next quest.</div>
+
+
+            <div id="userSkills">
+                <label>Skills:</label>
+                <div id="selectedSkillsDisplay"></div>
+            </div>
+
+            <div id="userSocials">
+                <div class="socialsClass" id="githubDisplayArea">
+                    <button id="githubBtn">GITHUB</button>
+                </div>
+                <div class="socialsClass" id="linkedInDisplayArea">
+                    <button id="linkedInBtn">LINKEDIN</button>
+                </div>
+                <div class="socialsClass" id="discordDisplayArea">
+                    <button id="discordBtn">DISCORD</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

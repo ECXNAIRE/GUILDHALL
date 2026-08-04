@@ -376,7 +376,7 @@ export function drawQuestCard(ctx, quest) {
     );
 
     ctx.textAlign = "right"
-    switch(quest.status) {
+    switch (quest.status) {
         case "AVAILABLE":
             ctx.fillStyle = "#4F8A10"
             break
@@ -388,9 +388,13 @@ export function drawQuestCard(ctx, quest) {
         case "UNAVAILABLE":
             ctx.fillStyle = "#B22222"
             break
+
+        case "COMPLETED":
+            ctx.fillStyle = "#2846a1";
+            break;
     }
 
-    ctx.fillText (
+    ctx.fillText(
         quest.status,
         width / 2 - padding,
         y

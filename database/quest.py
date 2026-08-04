@@ -134,6 +134,4 @@ def deleteQuest(questID):
 
     conn.commit()
     conn.close()
-    
 
-        

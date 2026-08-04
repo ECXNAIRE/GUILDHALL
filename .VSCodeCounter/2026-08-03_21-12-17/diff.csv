@@ -1,0 +1,17 @@
+"filename", "language", "HTML", "Python", "JavaScript", "comment", "blank", "total"
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\app.py", "Python", 0, 89, 0, 0, 60, 149
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\database\initDB.py", "Python", 0, 9, 0, 0, 6, 15
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\database\notifications.py", "Python", 0, 21, 0, 0, 12, 33
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\database\pledges.py", "Python", 0, 46, 0, 0, 36, 82
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\database\quest.py", "Python", 0, 27, 0, 0, 21, 48
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\database\rough.py", "Python", 0, 0, 0, -2, -2, -4
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\static\js\boardChunks.js", "JavaScript", 0, 0, 57, 0, 38, 95
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\static\js\boardDecoration.js", "JavaScript", 0, 0, 28, 2, 24, 54
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\static\js\drawQuest.js", "JavaScript", 0, 0, 136, 0, 49, 185
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\static\js\quest.js", "JavaScript", 0, 0, 78, 0, 25, 103
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\static\js\renders.js", "JavaScript", 0, 0, 2, 0, 3, 5
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\templates\mainPage.html", "HTML", 264, 0, 0, 0, 66, 330
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\templates\myQuestPage.html", "HTML", 290, 0, 0, 0, 90, 380
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\templates\notificationsPage.html", "HTML", 12, 0, 0, 0, 3, 15
+"c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\templates\profilePage.html", "HTML", 57, 0, 0, 0, 14, 71
+"Total", "-", 623, 192, 301, 0, 445, 1561

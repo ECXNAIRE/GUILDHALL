@@ -1,0 +1,46 @@
+Date : 2026-08-03 21:12:17
+Directory : c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall
+Total : 15 files,  1116 codes, 0 comments, 445 blanks, all 1561 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| HTML       |          4 |        623 |          0 |        173 |        796 |
+| JavaScript |          5 |        301 |          2 |        139 |        442 |
+| Python     |          6 |        192 |         -2 |        133 |        323 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                  | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                     |         15 |      1,116 |          0 |        445 |      1,561 |
+| . (Files)                                                                             |          1 |         89 |          0 |         60 |        149 |
+| database                                                                              |          5 |        103 |         -2 |         73 |        174 |
+| static                                                                                |          5 |        301 |          2 |        139 |        442 |
+| static\js                                                                             |          5 |        301 |          2 |        139 |        442 |
+| templates                                                                             |          4 |        623 |          0 |        173 |        796 |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                              | language   | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\app.py                           | Python     |         89 |          0 |         60 |        149 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\database\initDB.py               | Python     |          9 |          0 |          6 |         15 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\database\notifications.py        | Python     |         21 |          0 |         12 |         33 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\database\pledges.py              | Python     |         46 |          0 |         36 |         82 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\database\quest.py                | Python     |         27 |          0 |         21 |         48 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\database\rough.py                | Python     |          0 |         -2 |         -2 |         -4 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\static\js\boardChunks.js         | JavaScript |         57 |          0 |         38 |         95 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\static\js\boardDecoration.js     | JavaScript |         28 |          2 |         24 |         54 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\static\js\drawQuest.js           | JavaScript |        136 |          0 |         49 |        185 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\static\js\quest.js               | JavaScript |         78 |          0 |         25 |        103 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\static\js\renders.js             | JavaScript |          2 |          0 |          3 |          5 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\templates\mainPage.html          | HTML       |        264 |          0 |         66 |        330 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\templates\myQuestPage.html       | HTML       |        290 |          0 |         90 |        380 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\templates\notificationsPage.html | HTML       |         12 |          0 |          3 |         15 |
+| c:\Users\prash\OneDrive\Desktop\Hackclub 2\GuildHall\templates\profilePage.html       | HTML       |         57 |          0 |         14 |         71 |
+| Total                                                                                 |            |      1,116 |          0 |        445 |      1,561 |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

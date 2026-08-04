@@ -388,6 +388,13 @@ def completedQuest():
 
 
 
+
+
+@app.route("/viewProfile/<userID>", methods=["POST"])
+def viewProfile(userID):
+
+    return 
+
 if (__name__) == "__main__":
     app.run(debug=True)
 
