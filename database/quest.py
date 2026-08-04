@@ -135,3 +135,49 @@ def deleteQuest(questID):
     conn.commit()
     conn.close()
 
+
+
+def getQuestCounts(userID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+
+    cursor.execute("""
+    SELECT COUNT(*) FROM quests WHERE creator_id = ?
+    """, (userID,))
+
+
+    questCount = cursor.fetchone()[0]
+
+    conn.close()
+    return questCount
+
+
+
+def getCompletedCount(userID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT COUNT(*) from quests WHERE pledged_to = ? AND status = ?
+    """, (userID, "COMPLETED"))
+
+    completedCount = cursor.fetchone()[0]
+
+    conn.close()
+    return completedCount
+
+
+
+
+def getActiveQuests(userID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+    cursor.execute("""
+    SELECT COUNT(*) FROM quests WHERE pledged_to = ? AND status = ?
+    """, (userID, "PLEDGED"))
+
+    activeQuest = cursor.fetchone()[0]
+
+    conn.close()
+    return activeQuest

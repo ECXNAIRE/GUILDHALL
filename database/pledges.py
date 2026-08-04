@@ -117,3 +117,18 @@ def deleteAll(questID):
 
     conn.commit()
     conn.close()
+
+
+
+def getPledgesCount(userID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""SELECT COUNT(*)
+        FROM pledges
+        WHERE pledger_id = ?""", (userID,))
+
+    pledgesCount = cursor.fetchone()[0]
+    conn.close()
+
+    return pledgesCount
