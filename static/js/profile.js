@@ -1,27 +1,12 @@
 import { state } from "./state.js";
+import { allTags } from "./allTags.js";
 
 
 const skillsSearch = document.getElementById("skillsSearch")
 const suggestionBox = document.getElementById("skills-suggestions")
 const selectedBox = document.getElementById("selectedskills")
 
-const allSkills = [
-    "Python",
-    "JavaScript",
-    "Frontend",
-    "Backend",
-    "React",
-    "Flask",
-    "Django",
-    "HTML",
-    "CSS",
-    "AI",
-    "Machine Learning",
-    "Database",
-    "DevOps",
-    "Mobile Dev"
-]
-
+const allSkills = allTags
 
 export let selectedSkills = []
 renderSelectedSkills()

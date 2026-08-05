@@ -1,4 +1,5 @@
 import { state } from "./state.js";
+import { allTags } from "./allTags.js";
 
 const suggestionBox = document.getElementById("tag-suggestions");
 const selectedBox = document.getElementById("selectedTags")
@@ -8,23 +9,6 @@ const questPopup = document.getElementById("questPopup")
 const overlay = document.getElementById("overlay")
 const displayPopup = document.getElementById("questDisplayPopup")
 
-
-const allTags = [
-    "Python",
-    "JavaScript",
-    "Frontend",
-    "Backend",
-    "React",
-    "Flask",
-    "Django",
-    "HTML",
-    "CSS",
-    "AI",
-    "Machine Learning",
-    "Database",
-    "DevOps",
-    "Mobile Dev"
-]
 
 let selectedTags = []
 
