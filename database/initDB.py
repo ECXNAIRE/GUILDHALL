@@ -1,12 +1,18 @@
 import sqlite3
 from helpers.userID import generateUserId, checkUserID
-conn = sqlite3.connect("database/database.db")
-cursor = conn.cursor()
+import os
+
+
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DB_PATH = os.path.join(BASE_DIR, "database", "database.db")
+
 
 
 
 def initTable():
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
 
@@ -43,7 +49,7 @@ def insertUser(email, provider, providerID, avatar):
         userID = generateUserId(providerID)
         username = userID
 
-        conn = sqlite3.connect("database/database.db")
+        conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
         cursor.execute("""
@@ -60,7 +66,7 @@ def insertUser(email, provider, providerID, avatar):
 
 
 def getUser(providerID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     
     conn.row_factory = sqlite3.Row 
     cursor = conn.cursor()
@@ -75,7 +81,7 @@ def getUser(providerID):
 
 
 def getUserName(userID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -92,7 +98,7 @@ def getUserName(userID):
 
 
 def updateProfile(username, bio, skills, discord, linkedIn, github, userId):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -108,7 +114,7 @@ def updateProfile(username, bio, skills, discord, linkedIn, github, userId):
 
 
 def updatePoints(userID, points):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -122,7 +128,7 @@ def updatePoints(userID, points):
 
 
 def getUserWithUserID(userID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""

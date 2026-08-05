@@ -1,9 +1,17 @@
 import sqlite3
+import os
+
+
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DB_PATH = os.path.join(BASE_DIR, "database", "database.db")
+
 
 
 
 def createNoticeTable():
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
 
@@ -25,7 +33,7 @@ def createNoticeTable():
 
 def insertNotices(receiver_id, title, body, type):
     createNoticeTable()
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -39,7 +47,7 @@ def insertNotices(receiver_id, title, body, type):
 
 
 def getNotice(receriverID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -55,7 +63,7 @@ def getNotice(receriverID):
 
 
 def updateNotification(receiverId):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -69,7 +77,7 @@ def updateNotification(receiverId):
 
 
 def getUnreadNotificationsCount(receiverID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -92,7 +100,7 @@ def getUnreadNotificationsCount(receiverID):
 
 
 def clearNotifications(userID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""

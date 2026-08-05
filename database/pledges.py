@@ -1,8 +1,16 @@
 import sqlite3
+import os
+
+
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DB_PATH = os.path.join(BASE_DIR, "database", "database.db")
+
 
 
 def pledgeTable():
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
 
@@ -23,7 +31,7 @@ def pledgeTable():
 def savePledges(masterID, pledgerID, questID):
     pledgeTable()
 
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
 
@@ -46,7 +54,7 @@ def savePledges(masterID, pledgerID, questID):
 
 
 def getPledgesByQuestId(questID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -62,7 +70,7 @@ def getPledgesByQuestId(questID):
 
 
 def updatePledgeStatus(questID, status):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -76,7 +84,7 @@ def updatePledgeStatus(questID, status):
 
 
 def getMyPledges(userID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -94,7 +102,7 @@ def getMyPledges(userID):
 
 
 def deletePledge(questID, pledgerID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
 
@@ -108,7 +116,7 @@ def deletePledge(questID, pledgerID):
 
 
 def deleteAll(questID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -121,7 +129,7 @@ def deleteAll(questID):
 
 
 def getPledgesCount(userID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""SELECT COUNT(*)
