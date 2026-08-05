@@ -85,4 +85,19 @@ def getUnreadNotificationsCount(receiverID):
     conn.close()
     return count
 
-createNoticeTable()
+
+
+
+
+
+
+def clearNotifications(userID):
+    conn = sqlite3.connect("database/database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    DELETE FROM notifications WHERE receiver_id = ? 
+    """, (userID,))
+
+    conn.commit()
+    conn.close()

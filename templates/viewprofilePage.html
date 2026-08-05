@@ -281,6 +281,38 @@
             position: relative;
             min-height: 1050px;
         }
+
+
+        #toast {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: #F7EED2;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        #toast.show {
+            opacity: 1;
+            transform: translate(0);
+        }
+
+        #toast.success {
+            background: #6B8E23;
+            border: 2px solid #4F6918;
+        }
+
+
+        #toast.error {
+            background: #8B3A3A;
+            border: 2px solid #5F2424;
+        }
     </style>
 </head>
 
@@ -351,10 +383,12 @@
         </div>
     </div>
 
+    <div id="toast"></div>
+
 
     <script>
         const user = {{ user | tojson | safe }};
-
+        const toast = document.getElementById("toast");
         const userData = user[0]
 
         const profileImg = document.getElementById("profileImg")
@@ -398,9 +432,14 @@
         if (!userData[8]) {
             discordBtn.style.display = "none"
         } else {
-            discordBtn.addEventListener("click", () => {
-                window.open(userData[10], "_blank")
-            })
+            discordBtn.addEventListener("click", async () => {
+                try {
+                    await navigator.clipboard.writeText(userData[8]);
+                    showToast("DISCORD USERNAME COPIED!", "success");
+                } catch {
+                    showToast("FAILED TO COPY DISCORD USERNAME.", "error");
+                }
+            });
         }
 
         if (!userData[9]) {
@@ -461,6 +500,15 @@
 
         successRate.textContent = `${rate}%`
 
+
+        function showToast(message, type = "success") {
+            toast.textContent = message
+            toast.className = `show ${type}`
+
+            setTimeout(() => {
+                toast.className = "";
+            }, 2500);
+        }
     </script>
 
 </body>

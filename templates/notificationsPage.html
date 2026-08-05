@@ -37,8 +37,8 @@
             width: calc(100% - 500px);
             height: calc(100% - 110px);
             left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%);
+            top: 90px;
             border: none;
         }
 
@@ -117,6 +117,28 @@
             font-size: 13px;
             color: #8A6A45;
         }
+
+        #topButtons {
+            position: absolute;
+            top: 20px;
+            right: 150px;
+        }
+
+        #clearNotificationsBtn {
+            width: 160px;
+            height: 42px;
+            background: #8B3A3A;
+            color: #F7EED2;
+            border: 2px solid #542020;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: .2s ease;
+        }
+
+        #clearNotificationsBtn:hover {
+            background: #994646;
+        }
     </style>
 </head>
 
@@ -125,6 +147,9 @@
         GUILD NOTICES:
     </div>
 
+    <div id="topButtons">
+        <button id="clearNotificationsBtn">CLEAR ALL</button>
+    </div>
     <div id="notificationsArea">
 
     </div>
@@ -168,6 +193,28 @@
                 notificationsArea.appendChild(card);
             });
         }
+
+
+
+        const clearNotification = document.getElementById("clearNotificationsBtn")
+
+        clearNotification.addEventListener("click", async () => {
+            const response = await fetch("/clearNotices", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userID: notifications[0][0]
+                })
+            })
+
+            const data = await response.json()
+
+            if(data.success) {
+                window.location.reload()
+            }
+        })
 
     </script>
 

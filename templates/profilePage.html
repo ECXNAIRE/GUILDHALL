@@ -350,6 +350,7 @@
             color: #F2DFC0;
             transition: all 0.1s ease;
             font-weight: 600;
+            cursor: pointer;
         }
 
         #githubDisplay,
@@ -428,12 +429,7 @@
 
 
         #statsArea {
-            position: absolute;
-            top: 700px;
-            left: 50%;
-            transform: translateX(-50%);
             width: 700px;
-            margin: 40px 20px 80px auto;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 18px;
@@ -476,6 +472,13 @@
         #profileDisplayArea {
             position: relative;
             min-height: 1050px;
+        }
+
+        #githubInput::placeholder,
+        #linkedInInput::placeholder,
+        #discordInput::placeholder {
+            color: #A97B4F;
+            opacity: 1;
         }
     </style>
 </head>
@@ -521,37 +524,37 @@
             <div id="buttonArea">
                 <button id="editProfile">EDIT PROFILE</button>
             </div>
-        </div>
 
-        <div id="statsArea">
-            <div class="statsCard">
-                <div class="statsTitle">Quests Made</div>
-                <div class="statsValue" id="questMade">0</div>
-            </div>
+            <div id="statsArea">
+                <div class="statsCard">
+                    <div class="statsTitle">Quests Made</div>
+                    <div class="statsValue" id="questMade">0</div>
+                </div>
 
-            <div class="statsCard">
-                <div class="statsTitle">Completed</div>
-                <div class="statsValue" id="questCompleted">0</div>
-            </div>
+                <div class="statsCard">
+                    <div class="statsTitle">Completed</div>
+                    <div class="statsValue" id="questCompleted">0</div>
+                </div>
 
-            <div class="statsCard">
-                <div class="statsTitle">Guild Points</div>
-                <div class="statsValue" id="guildPoints">0</div>
-            </div>
+                <div class="statsCard">
+                    <div class="statsTitle">Guild Points</div>
+                    <div class="statsValue" id="guildPoints">0</div>
+                </div>
 
-            <div class="statsCard">
-                <div class="statsTitle">Active Quest</div>
-                <div class="statsValue" id="activeQuest">0</div>
-            </div>
+                <div class="statsCard">
+                    <div class="statsTitle">Active Quest</div>
+                    <div class="statsValue" id="activeQuest">0</div>
+                </div>
 
-            <div class="statsCard">
-                <div class="statsTitle">Pledges</div>
-                <div class="statsValue" id="pledgesStat">0</div>
-            </div>
+                <div class="statsCard">
+                    <div class="statsTitle">Pledges</div>
+                    <div class="statsValue" id="pledgesStat">0</div>
+                </div>
 
-            <div class="statsCard">
-                <div class="statsTitle">Success Rate</div>
-                <div class="statsValue" id="successRate">0%</div>
+                <div class="statsCard">
+                    <div class="statsTitle">Success Rate</div>
+                    <div class="statsValue" id="successRate">0%</div>
+                </div>
             </div>
         </div>
     </div>
@@ -583,15 +586,15 @@
             <div id="userSocialsDisplay">
                 <div class="socialsClass">
                     <label>Github: </label>
-                    <input id="githubInput">
+                    <input id="githubInput" type="url" placeholder="https://github.com/yourusername">
                 </div>
                 <div class="socialsClass">
                     <label>LinkedIn: </label>
-                    <input id="linkedInInput">
+                    <input id="linkedInInput" type="url" placeholder="https://linkedin.com/in/yourusername">
                 </div>
                 <div class="socialsClass">
                     <label>Discord: </label>
-                    <input id="discordInput">
+                    <input id="discordInput" placeholder="yourusername">
                 </div>
             </div>
 
@@ -722,6 +725,18 @@
         const saveBtn = document.getElementById("saveBtn")
 
         saveBtn.addEventListener("click", async () => {
+            if (!isValidGithub(githubInput.value.trim())) {
+                showToast("ENTER A VALID GITHUB PROFILE.", "error");
+                return;
+            }
+
+            if (!isValidLinkedIn(linkedInInput.value.trim())) {
+                showToast("ENTER A VALID LINKEDIN PROFILE.", "error");
+                linkedInInput.focus();
+                return;
+            }
+
+
             const profileData = {
                 username: userNameEdit.value,
                 userBio: userBioEdit.value,
@@ -796,6 +811,17 @@
         }
 
         successRate.textContent = `${rate}%`
+
+
+        function isValidGithub(url) {
+            return url === "" ||
+                /^https:\/\/(www\.)?github\.com\/[A-Za-z0-9-]+\/?$/.test(url)
+        }
+
+        function isValidLinkedIn(url) {
+            return url === "" ||
+                /^https:\/\/(www\.)?linkedin\.com\/in\/[A-Za-z0-9-_%]+\/?$/.test(url);
+        }
     </script>
 </body>
 

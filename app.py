@@ -8,7 +8,7 @@ from database.initDB import insertUser, getUser, getUserName, updateProfile, upd
 from database.quest import saveQuest, getQuests, getQuestByID, getMyQuest, updatePledgedTo, updateStatus, deleteQuest, getActiveQuests, getCompletedCount, getQuestCounts
 import json
 from database.pledges import savePledges, getPledgesByQuestId, updatePledgeStatus, getMyPledges, deleteAll, deletePledge, getPledgesCount
-from database.notifications import insertNotices, getNotice,updateNotification, getUnreadNotificationsCount
+from database.notifications import insertNotices, getNotice,updateNotification, getUnreadNotificationsCount, clearNotifications
 
 
 load_dotenv()
@@ -421,6 +421,21 @@ def viewProfile(userID):
         completedQuest=completedQuest
     )
 
+
+
+
+@app.route("/clearNotices", methods=["POST"])
+def clearNotices():
+
+    data = request.get_json()
+
+    userID = data["userID"]
+
+    clearNotifications(userID)
+
+    return jsonify({
+        "success": True
+    })
 if (__name__) == "__main__":
     app.run(debug=True)
 
