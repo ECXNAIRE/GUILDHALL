@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session, request, jsonify
+from flask import Flask, render_template, redirect, session, request, jsonify, url_for
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 import os
@@ -10,8 +10,13 @@ import json
 from database.pledges import savePledges, getPledgesByQuestId, updatePledgeStatus, getMyPledges, deleteAll, deletePledge, getPledgesCount
 from database.notifications import insertNotices, getNotice,updateNotification, getUnreadNotificationsCount, clearNotifications
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
-load_dotenv()
+print("BASE_DIR:", BASE_DIR)
+print("ENV EXISTS:", os.path.exists(os.path.join(BASE_DIR, ".env")))
+print("SECRET_KEY:", repr(os.getenv("SECRET_KEY")))
+
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 
@@ -48,7 +53,7 @@ def landingPage():
 @app.route("/googleLogin")
 def googleLogin():
     return google.authorize_redirect(
-        "http://127.0.0.1:5000/google/callback"
+    url_for("googleCallback", _external=True)
     )
 
 @app.route("/google/callback")
@@ -71,7 +76,7 @@ def googleCallback():
 @app.route("/githubLogin")
 def githubLogin():
     return github.authorize_redirect(
-        "http://127.0.0.1:5000/github/callback"
+        url_for("githubCallback", _external=True)
     )
 
 
@@ -210,9 +215,9 @@ def pledges():
             )
 
         title = "Pledge Received"
-                    
+
         insertNotices(masterID, title, body, "pledge")
-        
+
         return jsonify({
             "success": success
         })
@@ -255,7 +260,7 @@ def viewQuest(questID):
 
     quest = getQuestByID(questID)
     pledges = getPledgesByQuestId(questID)
-    
+
 
     return render_template(
         "myQuestPage.html",
@@ -368,7 +373,7 @@ def questDeletion():
     return jsonify({
             "success": True
         })
-    
+
 
 
 @app.route("/completedQuest", methods=["POST"])
@@ -406,7 +411,7 @@ def completedQuest():
 @app.route("/viewProfile/<userID>")
 def viewProfile(userID):
     user = getUserWithUserID(userID)
-    
+
     pledgesCount = getPledgesCount(userID)
     questCount = getQuestCounts(userID)
     activeQuests = getActiveQuests(userID)
@@ -436,7 +441,14 @@ def clearNotices():
     return jsonify({
         "success": True
     })
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
+
+
 if (__name__) == "__main__":
     app.run(debug=True)
 
-    

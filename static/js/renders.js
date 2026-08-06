@@ -47,14 +47,12 @@ export function renderUI(uiCtx, uiCanvas) {
     );
 
     if (addQuestFrame.complete) {
-        const width = 1000
-        const height = width * (addQuestFrame.height / addQuestFrame.width);
         uiCtx.drawImage(
             addQuestFrame,
             0,
             -10,
-            width,
-            height
+            uiCanvas.width,
+            uiCanvas.height
         );
 
     }

@@ -1,8 +1,15 @@
 import sqlite3
 from helpers.questID import generateQuestId
+import os
+
+
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DB_PATH = os.path.join(BASE_DIR, "database", "database.db")
 
 def createQuestTable():
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -30,7 +37,7 @@ def createQuestTable():
 def saveQuest(title, description, difficulty, tags, creator, guild, userID):
     createQuestTable()
     quest_id = generateQuestId()
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute(""" 
@@ -44,7 +51,7 @@ def saveQuest(title, description, difficulty, tags, creator, guild, userID):
 
 
 def getQuests(guild):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
@@ -62,7 +69,7 @@ def getQuests(guild):
 
 
 def getQuestByID(questID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -79,7 +86,7 @@ def getQuestByID(questID):
 
 
 def getMyQuest(userID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
 
@@ -96,7 +103,7 @@ def getMyQuest(userID):
 
 
 def updateStatus(questID, status):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
 
@@ -111,7 +118,7 @@ def updateStatus(questID, status):
 
 
 def updatePledgedTo(questID, pledgerID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -124,7 +131,7 @@ def updatePledgedTo(questID, pledgerID):
 
 
 def deleteQuest(questID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -138,7 +145,7 @@ def deleteQuest(questID):
 
 
 def getQuestCounts(userID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
 
@@ -155,7 +162,7 @@ def getQuestCounts(userID):
 
 
 def getCompletedCount(userID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -171,7 +178,7 @@ def getCompletedCount(userID):
 
 
 def getActiveQuests(userID):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute("""
     SELECT COUNT(*) FROM quests WHERE pledged_to = ? AND status = ?
