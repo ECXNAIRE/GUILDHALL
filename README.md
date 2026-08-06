@@ -18,7 +18,7 @@ The main reason to build GUILDHALL was to gamify the boring and repetitive proce
 
 ## WILL ADD SCREENSHOTS HERE 
 ### PROFILE PAGE
-![Profile Page](screenshots/ss1.pngss1.png)
+![Profile Page](screenshots/ss1.png)
 
 ### QUEST COMPLETED PAGE
 ![Quest COMPLETD Page](screenshots/ss2.png)
